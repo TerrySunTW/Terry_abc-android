@@ -22,6 +22,9 @@
         </activity>
         <activity android:name=".ArrowsActivity" />
         <activity android:name=".OptionsActivity" />
+        <activity android:name=".Photo_GalleryActivity" />
+
+
 
         <service
             android:name=".MyService"
