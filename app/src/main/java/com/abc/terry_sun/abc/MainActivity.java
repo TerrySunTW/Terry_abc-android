@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 public class MainActivity extends TabActivity {
 	/** Called when the activity is first created. */
-	
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);

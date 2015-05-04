@@ -2,8 +2,10 @@ package com.abc.terry_sun.abc;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.os.Handler;
 import android.view.Menu;
 import android.widget.GridView;
+import android.widget.Toast;
 
 public class Photo_GalleryActivity extends Activity {
 	public  GridView gridView;
@@ -16,12 +18,23 @@ public class Photo_GalleryActivity extends Activity {
 		gridView.setAdapter(new Photo_ImageAdapter(this));
 		
 	}
-
+	private Boolean exit = false;
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		//getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+	public void onBackPressed() {
+		if (exit) {
+			finish(); // finish activity
+		} else {
+			Toast.makeText(this, "Press Back again to Exit.",
+					Toast.LENGTH_SHORT).show();
+			exit = true;
+			new Handler().postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					exit = false;
+				}
+			}, 3 * 1000);
+
+		}
 	}
 
 }
