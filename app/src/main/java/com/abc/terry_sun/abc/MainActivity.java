@@ -1,9 +1,5 @@
 package com.abc.terry_sun.abc;
 
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,8 +21,8 @@ public class MainActivity extends TabActivity {
 	private void setTabs()
 	{
 		addTab("Cards", R.drawable.tab_home, Photo_GalleryActivity.class);
-		addTab("Actions", R.drawable.tab_search, OptionsActivity.class);
-        addTab("Bonus", R.drawable.tab_search, OptionsActivity.class);
+		addTab("Actions", R.drawable.tab_search, ActionsListActivity.class);
+        addTab("Bonus", R.drawable.tab_search, BounsListActivity.class);
         addTab("Friends", R.drawable.tab_search, OptionsActivity.class);
 	}
 	
