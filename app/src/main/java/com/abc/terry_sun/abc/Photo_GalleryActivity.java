@@ -36,5 +36,4 @@ public class Photo_GalleryActivity extends Activity {
 
 		}
 	}
-
 }
