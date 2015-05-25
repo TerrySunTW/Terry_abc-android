@@ -2,8 +2,10 @@
 <resources>
     <string name="hello">Hello World, TabSample!</string>
     <string name="app_name">ABC</string>
-<string-array name="Spinner_Content"><item>One</item>
-<item>Two</item>
-<item>Three</item>
-</string-array>
+    <string name="APP_ID">2b/4mGIq5ENziSwZsq6JZAS6eLA=</string>
+    <string-array name="Spinner_Content">
+        <item>One</item>
+        <item>Two</item>
+        <item>Three</item>
+    </string-array>
 </resources>
