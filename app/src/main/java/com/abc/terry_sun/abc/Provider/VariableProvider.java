@@ -17,4 +17,6 @@ public final class VariableProvider {
     }
     private boolean IsRuningServiceThread;
 
+    private String FacebookID;
+
 }

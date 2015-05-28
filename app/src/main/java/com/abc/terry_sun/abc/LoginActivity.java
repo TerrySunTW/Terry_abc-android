@@ -2,11 +2,16 @@ package com.abc.terry_sun.abc;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.abc.terry_sun.abc.Provider.VariableProvider;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -22,6 +27,8 @@ import com.facebook.login.widget.LoginButton;
 
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 
@@ -31,54 +38,98 @@ import java.util.Arrays;
 public class LoginActivity extends Activity {
     LoginButton loginButton;
     CallbackManager callbackManager;
+    private AccessToken accessToken;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
-
         setContentView(R.layout.activity_login);
 
         loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setReadPermissions("email", "user_likes", "user_friends");
-        loginButton.setLoginBehavior(LoginBehavior.SUPPRESS_SSO);
+        loginButton.setLoginBehavior(LoginBehavior.SSO_WITH_FALLBACK);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 //callback registration
 
-                LoginManager.getInstance().registerCallback(callbackManager,
-                        new FacebookCallback<LoginResult>() {
-                            @Override
-                            public void onSuccess(LoginResult loginResult) {
-                                // App code
-
-                                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile", "user_friends"));
-                                Log.e("-->", Arrays.asList("public_profile", "user_friends").toString());
-                                Toast.makeText(getApplication(), "success", Toast.LENGTH_SHORT).show();
-
-
-                            }
-
-                            @Override
-                            public void onCancel() {
-                                // App code
-                                Toast.makeText(getApplication(),"fail",Toast.LENGTH_SHORT).show();
-                            }
-
-                            @Override
-                            public void onError(FacebookException exception) {
-                                // App code
-                                Toast.makeText(getApplication(),"error", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                FacebookLogin();
             }
         });
 
     }
 
+    private void FacebookLogin() {
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        // App code
+                        accessToken = loginResult.getAccessToken();
+                        GraphRequest request = GraphRequest.newMeRequest(
+                                accessToken,
+                                new GraphRequest.GraphJSONObjectCallback() {
+                                    //當RESPONSE回來的時候
+                                    @Override
+                                    public void onCompleted(JSONObject object, GraphResponse response) {
+                                        //讀出姓名 ID FB個人頁面連結
+                                        Log.d("FB", "complete");
+                                        Log.d("FB",object.optString("id"));
+                                        Log.d("FB",object.optString("name"));
+                                        Log.d("FB", object.optString("link"));
+                                        VariableProvider.getInstance().setFacebookID(object.optString("id"));
+                                        Intent intent = new Intent();
+                                        intent.setClass(LoginActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                });
+
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields", "id,name,link");
+                        request.setParameters(parameters);
+                        request.executeAsync();
+
+                        //LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile", "user_friends"));
+                        //Log.e("-->", Arrays.asList("public_profile", "user_friends").toString());
+                        Toast.makeText(getApplication(), "success", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        // App code
+                        Toast.makeText(getApplication(),"fail",Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        // App code
+                        Toast.makeText(getApplication(),"error", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void GetKeyHash() {
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "com.abc.terry_sun.abc",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.d("KeyHash:", "PackageManager.NameNotFoundException");
+
+        } catch (NoSuchAlgorithmException e) {
+            Log.d("KeyHash:", "NoSuchAlgorithmException");
+        }
+    }
 
 
     @Override
