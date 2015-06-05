@@ -114,15 +114,14 @@ public class LoginActivity extends Activity {
         GraphRequest request = GraphRequest.newMeRequest(
                 accessToken,
                 new GraphRequest.GraphJSONObjectCallback() {
-                    //當RESPONSE回來的時候
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
-                        //讀出姓名 ID FB個人頁面連結
                         Log.d("FB", "complete");
                         Log.d("FB",object.optString("id"));
                         Log.d("FB",object.optString("name"));
                         Log.d("FB", object.optString("link"));
                         VariableProvider.getInstance().setFacebookID(object.optString("id"));
+                        VariableProvider.getInstance().setFacebookUserName(object.optString("name"));
                         Intent intent = new Intent();
                         intent.setClass(LoginActivity.this, MainActivity.class);
                         startActivity(intent);

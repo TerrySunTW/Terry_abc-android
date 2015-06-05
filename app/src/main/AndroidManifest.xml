@@ -29,6 +29,16 @@
         <activity android:name=".Photo_GalleryActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".SettingActivity" />
+        <activity android:name=".CardsActivity" />
+        <activity android:name=".TabGroup_Cards" />
+
+
+        <activity android:name=".CardDetailMainActivity" />
+        <activity android:name=".CardDetailEmulateActivity" />
+        <activity android:name=".CardDetailActionsActivity" />
+        <activity android:name=".CardDetailBonusActivity" />
+        <activity android:name=".CardDetailSettingsActivity" />
+
         <activity android:name="com.facebook.FacebookActivity"
             android:configChanges=
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation"

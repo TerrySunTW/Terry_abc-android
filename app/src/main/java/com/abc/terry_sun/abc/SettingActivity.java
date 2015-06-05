@@ -10,6 +10,8 @@ import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.abc.terry_sun.abc.Provider.VariableProvider;
@@ -33,6 +35,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 
 /**
  * Created by Terry on 2015/4/19.
@@ -42,14 +47,19 @@ public class SettingActivity extends Activity {
     CallbackManager callbackManager;
     private AccessToken accessToken;
     AccessTokenTracker accessTokenTracker;
+
+    @InjectView(R.id.username)
+    protected TextView TextViewUsername;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(this.getApplicationContext());
-
-
         callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.activity_setting);
+        ButterKnife.inject(this);
+        
+        TextViewUsername.setText(VariableProvider.getInstance().getFacebookUserName());
 
 
         loginButton = (LoginButton) findViewById(R.id.login_button);
