@@ -21,7 +21,7 @@ import com.abc.terry_sun.abc.CustomClass.Adapter.AdapterCardsImage;
 public class CardDetailBonusActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_card_detail_bonus);
     }
 
 }

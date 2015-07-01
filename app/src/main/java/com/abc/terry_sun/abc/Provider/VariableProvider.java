@@ -19,5 +19,7 @@ public final class VariableProvider {
 
     private String FacebookID;
     private String FacebookUserName;
+    private String FacebookLink;
+    private String FacebookPhotoURL;
 
 }

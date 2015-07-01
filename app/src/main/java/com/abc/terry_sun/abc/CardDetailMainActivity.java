@@ -32,11 +32,11 @@ public class CardDetailMainActivity extends TabActivity {
     private void setTabs()
     {
 
-        addTab("Emulate", R.drawable.tab_search, CardDetailEmulateActivity.class);
-        addTab("Actions", R.drawable.tab_home, CardDetailActionsActivity.class);
+        addTab("Info", R.drawable.tab_search, CardDetailInfoActivity.class);
+        addTab("Bonus", R.drawable.tab_home, CardDetailBonusActivity.class);
         addTab("Fake", R.drawable.tab_search, CardDetailEmulateActivity.class);
-        addTab("Bonus", R.drawable.tab_search, CardDetailBonusActivity.class);
         addTab("Settings", R.drawable.tab_search, CardDetailSettingsActivity.class);
+        addTab("Emulate", R.drawable.tab_search, CardDetailEmulateActivity.class);
     }
     private void addTab(String labelId, int drawableId, Class<?> c)
     {

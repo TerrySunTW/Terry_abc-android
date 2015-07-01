@@ -21,10 +21,9 @@ public class MainActivity extends TabActivity {
 	private void setTabs()
 	{
 		addTab("Cards", R.drawable.tab_home, TabGroup_Cards.class);
-		addTab("Actions", R.drawable.tab_search, ActionsListActivity.class);
-        addTab("Bonus", R.drawable.tab_search, BounsListActivity.class);
-        addTab("Friends", R.drawable.tab_search, OptionsActivity.class);
-		addTab("Setting", R.drawable.tab_search, SettingActivity.class);
+		addTab("Bonus", R.drawable.tab_search, ActionsListActivity.class);
+        addTab("Link", R.drawable.tab_search, OptionsActivity.class);
+		addTab("R-Card", R.drawable.tab_search, SettingActivity.class);
 	}
 	
 	private void addTab(String labelId, int drawableId, Class<?> c)

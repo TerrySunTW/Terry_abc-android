@@ -53,7 +53,7 @@ public class TabGroup_Cards  extends ActivityGroup {
         {
             //第一次點，預設第一頁
             Intent intent = new Intent(this, CardsActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            ChangeActivity("tab_purchase_function_list", intent, true);
+            ChangeActivity("CardsActivity", intent, true);
         }
     }
     public static void ChangeActivity(String IntentName,Intent _intent,Boolean WantSaved)
