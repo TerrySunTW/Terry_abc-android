@@ -7,6 +7,7 @@ import com.orm.SugarRecord;
 import org.json.JSONObject;
 
 import java.security.spec.ECField;
+import java.util.Date;
 
 import lombok.Data;
 
@@ -46,4 +47,5 @@ public class Cards extends SugarRecord<Cards> {
     Boolean IsFavorite;
     Boolean IsMainCard;
     String CreatedTime;
+    Date CreatedTimeFormated;
 }

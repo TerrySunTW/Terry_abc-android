@@ -20,6 +20,7 @@ import com.abc.terry_sun.abc.Provider.HttpURL_Provider;
 import com.abc.terry_sun.abc.Provider.VariableProvider;
 import com.abc.terry_sun.abc.Service.ImageService;
 import com.abc.terry_sun.abc.Service.StorageService;
+import com.abc.terry_sun.abc.Service.StringService;
 import com.abc.terry_sun.abc.Utilits.InternetUtil;
 import com.abc.terry_sun.abc.Utilits.OkHttpUtil;
 import com.facebook.AccessToken;
@@ -153,6 +154,7 @@ public class LoginActivity extends Activity {
                                         {
                                             //create
                                             Log.i("info","StorageService.GetImagePath(_context,Item.getCardImage()):"+ StorageService.GetImagePath(_context,Item.getCardImage()));
+                                            Item.setCreatedTimeFormated(StringService.GetJsonDate(Item.getCreatedTime()));
                                             Item.save();
                                             Result=InternetUtil.DownloadFile(HttpURL_Provider.ImageServerLocation+ImageService.GetImageFileName(Item.getCategoryImage()), StorageService.GetImagePath(_context, ImageService.GetImageFileName(Item.getCategoryImage())));
                                             Result+=InternetUtil.DownloadFile(HttpURL_Provider.ImageServerLocation+ImageService.GetImageFileName(Item.getGroupImage()), StorageService.GetImagePath(_context, ImageService.GetImageFileName(Item.getGroupImage())));
