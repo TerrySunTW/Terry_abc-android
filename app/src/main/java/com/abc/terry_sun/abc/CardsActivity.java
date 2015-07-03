@@ -20,6 +20,7 @@ import com.abc.terry_sun.abc.Models.CardInfo;
 import com.abc.terry_sun.abc.Models.CategoryInfo;
 import com.abc.terry_sun.abc.Models.GalleryItem;
 import com.abc.terry_sun.abc.Models.GroupInfo;
+import com.abc.terry_sun.abc.Models.RepresentativeInfo;
 import com.abc.terry_sun.abc.Service.CardService;
 import com.abc.terry_sun.abc.Service.ScreenService;
 
@@ -39,13 +40,25 @@ public class CardsActivity extends Activity {
     GridView gridView;
     @InjectView(R.id.ButtonCategory)
     Button ButtonCategory;
+    @InjectView(R.id.ButtonGroup)
+    Button ButtonGroup;
+    @InjectView(R.id.ButtonRepresentative)
+    Button ButtonRepresentative;
+
     List<CategoryInfo> CategoryList;
     List<GroupInfo> GroupList;
+    List<RepresentativeInfo> RepresentativeList;
     List<CardInfo> CardList;
     List<GalleryItem> GalleryItemList;
+
+    //MenuItem
     List<GalleryItem> CategoryGalleryItemList;
+    List<GalleryItem> GroupGalleryItemList;
+    List<GalleryItem> RepresentativeGalleryItemList;
+
     String SelectedCategoryID;
     String SelectedGroupID;
+    String SelectedRepresentativeID;
     String SelectedCardID;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,6 +85,7 @@ public class CardsActivity extends Activity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
+                ButtonCategory.setText(CategoryGalleryItemList.get(position).getTitle());
                 SelectedCategoryID = CategoryGalleryItemList.get(position).getItemID();
                 GroupDataSetting();
                 /**
@@ -82,18 +96,37 @@ public class CardsActivity extends Activity {
             }
         });
     }
+
     private void GroupDataSetting() {
         GroupList=CardService.getInstance().GetGroupByCategoryID(SelectedCategoryID);
-        GalleryItemList = new ArrayList<GalleryItem>();
+        GroupGalleryItemList = new ArrayList<GalleryItem>();
         for(GroupInfo Item:GroupList)
         {
-            GalleryItemList.add(new GalleryItem(Item.getGroupID(),Item.getGroupName(),Item.getGroupImage()));
+            GroupGalleryItemList.add(new GalleryItem(Item.getGroupID(),Item.getGroupName(),Item.getGroupImage()));
+        }
+        gridView.setAdapter(new AdapterCardsImage(this.getParent(), GroupGalleryItemList));
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+                ButtonGroup.setText(GroupGalleryItemList.get(position).getTitle());
+                SelectedGroupID=GroupGalleryItemList.get(position).getItemID();
+                RepresentativeListDataSetting();
+            }
+        });
+    }
+    private void RepresentativeListDataSetting() {
+        RepresentativeList=CardService.getInstance().GetRepresentativeByGroupID(SelectedGroupID);
+        GalleryItemList = new ArrayList<GalleryItem>();
+        for(RepresentativeInfo Item:RepresentativeList)
+        {
+            GalleryItemList.add(new GalleryItem(Item.getGroupID(),Item.getRepresentativeName(),Item.getRepresentativeImage()));
         }
         gridView.setAdapter(new AdapterCardsImage(this.getParent(), GalleryItemList));
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                SelectedGroupID=GalleryItemList.get(position).getItemID();
+                SelectedRepresentativeID=GalleryItemList.get(position).getItemID();
+
             }
         });
     }
@@ -105,16 +138,18 @@ public class CardsActivity extends Activity {
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == 0) {
-                    //Select all
+                if (item.getItemId() == 1) {
+                    //Select all && Reset Menu
+                    ReSetMenuStatus();
                     GategoryDataSetting();
                 }
-                else if (item.getItemId() == 0) {
+                else if (item.getItemId() == 2) {
                     //select Favorite
                 }
                 else {
                     for (CategoryInfo CategoryInfoItem : CategoryList) {
                         if (CategoryInfoItem.getCategoryName().equals(item.getTitle().toString())) {
+                            ButtonCategory.setText(item.getTitle().toString());
                             SelectedCategoryID = CategoryInfoItem.getCategoryID();
                             GroupDataSetting();
                         }
@@ -123,20 +158,53 @@ public class CardsActivity extends Activity {
                 return false;
             }
         });
-        popupMenu.getMenu().add(0,0,0,"All");
-        popupMenu.getMenu().add(0,1,0,"Favorite");
+        popupMenu.getMenu().add(0,1,0,"All");
+        popupMenu.getMenu().add(0,2,0,"Favorite");
         for(int i=0; i<CategoryList.size(); i++)
         {
             popupMenu.getMenu().add(CategoryList.get(i).getCategoryName());
         }
         popupMenu.show();
     }
+
+    private void ReSetMenuStatus() {
+        GroupGalleryItemList=null;
+        RepresentativeGalleryItemList=null;
+        ButtonCategory.setText("Category>>");
+        ButtonGroup.setText("Group>>");
+        ButtonRepresentative.setText("Member>>");
+    }
+
     @OnClick(R.id.ButtonGroup)
     protected void onButtonClicked_ButtonGroup() {
-
+        if(GroupGalleryItemList !=null)
+        {
+            PopupMenu popupMenu = new PopupMenu(this, ButtonGroup);
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    for (GalleryItem GroupGalleryItem : GroupGalleryItemList) {
+                        if (GroupGalleryItem.getTitle().equals(item.getTitle().toString())) {
+                            ButtonGroup.setText(item.getTitle().toString());
+                            SelectedGroupID = GroupGalleryItem.getItemID();
+                            RepresentativeListDataSetting();
+                        }
+                    }
+                    return false;
+                }
+            });
+            for(int i=0; i<GroupGalleryItemList.size(); i++)
+            {
+                popupMenu.getMenu().add(GroupGalleryItemList.get(i).getTitle());
+            }
+            popupMenu.show();
+        }
     }
     @OnClick(R.id.ButtonRepresentative)
     protected void onButtonClicked_ButtonRepresentative() {
+        if(RepresentativeGalleryItemList !=null)
+        {
 
+        }
     }
 }
