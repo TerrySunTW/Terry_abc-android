@@ -1,6 +1,9 @@
 package com.abc.terry_sun.abc.CustomClass.Adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,18 +11,22 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.abc.terry_sun.abc.Models.GalleryItem;
 import com.abc.terry_sun.abc.R;
+import com.abc.terry_sun.abc.Service.StorageService;
+
+import java.util.List;
 
 /**
  * Created by terry_sun on 2015/6/2.
  */
 public class AdapterCardsImage extends BaseAdapter {
-    private Context context;
-    private final String[] mobileValues;
+    Context context;
+    List<GalleryItem> GalleryItemList;
 
-    public AdapterCardsImage(Context context, String[] mobileValues) {
+    public AdapterCardsImage(Context context, List<GalleryItem> _GalleryItemList) {
         this.context = context;
-        this.mobileValues = mobileValues;
+        this.GalleryItemList = _GalleryItemList;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -39,23 +46,15 @@ public class AdapterCardsImage extends BaseAdapter {
             // set value into textview
             TextView textView = (TextView) gridView
                     .findViewById(R.id.grid_item_label);
-            textView.setText(mobileValues[position]);
+            textView.setText(GalleryItemList.get(position).getTitle());
 
             // set image based on selected text
             ImageView imageView = (ImageView) gridView
                     .findViewById(R.id.grid_item_image);
 
-            String mobile = mobileValues[position];
-
-            if (mobile.equals("Windows")) {
-                imageView.setImageResource(R.drawable.card1);
-            } else if (mobile.equals("iOS")) {
-                imageView.setImageResource(R.drawable.card1);
-            } else if (mobile.equals("Blackberry")) {
-                imageView.setImageResource(R.drawable.card1);
-            } else {
-                imageView.setImageResource(R.drawable.card1);
-            }
+            Log.i("Info", "ImagePath:" + StorageService.GetImagePath(context, GalleryItemList.get(position).getImageName()));
+            Bitmap Img = BitmapFactory.decodeFile(StorageService.GetImagePath(context,GalleryItemList.get(position).getImageName()));
+            imageView.setImageBitmap(Img);
 
         } else {
             gridView = (View) convertView;
@@ -66,7 +65,7 @@ public class AdapterCardsImage extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mobileValues.length;
+        return GalleryItemList.size();
     }
 
     @Override

@@ -15,7 +15,7 @@ public class StorageService {
     private static String FolderName="ABC/";
     public static String GetImagePath(Context context,String ImageName)
     {
-        return GetAppStoragePath(context)+ File.separator+ImageName;
+        return GetAppStoragePath(context)+ File.separator+ImageService.GetImageFileName(ImageName);
     }
     public static String GetAppStoragePath(Context context)
     {
