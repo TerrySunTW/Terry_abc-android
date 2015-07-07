@@ -156,9 +156,9 @@ public class LoginActivity extends Activity {
                                             Log.i("info","StorageService.GetImagePath(_context,Item.getCardImage()):"+ StorageService.GetImagePath(_context,Item.getCardImage()));
                                             Item.setCreatedTimeFormated(StringService.GetJsonDate(Item.getCreatedTime()));
                                             Item.save();
-                                            Result=InternetUtil.DownloadFile(HttpURL_Provider.ImageServerLocation+ImageService.GetImageFileName(Item.getCategoryImage()), StorageService.GetImagePath(_context, ImageService.GetImageFileName(Item.getCategoryImage())));
-                                            Result+=InternetUtil.DownloadFile(HttpURL_Provider.ImageServerLocation+ImageService.GetImageFileName(Item.getGroupImage()), StorageService.GetImagePath(_context, ImageService.GetImageFileName(Item.getGroupImage())));
-                                            Result+=InternetUtil.DownloadFile(HttpURL_Provider.ImageServerLocation+ImageService.GetImageFileName(Item.getCardImage()), StorageService.GetImagePath(_context, ImageService.GetImageFileName(Item.getCardImage())));
+                                            Result=InternetUtil.DownloadFile(HttpURL_Provider.ImageServerLocation+ImageService.GetImageFileName(Item.getCategoryImage()), StorageService.GetImagePath(_context, Item.getCategoryImage()));
+                                            Result+=InternetUtil.DownloadFile(HttpURL_Provider.ImageServerLocation+ImageService.GetImageFileName(Item.getGroupImage()), StorageService.GetImagePath(_context,Item.getGroupImage()));
+                                            Result+=InternetUtil.DownloadFile(HttpURL_Provider.ImageServerLocation+ImageService.GetImageFileName(Item.getCardImage()), StorageService.GetImagePath(_context,Item.getCardImage()));
                                             Log.i("info","StorageService.Result:"+ Result);
                                         }
                                         else

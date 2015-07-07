@@ -1,6 +1,7 @@
 package com.abc.terry_sun.abc.Service;
 
 import com.abc.terry_sun.abc.Entities.Cards;
+import com.abc.terry_sun.abc.Models.CardInfo;
 import com.abc.terry_sun.abc.Models.CategoryInfo;
 import com.abc.terry_sun.abc.Models.GroupInfo;
 import com.abc.terry_sun.abc.Models.RepresentativeInfo;
@@ -92,6 +93,16 @@ public class CardService {
             }
         }
         return NewRepresentativeInfoList;
+    }
+    public List<CardInfo> GetCardsByRepresentativeID(String RepresentativeID)
+    {
+        List<Cards> CardList=Cards.find(Cards.class, "REPRESENTATIVE_ID=?", RepresentativeID);
+        List<CardInfo> CardInfoList=new ArrayList<CardInfo>();
+        for(Cards Item:CardList)
+        {
+            CardInfoList.add(new CardInfo(Item.getRepresentativeID(),Item.getCardID(),Item.getCardName(),Item.getCardImage()));
+        }
+        return CardInfoList;
     }
     public List<Cards> GetAllCards()
     {
