@@ -10,7 +10,7 @@ import lombok.Data;
 @AllArgsConstructor(suppressConstructorProperties = true)
 public class CardInfo {
     String RepresentativeID;
-    String CardID;
+    String EntityCardID;
     String CardName;
     String CardImage;
 }

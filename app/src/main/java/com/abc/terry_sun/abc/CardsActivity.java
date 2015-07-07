@@ -1,21 +1,24 @@
 package com.abc.terry_sun.abc;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Point;
+import android.app.Dialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.abc.terry_sun.abc.CustomClass.Adapter.AdapterCardsImage;
+import com.abc.terry_sun.abc.Entities.Cards;
 import com.abc.terry_sun.abc.Models.CardInfo;
 import com.abc.terry_sun.abc.Models.CategoryInfo;
 import com.abc.terry_sun.abc.Models.GalleryItem;
@@ -23,6 +26,7 @@ import com.abc.terry_sun.abc.Models.GroupInfo;
 import com.abc.terry_sun.abc.Models.RepresentativeInfo;
 import com.abc.terry_sun.abc.Service.CardService;
 import com.abc.terry_sun.abc.Service.ScreenService;
+import com.abc.terry_sun.abc.Service.StorageService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +65,7 @@ public class CardsActivity extends Activity {
     String SelectedCategoryID;
     String SelectedGroupID;
     String SelectedRepresentativeID;
-    String SelectedCardID;
+    String SelectedEntityCardID;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,16 +142,35 @@ public class CardsActivity extends Activity {
         CardGalleryItemList = new ArrayList<GalleryItem>();
         for(CardInfo Item:CardList)
         {
-            CardGalleryItemList.add(new GalleryItem(Item.getCardID(),Item.getCardName(),Item.getCardImage()));
+            CardGalleryItemList.add(new GalleryItem(Item.getEntityCardID(),Item.getCardName(),Item.getCardImage()));
         }
         gridView.setAdapter(new AdapterCardsImage(this.getParent(), CardGalleryItemList));
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                SelectedCardID=CardGalleryItemList.get(position).getItemID();
-                Log.i("Info","SelectedCardID"+SelectedCardID);
+                SelectedEntityCardID =CardGalleryItemList.get(position).getItemID();
+                ShowCardDialog(SelectedEntityCardID);
+                Log.i("Info", "SelectedEntityCardID" + SelectedEntityCardID);
             }
         });
+    }
+
+    private void ShowCardDialog(String EntityCardID) {
+        Cards CardInfo=CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
+        Dialog dialog=new Dialog(this.getParent());
+        dialog.setContentView(R.layout.dialog_card_info);
+        Window window = dialog.getWindow();
+        window.setBackgroundDrawable(new ColorDrawable(0));
+        window.setLayout(ScreenService.GetScreenWidth(this.getParent()).x - 100, ScreenService.GetScreenWidth(this.getParent()).y - 300);
+
+
+        ImageView _ImageView=(ImageView)dialog.findViewById(R.id.ImageView_ItemImage);
+        Bitmap Img = BitmapFactory.decodeFile(StorageService.GetImagePath(this.getParent(), CardInfo.getCardImage()));
+        _ImageView.setImageBitmap(Img);
+
+        TextView TextView_ItemName=(TextView)dialog.findViewById(R.id.TextView_ItemName);
+        TextView_ItemName.setText(CardInfo.getCardName());
+        dialog.show();
     }
 
 

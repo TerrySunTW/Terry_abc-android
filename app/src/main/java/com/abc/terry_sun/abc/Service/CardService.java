@@ -100,9 +100,18 @@ public class CardService {
         List<CardInfo> CardInfoList=new ArrayList<CardInfo>();
         for(Cards Item:CardList)
         {
-            CardInfoList.add(new CardInfo(Item.getRepresentativeID(),Item.getCardID(),Item.getCardName(),Item.getCardImage()));
+            CardInfoList.add(new CardInfo(Item.getRepresentativeID(),Item.getEntityCardID(),Item.getCardName(),Item.getCardImage()));
         }
         return CardInfoList;
+    }
+    public Cards GetCardsByEntityCardID(String EntityCardID)
+    {
+        List<Cards> CardList=Cards.find(Cards.class, "ENTITY_CARD_ID=?", EntityCardID);
+        if(CardList.size()>0)
+        {
+            return CardList.get(0);
+        }
+        return null;
     }
     public List<Cards> GetAllCards()
     {
