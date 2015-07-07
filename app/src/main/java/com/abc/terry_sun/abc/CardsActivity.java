@@ -74,7 +74,7 @@ public class CardsActivity extends Activity {
         ButterKnife.inject(this);
 
         Log.i("INFO","size.x="+String.valueOf(ScreenService.GetScreenWidth(this)));
-        gridView.setColumnWidth((ScreenService.GetScreenWidth(this).x -30)/3);
+        gridView.setColumnWidth((ScreenService.GetScreenWidth(this).x - 30) / 3);
         GategoryDataSetting();
     }
     void InitialParameter()
@@ -94,7 +94,7 @@ public class CardsActivity extends Activity {
                                     int position, long id) {
                 ButtonCategory.setText(CategoryGalleryItemList.get(position).getTitle());
                 SelectedCategoryID = CategoryGalleryItemList.get(position).getItemID();
-                Log.i("Info","SelectedCategoryID"+SelectedCategoryID);
+                Log.i("Info", "SelectedCategoryID" + SelectedCategoryID);
                 GroupDataSetting();
             }
         });
@@ -112,8 +112,8 @@ public class CardsActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
                 ButtonGroup.setText(GroupGalleryItemList.get(position).getTitle());
-                SelectedGroupID=GroupGalleryItemList.get(position).getItemID();
-                Log.i("Info","SelectedGroupID"+SelectedGroupID);
+                SelectedGroupID = GroupGalleryItemList.get(position).getItemID();
+                Log.i("Info", "SelectedGroupID" + SelectedGroupID);
                 RepresentativeListDataSetting();
             }
         });
@@ -130,8 +130,8 @@ public class CardsActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
                 ButtonRepresentative.setText(RepresentativeGalleryItemList.get(position).getTitle());
-                SelectedRepresentativeID=RepresentativeGalleryItemList.get(position).getItemID();
-                Log.i("Info","SelectedRepresentativeID"+SelectedRepresentativeID);
+                SelectedRepresentativeID = RepresentativeGalleryItemList.get(position).getItemID();
+                Log.i("Info", "SelectedRepresentativeID" + SelectedRepresentativeID);
                 CardListDataSetting(SelectedRepresentativeID);
             }
         });
@@ -154,23 +154,32 @@ public class CardsActivity extends Activity {
             }
         });
     }
-
+    Dialog CardDetailDialog;
     private void ShowCardDialog(String EntityCardID) {
         Cards CardInfo=CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
-        Dialog dialog=new Dialog(this.getParent());
-        dialog.setContentView(R.layout.dialog_card_info);
-        Window window = dialog.getWindow();
+        CardDetailDialog=new Dialog(this.getParent());
+        CardDetailDialog.setContentView(R.layout.dialog_card_info);
+        Window window = CardDetailDialog.getWindow();
         window.setBackgroundDrawable(new ColorDrawable(0));
         window.setLayout(ScreenService.GetScreenWidth(this.getParent()).x - 100, ScreenService.GetScreenWidth(this.getParent()).y - 300);
 
 
-        ImageView _ImageView=(ImageView)dialog.findViewById(R.id.ImageView_ItemImage);
+        ImageView _ImageView=(ImageView)CardDetailDialog.findViewById(R.id.ImageView_ItemImage);
         Bitmap Img = BitmapFactory.decodeFile(StorageService.GetImagePath(this.getParent(), CardInfo.getCardImage()));
         _ImageView.setImageBitmap(Img);
 
-        TextView TextView_ItemName=(TextView)dialog.findViewById(R.id.TextView_ItemName);
+        TextView TextView_ItemName=(TextView)CardDetailDialog.findViewById(R.id.TextView_ItemName);
         TextView_ItemName.setText(CardInfo.getCardName());
-        dialog.show();
+
+        Button Button_Return = (Button)CardDetailDialog.findViewById(R.id.Button_Return);
+        Button_Return.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CardDetailDialog.dismiss();
+            }
+        });
+        CardDetailDialog.show();
+
     }
 
 
