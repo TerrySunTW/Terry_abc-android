@@ -45,14 +45,16 @@
         </TableLayout>
     </LinearLayout>
     <Button
+        android:id="@+id/Button_Favorite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Favorite"
         android:layout_gravity="center_horizontal" />
     <Button
+        android:id="@+id/Button_MainCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Card Picture"
+        android:text="Main Card"
         android:layout_gravity="center_horizontal" />
     <Button
         android:layout_width="match_parent"

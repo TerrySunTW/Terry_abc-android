@@ -25,6 +25,7 @@ import com.abc.terry_sun.abc.Models.GalleryItem;
 import com.abc.terry_sun.abc.Models.GroupInfo;
 import com.abc.terry_sun.abc.Models.RepresentativeInfo;
 import com.abc.terry_sun.abc.Service.CardService;
+import com.abc.terry_sun.abc.Service.ImageService;
 import com.abc.terry_sun.abc.Service.ScreenService;
 import com.abc.terry_sun.abc.Service.StorageService;
 
@@ -137,6 +138,24 @@ public class CardsActivity extends Activity {
         });
     }
 
+    private void FavoriteCardListDataSetting() {
+        CardList=CardService.getInstance().GetFavoriteCardsInfo();
+        CardGalleryItemList = new ArrayList<GalleryItem>();
+        for(CardInfo Item:CardList)
+        {
+            CardGalleryItemList.add(new GalleryItem(Item.getEntityCardID(),Item.getCardName(),Item.getCardImage()));
+        }
+        gridView.setAdapter(new AdapterCardsImage(this.getParent(), CardGalleryItemList));
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+                SelectedEntityCardID =CardGalleryItemList.get(position).getItemID();
+                ShowCardDialog(SelectedEntityCardID);
+                Log.i("Info", "SelectedEntityCardID" + SelectedEntityCardID);
+            }
+        });
+    }
+
     private void CardListDataSetting(String RepresentativeID) {
         CardList=CardService.getInstance().GetCardsByRepresentativeID(RepresentativeID);
         CardGalleryItemList = new ArrayList<GalleryItem>();
@@ -155,8 +174,9 @@ public class CardsActivity extends Activity {
         });
     }
     Dialog CardDetailDialog;
+    Cards SelectedCardInfo;
     private void ShowCardDialog(String EntityCardID) {
-        Cards CardInfo=CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
+        SelectedCardInfo=CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
         CardDetailDialog=new Dialog(this.getParent());
         CardDetailDialog.setContentView(R.layout.dialog_card_info);
         Window window = CardDetailDialog.getWindow();
@@ -165,17 +185,34 @@ public class CardsActivity extends Activity {
 
 
         ImageView _ImageView=(ImageView)CardDetailDialog.findViewById(R.id.ImageView_ItemImage);
-        Bitmap Img = BitmapFactory.decodeFile(StorageService.GetImagePath(this.getParent(), CardInfo.getCardImage()));
+        Bitmap Img = BitmapFactory.decodeFile(StorageService.GetImagePath(this.getParent(), SelectedCardInfo.getCardImage()));
         _ImageView.setImageBitmap(Img);
 
         TextView TextView_ItemName=(TextView)CardDetailDialog.findViewById(R.id.TextView_ItemName);
-        TextView_ItemName.setText(CardInfo.getCardName());
+        TextView_ItemName.setText(SelectedCardInfo.getCardName());
 
         Button Button_Return = (Button)CardDetailDialog.findViewById(R.id.Button_Return);
         Button_Return.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 CardDetailDialog.dismiss();
+            }
+        });
+
+        Button Button_MainCard = (Button)CardDetailDialog.findViewById(R.id.Button_MainCard);
+        Button_MainCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CardService.getInstance().SetMainCards(SelectedCardInfo);
+                MainActivity.ChangeMainCardImage(ImageService.GetBitmapFromImageName(SelectedCardInfo.getCardImage()));
+            }
+        });
+
+        Button Button_Favorite = (Button)CardDetailDialog.findViewById(R.id.Button_Favorite);
+        Button_Favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CardService.getInstance().AddToFavorite(SelectedCardInfo);
             }
         });
         CardDetailDialog.show();
@@ -196,6 +233,7 @@ public class CardsActivity extends Activity {
                 }
                 else if (item.getItemId() == 2) {
                     //select Favorite
+                    FavoriteCardListDataSetting();
                 }
                 else {
                     for (CategoryInfo CategoryInfoItem : CategoryList) {

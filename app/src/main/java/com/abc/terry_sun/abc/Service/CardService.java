@@ -104,6 +104,26 @@ public class CardService {
         }
         return CardInfoList;
     }
+    public List<CardInfo> GetFavoriteCardsInfo()
+    {
+        List<Cards> CardList=Cards.find(Cards.class, "IS_FAVORITE=?", "1");
+        List<CardInfo> CardInfoList=new ArrayList<CardInfo>();
+        for(Cards Item:CardList)
+        {
+            CardInfoList.add(new CardInfo(Item.getRepresentativeID(),Item.getEntityCardID(),Item.getCardName(),Item.getCardImage()));
+        }
+        return CardInfoList;
+    }
+    public List<CardInfo> GetAllCardsInfo()
+    {
+        List<Cards> CardList=Cards.listAll(Cards.class);
+        List<CardInfo> CardInfoList=new ArrayList<CardInfo>();
+        for(Cards Item:CardList)
+        {
+            CardInfoList.add(new CardInfo(Item.getRepresentativeID(),Item.getEntityCardID(),Item.getCardName(),Item.getCardImage()));
+        }
+        return CardInfoList;
+    }
     public Cards GetCardsByEntityCardID(String EntityCardID)
     {
         List<Cards> CardList=Cards.find(Cards.class, "ENTITY_CARD_ID=?", EntityCardID);
@@ -112,6 +132,27 @@ public class CardService {
             return CardList.get(0);
         }
         return null;
+    }
+    public Cards GetMainCards()
+    {
+        List<Cards> CardList=Cards.find(Cards.class, "IS_MAIN_CARD=?", "1");
+        if(CardList.size()>0)
+        {
+            return CardList.get(0);
+        }
+        return null;
+    }
+    public void SetMainCards(Cards Card)
+    {
+        List<Cards> CardList= GetAllCards();
+        Cards.executeQuery("UPDATE CARDS set IS_MAIN_CARD=0");
+        Card.setIsMainCard(true);
+        Card.save();
+    }
+    public void AddToFavorite(Cards Card)
+    {
+        Card.setIsFavorite(true);
+        Card.save();
     }
     public List<Cards> GetAllCards()
     {
