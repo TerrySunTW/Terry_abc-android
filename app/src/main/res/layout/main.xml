@@ -19,7 +19,7 @@
 	<ImageButton
 		android:id="@+id/ImageButtonMainCard"
 		android:layout_width="70sp"
-		android:layout_height="120sp"
+		android:layout_height="100sp"
 		android:layout_alignParentBottom="true"
 		android:layout_centerHorizontal="true"
 		android:src="@drawable/card1"

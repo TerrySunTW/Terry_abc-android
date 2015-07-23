@@ -1,6 +1,7 @@
 package com.abc.terry_sun.abc;
 
 import android.app.TabActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.abc.terry_sun.abc.Entities.Cards;
+import com.abc.terry_sun.abc.NFC.NfcStorage;
 import com.abc.terry_sun.abc.Service.CardService;
 import com.abc.terry_sun.abc.Service.ImageService;
 import com.abc.terry_sun.abc.Service.StorageService;
@@ -26,27 +28,41 @@ public class MainActivity extends TabActivity {
 	@InjectView(R.id.ImageButtonMainCard)
 	ImageButton ImageButtonMainCard;
 	static ImageButton MainCardImageButton;
+	static Context MainActivityContext;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		MainActivityContext=this;
 		setContentView(R.layout.main);
 		ButterKnife.inject(this);
 		MainCardImageButton=ImageButtonMainCard;
 
 		Cards MainCard= CardService.getInstance().GetMainCards();
-		ChangeMainCardImage(ImageService.GetBitmapFromImageName(MainCard.getCardImage()));
+		ChangeMainCardImage(ImageService.GetBitmapFromImageName(MainCard.getCardImage()), MainCard.getEntityCardID());
+		//default NFC Card ID
+		NfcStorage.SetAccount(this, MainCard.getEntityCardID());
 		setTabs();
 	}
 
-	public static void ChangeMainCardImage(Bitmap MainCardImage)
+	public static void ChangeMainCardImage(final Bitmap MainCardImage,final String EntityCardID)
 	{
 		MainCardImageButton.setImageBitmap(MainCardImage);
+		MainCardImageButton.setTag(EntityCardID);
+		MainCardImageButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				CardService.getInstance().ShowCardDetailDialog(EntityCardID, MainActivityContext);
+			}
+		});
 	}
 	private void setTabs() {
+
 		addTab("Cards", R.drawable.tab_home, TabGroup_Cards.class);
 		addTab("Bonus", R.drawable.tab_search, ActionsListActivity.class);
 		addTab("Fake", R.drawable.tab_search, CardDetailEmulateActivity.class);
         addTab("Link", R.drawable.tab_search, OptionsActivity.class);
-		addTab("R-Card", R.drawable.tab_search, SettingActivity.class);
+		addTab("R-Card", R.drawable.tab_search, ReadCardActivity.class);
+
+
 	}
 	
 	private void addTab(String labelId, int drawableId, Class<?> c)

@@ -2,6 +2,7 @@ package com.abc.terry_sun.abc;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
@@ -39,7 +40,7 @@ import butterknife.OnClick;
 /**
  * Created by terry_sun on 2015/6/2.
  */
-public class CardsActivity extends Activity {
+public class CardsActivity extends BasicActivity {
 
     @InjectView(R.id.gridView1)
     GridView gridView;
@@ -67,9 +68,12 @@ public class CardsActivity extends Activity {
     String SelectedGroupID;
     String SelectedRepresentativeID;
     String SelectedEntityCardID;
+
+    Context context;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context=this.getParent();
         InitialParameter();
         setContentView(R.layout.activity_cards);
         ButterKnife.inject(this);
@@ -150,7 +154,7 @@ public class CardsActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
                 SelectedEntityCardID =CardGalleryItemList.get(position).getItemID();
-                ShowCardDialog(SelectedEntityCardID);
+                CardService.getInstance().ShowCardDetailDialog(SelectedEntityCardID, context);
                 Log.i("Info", "SelectedEntityCardID" + SelectedEntityCardID);
             }
         });
@@ -168,56 +172,12 @@ public class CardsActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
                 SelectedEntityCardID =CardGalleryItemList.get(position).getItemID();
-                ShowCardDialog(SelectedEntityCardID);
+                CardService.getInstance().ShowCardDetailDialog(SelectedEntityCardID, context);
                 Log.i("Info", "SelectedEntityCardID" + SelectedEntityCardID);
             }
         });
     }
-    Dialog CardDetailDialog;
-    Cards SelectedCardInfo;
-    private void ShowCardDialog(String EntityCardID) {
-        SelectedCardInfo=CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
-        CardDetailDialog=new Dialog(this.getParent());
-        CardDetailDialog.setContentView(R.layout.dialog_card_info);
-        Window window = CardDetailDialog.getWindow();
-        window.setBackgroundDrawable(new ColorDrawable(0));
-        window.setLayout(ScreenService.GetScreenWidth(this.getParent()).x - 100, ScreenService.GetScreenWidth(this.getParent()).y - 300);
 
-
-        ImageView _ImageView=(ImageView)CardDetailDialog.findViewById(R.id.ImageView_ItemImage);
-        Bitmap Img = BitmapFactory.decodeFile(StorageService.GetImagePath(this.getParent(), SelectedCardInfo.getCardImage()));
-        _ImageView.setImageBitmap(Img);
-
-        TextView TextView_ItemName=(TextView)CardDetailDialog.findViewById(R.id.TextView_ItemName);
-        TextView_ItemName.setText(SelectedCardInfo.getCardName());
-
-        Button Button_Return = (Button)CardDetailDialog.findViewById(R.id.Button_Return);
-        Button_Return.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CardDetailDialog.dismiss();
-            }
-        });
-
-        Button Button_MainCard = (Button)CardDetailDialog.findViewById(R.id.Button_MainCard);
-        Button_MainCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CardService.getInstance().SetMainCards(SelectedCardInfo);
-                MainActivity.ChangeMainCardImage(ImageService.GetBitmapFromImageName(SelectedCardInfo.getCardImage()));
-            }
-        });
-
-        Button Button_Favorite = (Button)CardDetailDialog.findViewById(R.id.Button_Favorite);
-        Button_Favorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CardService.getInstance().AddToFavorite(SelectedCardInfo);
-            }
-        });
-        CardDetailDialog.show();
-
-    }
 
 
     @OnClick(R.id.ButtonCategory)

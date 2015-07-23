@@ -1,10 +1,24 @@
 package com.abc.terry_sun.abc.Service;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.ColorDrawable;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.abc.terry_sun.abc.Entities.Cards;
+import com.abc.terry_sun.abc.MainActivity;
 import com.abc.terry_sun.abc.Models.CardInfo;
 import com.abc.terry_sun.abc.Models.CategoryInfo;
 import com.abc.terry_sun.abc.Models.GroupInfo;
 import com.abc.terry_sun.abc.Models.RepresentativeInfo;
+import com.abc.terry_sun.abc.NFC.NfcStorage;
+import com.abc.terry_sun.abc.R;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 
@@ -157,5 +171,60 @@ public class CardService {
     public List<Cards> GetAllCards()
     {
         return Cards.listAll(Cards.class);
+    }
+    public void ShowCardDetailDialog(final String EntityCardID,final Context context)
+    {
+        final Dialog CardDetailDialog=new Dialog(context);
+        final Cards SelectedCardInfo=CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
+
+        CardDetailDialog.setContentView(R.layout.dialog_card_info);
+        Window window = CardDetailDialog.getWindow();
+        window.setBackgroundDrawable(new ColorDrawable(0));
+        window.setLayout(ScreenService.GetScreenWidth(context).x - 100, ScreenService.GetScreenWidth(context).y - 300);
+
+
+        ImageView _ImageView=(ImageView)CardDetailDialog.findViewById(R.id.ImageView_ItemImage);
+        Bitmap Img = BitmapFactory.decodeFile(StorageService.GetImagePath(context, SelectedCardInfo.getCardImage()));
+        _ImageView.setImageBitmap(Img);
+
+        TextView TextView_ItemName=(TextView)CardDetailDialog.findViewById(R.id.TextView_ItemName);
+        TextView_ItemName.setText(SelectedCardInfo.getCardName());
+
+
+
+        Button Button_MainCard = (Button)CardDetailDialog.findViewById(R.id.Button_MainCard);
+        Button_MainCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CardService.getInstance().SetMainCards(SelectedCardInfo);
+                MainActivity.ChangeMainCardImage(ImageService.GetBitmapFromImageName(SelectedCardInfo.getCardImage()), EntityCardID);
+            }
+        });
+
+        Button Button_Favorite = (Button)CardDetailDialog.findViewById(R.id.Button_Favorite);
+        Button_Favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CardService.getInstance().AddToFavorite(SelectedCardInfo);
+            }
+        });
+
+
+        Button Button_Return = (Button)CardDetailDialog.findViewById(R.id.Button_Return);
+        Button_Return.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CardDetailDialog.dismiss();
+            }
+        });
+
+        Button Button_Emulation = (Button)CardDetailDialog.findViewById(R.id.Button_Emulation);
+        Button_Emulation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NfcStorage.SetAccount(context,SelectedCardInfo.getEntityCardID());
+            }
+        });
+        CardDetailDialog.show();
     }
 }

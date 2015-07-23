@@ -3,78 +3,84 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
+
+    <ScrollView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/ImageView_ItemImage"
-            android:layout_width="300px"
-            android:layout_height="300px">
-        </ImageView>
-        <TableLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="false"
-            android:stretchColumns="*">
-            <TableRow>
-                <TextView
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/ImageView_ItemImage"
+                    android:layout_width="300px"
+                    android:layout_height="300px">
+                </ImageView>
+                <TableLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Name:" />
-                <TextView
-                    android:id="@+id/TextView_ItemName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="xxxxxxxxx"/>
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Info1:" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="xxxxxxx" />
-            </TableRow>
-        </TableLayout>
-    </LinearLayout>
-    <Button
-        android:id="@+id/Button_Favorite"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Favorite"
-        android:layout_gravity="center_horizontal" />
-    <Button
-        android:id="@+id/Button_MainCard"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Main Card"
-        android:layout_gravity="center_horizontal" />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Media"
-        android:layout_gravity="center_horizontal" />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Bonus"
-        android:layout_gravity="center_horizontal" />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Emu"
-        android:layout_gravity="center_horizontal" />
-    <Button
-        android:id="@+id/Button_Return"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Return"
-        android:layout_gravity="center_horizontal" />
+                    android:clickable="false"
+                    android:stretchColumns="*">
+                    <TableRow>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="Name:" />
+                        <TextView
+                            android:id="@+id/TextView_ItemName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="xxxxxxxxx"/>
+                    </TableRow>
+                    <TableRow>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="Info1:" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="xxxxxxx" />
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+            <Button
+                android:id="@+id/Button_Favorite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Favorite"
+                android:layout_gravity="center_horizontal" />
+            <Button
+                android:id="@+id/Button_MainCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Main Card"
+                android:layout_gravity="center_horizontal" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bonus"
+                android:layout_gravity="center_horizontal" />
+            <Button
+                android:id="@+id/Button_Emulation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Emu"
+                android:layout_gravity="center_horizontal" />
+            <Button
+                android:id="@+id/Button_Return"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Return"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
