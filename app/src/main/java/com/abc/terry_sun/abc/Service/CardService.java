@@ -163,10 +163,11 @@ public class CardService {
         Card.setIsMainCard(true);
         Card.save();
     }
-    public void AddToFavorite(Cards Card)
+    public void ToggleIsCardFavorite(Cards Card)
     {
-        Card.setIsFavorite(true);
+        Card.setIsFavorite(!Card.getIsFavorite());
         Card.save();
+        ServerCommunicationService.getInstance().ChangeFavoriteCard(Card.getEntityCardID());
     }
     public List<Cards> GetAllCards()
     {
@@ -192,7 +193,7 @@ public class CardService {
 
 
 
-        Button Button_MainCard = (Button)CardDetailDialog.findViewById(R.id.Button_MainCard);
+        final Button Button_MainCard = (Button)CardDetailDialog.findViewById(R.id.Button_MainCard);
         Button_MainCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -200,14 +201,29 @@ public class CardService {
                 MainActivity.ChangeMainCardImage(ImageService.GetBitmapFromImageName(SelectedCardInfo.getCardImage()), EntityCardID);
             }
         });
+        final Button Button_Favorite = (Button)CardDetailDialog.findViewById(R.id.Button_Favorite);
+        if(SelectedCardInfo.getIsFavorite())
+        {
+            Button_Favorite.setText("Remove from favorites");
+        }
 
-        Button Button_Favorite = (Button)CardDetailDialog.findViewById(R.id.Button_Favorite);
         Button_Favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CardService.getInstance().AddToFavorite(SelectedCardInfo);
+
+                CardService.getInstance().ToggleIsCardFavorite(SelectedCardInfo);
+                if(SelectedCardInfo.getIsFavorite())
+                {
+                    Button_Favorite.setText("Remove from favorites");
+                }
+                else
+                {
+                    Button_Favorite.setText("Favorites");
+                }
             }
         });
+
+
 
 
         Button Button_Return = (Button)CardDetailDialog.findViewById(R.id.Button_Return);
