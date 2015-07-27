@@ -7,7 +7,7 @@
     <uses-feature android:name="android.hardware.nfc" android:required="true" />
     <uses-feature android:name="android.hardware.nfc.hce" android:required="true" />
     <application
-        android:name="com.orm.SugarApp"
+        android:name="com.abc.terry_sun.abc.CustomClass.Application.ABCApplication"
         android:allowBackup="true"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar">

@@ -9,5 +9,4 @@ public class HttpURL_Provider {
     public static String FacebookLogin= ServerURL + "WebService/FacebookLogin";
     public static String GetUserCard= ServerURL + "WebService/GetUserCard";
     public static String ToggleFavoriteSetting= ServerURL + "WebService/SetFavoriteCard";
-
 }
