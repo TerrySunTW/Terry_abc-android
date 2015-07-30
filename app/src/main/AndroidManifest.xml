@@ -43,6 +43,12 @@
         <activity android:name=".CardDetailBonusActivity" />
         <activity android:name=".CardDetailSettingsActivity" />
         <activity android:name=".ReadCardActivity" />
+        <activity android:name=".TabGroup_R_Card" />
+        <activity android:name=".R_CardHomeActivity" />
+        <activity android:name=".R_CardNewCardActivity" />
+        <activity android:name=".R_CardFriendCardActivity" />
+
+
 
         <activity android:name="com.facebook.FacebookActivity"
             android:configChanges=
