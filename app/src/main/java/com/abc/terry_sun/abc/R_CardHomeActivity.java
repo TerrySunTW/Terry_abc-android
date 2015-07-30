@@ -24,10 +24,7 @@ import butterknife.OnClick;
  */
 public class R_CardHomeActivity extends BasicActivity {
     String TAG="R_CardHomeActivity";
-    @InjectView(R.id.ButtonNewCard)
-    Button ButtonNewCard;
-    @InjectView(R.id.ButtonFriendCard)
-    Button ButtonFriendCard;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
