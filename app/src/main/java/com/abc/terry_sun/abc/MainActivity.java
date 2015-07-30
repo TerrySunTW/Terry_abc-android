@@ -11,6 +11,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TabHost;
+import android.widget.TabWidget;
 import android.widget.TextView;
 
 import com.abc.terry_sun.abc.Entities.Cards;
@@ -27,6 +28,7 @@ public class MainActivity extends TabActivity {
 	/** Called when the activity is first created. */
 	@InjectView(R.id.ImageButtonMainCard)
 	ImageButton ImageButtonMainCard;
+	TabHost tabHost;
 	static ImageButton MainCardImageButton;
 	static Context MainActivityContext;
 	public void onCreate(Bundle savedInstanceState) {
@@ -61,13 +63,32 @@ public class MainActivity extends TabActivity {
 		addTab("Fake", R.drawable.tab_search, CardDetailEmulateActivity.class);
         addTab("Link", R.drawable.tab_search, OptionsActivity.class);
 		addTab("R-Card", R.drawable.tab_search, TabGroup_R_Card.class);
-
+		TabWidgetSetting();
 
 	}
-	
+	private void TabWidgetSetting()
+	{
+		TabWidget tabWidget=this.getTabWidget();
+
+
+
+
+		//SystemUnit
+		final int SystemUnitIndex=4;
+		tabWidget.getChildTabViewAt(SystemUnitIndex).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				System.gc();
+				if (SystemUnitIndex == tabHost.getCurrentTab()) {
+					TabGroup_R_Card.CleanActiveAndGoFirst();
+				}
+				tabHost.setCurrentTab(SystemUnitIndex);
+			}
+		});
+	}
 	private void addTab(String labelId, int drawableId, Class<?> c)
 	{
-		TabHost tabHost = getTabHost();
+		tabHost = getTabHost();
 		Intent intent = new Intent(this, c);
 		TabHost.TabSpec spec = tabHost.newTabSpec("tab" + labelId);	
 		
