@@ -14,10 +14,10 @@ import java.util.ArrayList;
 /**
  * Created by terry_sun on 2015/6/2.
  */
-public class TabGroup_Cards  extends BaseTabGroup {
+public class TabGroup_R_Card  extends BaseTabGroup {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FirstActivity=CardsActivity.class;
+        FirstActivity=R_CardHomeActivity.class;
     }
 }
