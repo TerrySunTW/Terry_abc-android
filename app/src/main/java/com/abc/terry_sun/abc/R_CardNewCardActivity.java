@@ -14,6 +14,7 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.abc.terry_sun.abc.Models.GalleryItem;
+import com.abc.terry_sun.abc.Service.ServerCommunicationService;
 import com.facebook.appevents.AppEventsLogger;
 
 import butterknife.ButterKnife;
@@ -48,9 +49,11 @@ public class R_CardNewCardActivity extends BasicActivity {
 
             }
 
-            public boolean onCodeScanned(final String data) {
+            public boolean onCodeScanned(final String EntityCardID) {
                 scanner.stopScanner();
-                Log.i(TAG, "QRdata=" + data);
+                Log.i(TAG, "QRdata=" + EntityCardID);
+                ServerCommunicationService.getInstance().AddNewCard(EntityCardID);
+                ServerCommunicationService.getInstance().GetUserCardInfo();
                 return true;
             }
         });
@@ -60,6 +63,7 @@ public class R_CardNewCardActivity extends BasicActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        scanner.stopScanner();
     }
     @Override
     protected void onResume() {

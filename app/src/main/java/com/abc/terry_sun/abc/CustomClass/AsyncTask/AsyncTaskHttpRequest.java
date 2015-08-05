@@ -10,13 +10,19 @@ import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.abc.terry_sun.abc.MainActivity;
+import com.abc.terry_sun.abc.Service.ProcessControlService;
+
 /**
  * Created by terry_sun on 2015/6/26.
  */
 public class AsyncTaskHttpRequest  extends AsyncTask<Void, Integer, Integer> {
     AsyncTaskProcessingInterface _AsyncTaskProcessingInterface;
-    public AsyncTaskHttpRequest(AsyncTaskProcessingInterface asyncTaskProcessingInterfac){
+    Context context;
+    public AsyncTaskHttpRequest(Context context,AsyncTaskProcessingInterface asyncTaskProcessingInterfac){
         this._AsyncTaskProcessingInterface=asyncTaskProcessingInterfac;
+        this.context=context;
+        ProcessControlService.ShowProgressDialog(context,"作業處理中...","請稍待...");
     }
     @Override
     protected void onPreExecute()
@@ -31,7 +37,7 @@ public class AsyncTaskHttpRequest  extends AsyncTask<Void, Integer, Integer> {
     }
     protected void onPostExecute(Integer result) {
         //Log.i("Event", "AsyncTaskPurchaseStock.onPostExecute.CheckResulteIsPass="+String.valueOf(CheckResulteIsPass));
-
+        ProcessControlService.CloseProgressDialog();
     }
 
 }

@@ -14,6 +14,7 @@ import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
+import com.abc.terry_sun.abc.CustomClass.Application.ABCApplication;
 import com.abc.terry_sun.abc.Entities.Cards;
 import com.abc.terry_sun.abc.NFC.NfcStorage;
 import com.abc.terry_sun.abc.Service.CardService;
@@ -39,14 +40,21 @@ public class MainActivity extends TabActivity {
 		MainCardImageButton=ImageButtonMainCard;
 
 		Cards MainCard= CardService.getInstance().GetMainCards();
-		ChangeMainCardImage(ImageService.GetBitmapFromImageName(MainCard.getCardImage()), MainCard.getEntityCardID());
-		//default NFC Card ID
-		NfcStorage.SetAccount(this, MainCard.getEntityCardID());
+		if(MainCard!=null) {
+			ChangeMainCardImage(ImageService.GetBitmapFromImageName(MainCard.getCardImage()), MainCard.getEntityCardID());
+
+		}
+
 		setTabs();
 	}
-
+	public static Context GetMainActivityContext()
+	{
+		return MainActivityContext;
+	}
 	public static void ChangeMainCardImage(final Bitmap MainCardImage,final String EntityCardID)
 	{
+		//default NFC Card ID
+		NfcStorage.SetAccount(ABCApplication.getSugarContext(), EntityCardID);
 		MainCardImageButton.setImageBitmap(MainCardImage);
 		MainCardImageButton.setTag(EntityCardID);
 		MainCardImageButton.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +69,7 @@ public class MainActivity extends TabActivity {
 		addTab("Cards", R.drawable.tab_home, TabGroup_Cards.class);
 		addTab("Bonus", R.drawable.tab_search, ActionsListActivity.class);
 		addTab("Fake", R.drawable.tab_search, CardDetailEmulateActivity.class);
-        addTab("Link", R.drawable.tab_search, OptionsActivity.class);
+        addTab("Link", R.drawable.tab_search, ReadCardActivity.class);
 		addTab("R-Card", R.drawable.tab_search, TabGroup_R_Card.class);
 		TabWidgetSetting();
 
@@ -73,7 +81,19 @@ public class MainActivity extends TabActivity {
 
 
 
-		//SystemUnit
+
+		final int CardsUnitIndex=1;
+		tabWidget.getChildTabViewAt(CardsUnitIndex).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				System.gc();
+				if (CardsUnitIndex == tabHost.getCurrentTab()) {
+					TabGroup_Cards.CleanActiveAndGoFirst();
+				}
+				tabHost.setCurrentTab(CardsUnitIndex);
+			}
+		});
+
 		final int SystemUnitIndex=4;
 		tabWidget.getChildTabViewAt(SystemUnitIndex).setOnClickListener(new View.OnClickListener() {
 			@Override

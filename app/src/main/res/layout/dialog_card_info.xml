@@ -53,6 +53,12 @@
                 </TableLayout>
             </LinearLayout>
             <Button
+                android:id="@+id/Button_Media"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Media"
+                android:layout_gravity="center_horizontal" />
+            <Button
                 android:id="@+id/Button_Favorite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,7 +68,7 @@
                 android:id="@+id/Button_MainCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Main Card"
+                android:text="Change show card"
                 android:layout_gravity="center_horizontal" />
             <Button
                 android:layout_width="match_parent"

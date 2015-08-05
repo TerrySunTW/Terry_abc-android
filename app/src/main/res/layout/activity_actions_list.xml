@@ -2,24 +2,40 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-    <!-- Third header line and column headings -->
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#006"
-        >
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Actions"
-            android:gravity="center_horizontal" />
+        android:layout_width="match_parent"
+        android:layout_height="80dip"
+        android:gravity="center_vertical"
+        android:background="#323331"
+        android:id="@+id/LinearLayout_Title">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            <Button
+                android:id="@+id/ButtonCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Category>>"/>
+            <Button
+                android:id="@+id/ButtonGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Group>>"/>
+            <Button
+                android:id="@+id/ButtonRepresentative"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Member>>"/>
+        </LinearLayout>
     </LinearLayout>
     <ListView android:id="@+id/listview_activity_list"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         />
 </LinearLayout>

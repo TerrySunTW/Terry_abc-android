@@ -3,6 +3,7 @@ package com.abc.terry_sun.abc.Service;
 import android.content.Context;
 import android.os.Environment;
 
+import com.abc.terry_sun.abc.CustomClass.Application.ABCApplication;
 import com.abc.terry_sun.abc.R;
 
 import java.io.File;
@@ -13,29 +14,30 @@ import java.security.PublicKey;
  */
 public class StorageService {
     private static String FolderName="ABC/";
-    public static String GetImagePath(Context context,String ImageName)
+    public static String GetImagePath(String ImageName)
     {
-        return GetAppStoragePath(context)+ File.separator+ImageService.GetImageFileName(ImageName);
+        return GetAppStoragePath()+ File.separator+ImageService.GetImageFileName(ImageName);
     }
-    public static String GetAppStoragePath(Context context)
+    public static String GetAppStoragePath()
     {
+        String AppName=ABCApplication.getSugarContext().getString(R.string.app_name);
         if (android.os.Environment.getExternalStorageState().equals(
                 android.os.Environment.MEDIA_MOUNTED)) {
 
             File podcastFolder = new File(Environment.getExternalStorageDirectory() + File.separator
-                    + context.getString(R.string.app_name));
+                    + AppName);
             return podcastFolder.getAbsolutePath();
         } else {
             /* save the folder in internal memory of phone */
 
-            File podcastFolder = new File("/data/data/" + context.getPackageName()
-                    + File.separator + context.getString(R.string.app_name));
+            File podcastFolder = new File("/data/data/" + ABCApplication.getSugarContext().getPackageName()
+                    + AppName);
             return podcastFolder.getAbsolutePath();
         }
     }
-    public static void GetAppStorageFolderInitial(Context context)
+    public static void GetAppStorageFolderInitial()
     {
-        File f = new File(GetAppStoragePath(context));
+        File f = new File(GetAppStoragePath());
         if(!f.exists()) {
             f.mkdirs();
         }

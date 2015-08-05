@@ -11,6 +11,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.gson.Gson;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -62,6 +63,18 @@ public class OkHttpUtil {
         if (response.isSuccessful()) {
             String responseUrl = response.body().string();
             return responseUrl;
+        } else {
+            throw new IOException("Unexpected code " + response);
+        }
+    }
+    public static boolean getBooleanFromServer(String url) throws IOException{
+        Request request = new Request.Builder().url(url).build();
+        Response response = execute(request);
+        if (response.isSuccessful()) {
+            String responseUrl = response.body().string();
+            Gson gson = new Gson();
+            Boolean Result=gson.fromJson(responseUrl, boolean.class);
+            return Result;
         } else {
             throw new IOException("Unexpected code " + response);
         }

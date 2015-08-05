@@ -2,9 +2,11 @@ package com.abc.terry_sun.abc.Service;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -154,6 +156,11 @@ public class CardService {
         {
             return CardList.get(0);
         }
+        CardList=Cards.listAll(Cards.class);
+        if(CardList.size()>0)
+        {
+            Cards.listAll(Cards.class).get(0);
+        }
         return null;
     }
     public void SetMainCards(Cards Card)
@@ -185,13 +192,22 @@ public class CardService {
 
 
         ImageView _ImageView=(ImageView)CardDetailDialog.findViewById(R.id.ImageView_ItemImage);
-        Bitmap Img = BitmapFactory.decodeFile(StorageService.GetImagePath(context, SelectedCardInfo.getCardImage()));
+        Bitmap Img = BitmapFactory.decodeFile(StorageService.GetImagePath(SelectedCardInfo.getCardImage()));
         _ImageView.setImageBitmap(Img);
 
         TextView TextView_ItemName=(TextView)CardDetailDialog.findViewById(R.id.TextView_ItemName);
         TextView_ItemName.setText(SelectedCardInfo.getCardName());
 
-
+        Button Button_RelationURL = (Button)CardDetailDialog.findViewById(R.id.Button_Media);
+        Button_RelationURL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CardService.getInstance().SetMainCards(SelectedCardInfo);
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(SelectedCardInfo.getRelationLink()));
+                context.startActivity(i);
+            }
+        });
 
         final Button Button_MainCard = (Button)CardDetailDialog.findViewById(R.id.Button_MainCard);
         Button_MainCard.setOnClickListener(new View.OnClickListener() {

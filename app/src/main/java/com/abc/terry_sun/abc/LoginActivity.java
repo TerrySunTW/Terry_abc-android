@@ -19,6 +19,7 @@ import com.abc.terry_sun.abc.Entities.Cards;
 import com.abc.terry_sun.abc.Provider.HttpURL_Provider;
 import com.abc.terry_sun.abc.Provider.VariableProvider;
 import com.abc.terry_sun.abc.Service.ImageService;
+import com.abc.terry_sun.abc.Service.ServerCommunicationService;
 import com.abc.terry_sun.abc.Service.StorageService;
 import com.abc.terry_sun.abc.Service.StringService;
 import com.abc.terry_sun.abc.Utilits.InternetUtil;
@@ -131,78 +132,14 @@ public class LoginActivity extends Activity {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         GetFacebookUserData(object);
-                        AsyncTaskHttpRequest _AsyncTaskHttpRequest=new AsyncTaskHttpRequest(new AsyncTaskProcessingInterface() {
+                        AsyncTaskHttpRequest _AsyncTaskHttpRequest=new AsyncTaskHttpRequest(_context,new AsyncTaskProcessingInterface() {
                             @Override
                             public void DoProcessing() {
                                 try {
                                     //login
                                     OkHttpUtil.getStringFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.FacebookLogin, LoginParams));
                                     //get user card info
-                                    List<BasicNameValuePair> UrlParams= new LinkedList<BasicNameValuePair>();
-                                    UrlParams.add(new BasicNameValuePair("UserFacebookID",VariableProvider.getInstance().getFacebookID()));
-                                    Gson gson = new Gson();
-                                    String UserCardsInJson=OkHttpUtil.getStringFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.GetUserCard, UrlParams));
-                                    Log.i("info","JsonArray.UserCardsInJson:"+ UserCardsInJson);
-                                    Cards[] OnlineCardsArray = gson.fromJson(UserCardsInJson, Cards[].class);
-                                    StorageService.GetAppStorageFolderInitial(_context);
-                                    Log.i("info", "OnlineCardsArray:"+OnlineCardsArray.length);
-                                    String Result="";
-                                    for (Cards Item:OnlineCardsArray)
-                                    {
-                                        List<Cards> CardList = Cards.find(Cards.class, "ENTITY_CARD_ID = ?", Item.getEntityCardID());
-                                        if(CardList.size()==0)
-                                        {
-                                            //create
-                                            Log.i("info","StorageService.GetImagePath(_context,Item.getCardImage()):"+ StorageService.GetImagePath(_context,Item.getCardImage()));
-                                            Item.setCreatedTimeFormated(StringService.GetJsonDate(Item.getCreatedTime()));
-                                            Item.save();
-                                            Result=InternetUtil.DownloadFile(HttpURL_Provider.ImageServerLocation+ImageService.GetImageFileName(Item.getCategoryImage()), StorageService.GetImagePath(_context, Item.getCategoryImage()));
-                                            Result+=InternetUtil.DownloadFile(HttpURL_Provider.ImageServerLocation+ImageService.GetImageFileName(Item.getGroupImage()), StorageService.GetImagePath(_context,Item.getGroupImage()));
-                                            Result+=InternetUtil.DownloadFile(HttpURL_Provider.ImageServerLocation+ImageService.GetImageFileName(Item.getCardImage()), StorageService.GetImagePath(_context,Item.getCardImage()));
-                                            Log.i("info","StorageService.Result:"+ Result);
-                                        }
-                                        else
-                                        {
-                                            //update
-                                            Cards _Cards=CardList.get(0);
-                                            if(!_Cards.getCategoryVersion().equals(Item.getCategoryVersion()))
-                                            {
-                                                //update to
-                                                Result=InternetUtil.DownloadFile(HttpURL_Provider.ImageServerLocation+ImageService.GetImageFileName(Item.getCategoryImage()), StorageService.GetImagePath(_context, ImageService.GetImageFileName(Item.getCategoryImage())));
-                                                _Cards.setCategoryName(Item.getCategoryName());
-                                                _Cards.setCategoryImage(Item.getCategoryImage());
-                                                _Cards.setCategoryVersion(Item.getCategoryVersion());
-                                            }
-                                            if(!_Cards.getGroupVersion().equals(Item.getGroupVersion())) {
-                                                //update to
-                                                Result=InternetUtil.DownloadFile(HttpURL_Provider.ImageServerLocation+ImageService.GetImageFileName(Item.getGroupImage()), StorageService.GetImagePath(_context, ImageService.GetImageFileName(Item.getGroupImage())));
-                                                _Cards.setGroupName(Item.getGroupName());
-                                                _Cards.setGroupImage(Item.getGroupImage());
-                                                _Cards.setGroupVersion(Item.getGroupVersion());
-                                            }
-                                            if(!_Cards.getRepresentativeVersion().equals(Item.getRepresentativeVersion()))
-                                            {
-                                                //update to
-                                                Result=InternetUtil.DownloadFile(HttpURL_Provider.ImageServerLocation+ImageService.GetImageFileName(Item.getRepresentativeImage()), StorageService.GetImagePath(_context, ImageService.GetImageFileName(Item.getRepresentativeImage())));
-                                                _Cards.setRepresentativeName(Item.getRepresentativeName());
-                                                _Cards.setRepresentativeImage(Item.getRepresentativeImage());
-                                                _Cards.setRepresentativeVersion(Item.getRepresentativeVersion());
-                                            }
-                                            if(!_Cards.getCardVersion().equals(Item.getCardVersion()))
-                                            {
-                                                //update to
-                                                Result=InternetUtil.DownloadFile(HttpURL_Provider.ImageServerLocation+ImageService.GetImageFileName(Item.getCardImage()), StorageService.GetImagePath(_context, ImageService.GetImageFileName(Item.getCardImage())));
-                                                _Cards.setCardName(Item.getCardName());
-                                                _Cards.setCardImage(Item.getCardImage());
-                                                _Cards.setCardDescription(Item.getCardDescription());
-                                                _Cards.setCardVersion(Item.getCardVersion());
-                                            }
-                                            _Cards.save();
-                                        }
-                                    }
-
-
-
+                                    ServerCommunicationService.getInstance().GetUserCardInfo();
                                 } catch (Exception e) {
                                     if (e!=null) {
                                         Log.e("Error", e.getMessage());

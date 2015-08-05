@@ -280,5 +280,4 @@ public class CardsActivity extends BasicActivity {
         RepresentativeGalleryItemList=null;
         ButtonRepresentative.setText("Member>>");
     }
-
 }

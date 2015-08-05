@@ -5,8 +5,9 @@ package com.abc.terry_sun.abc.Provider;
  */
 public class HttpURL_Provider {
     public static String ServerURL= "http://10.9.112.20:777/";
-    public static String ImageServerLocation= ServerURL + "Cards/";
-    public static String FacebookLogin= ServerURL + "WebService/FacebookLogin";
-    public static String GetUserCard= ServerURL + "WebService/GetUserCard";
-    public static String ToggleFavoriteSetting= ServerURL + "WebService/SetFavoriteCard";
+    public static final String ImageServerLocation= ServerURL + "Cards/";
+    public static final String FacebookLogin= ServerURL + "WebService/FacebookLogin";
+    public static final String GetUserCard= ServerURL + "WebService/GetUserCard";
+    public static final String ToggleFavoriteSetting= ServerURL + "WebService/SetFavoriteCard";
+    public static final String AddNewCard= ServerURL + "WebService/UserAddNewCard";
 }

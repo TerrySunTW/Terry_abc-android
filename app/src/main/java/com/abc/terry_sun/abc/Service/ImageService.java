@@ -16,6 +16,6 @@ public class ImageService {
     }
     public static Bitmap GetBitmapFromImageName(String ImageName)
     {
-        return BitmapFactory.decodeFile(StorageService.GetImagePath(SugarApp.getSugarContext(), ImageName));
+        return BitmapFactory.decodeFile(StorageService.GetImagePath(ImageName));
     }
 }
