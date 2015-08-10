@@ -149,6 +149,15 @@ public class CardService {
         }
         return null;
     }
+    public Cards GetCardsByCardID(String CardID)
+    {
+        List<Cards> CardList=Cards.find(Cards.class, "CARD_ID=?", CardID);
+        if(CardList.size()>0)
+        {
+            return CardList.get(0);
+        }
+        return null;
+    }
     public Cards GetMainCards()
     {
         List<Cards> CardList=Cards.find(Cards.class, "IS_MAIN_CARD=?", "1");

@@ -57,6 +57,26 @@ public class OkHttpUtil {
             }
         });
     }
+    public static int getIntFromServer(String url) throws IOException{
+        int Result=0;
+        Request request = new Request.Builder().url(url).build();
+        Response response = execute(request);
+        if (response.isSuccessful()) {
+            String responseUrl = response.body().string();
+
+            try {
+                Result=Integer.parseInt(responseUrl);
+            }
+            catch (Exception ex)
+            {
+                ex.printStackTrace();
+            }
+
+        } else {
+            throw new IOException("Unexpected code " + response);
+        }
+        return Result;
+    }
     public static String getStringFromServer(String url) throws IOException{
         Request request = new Request.Builder().url(url).build();
         Response response = execute(request);

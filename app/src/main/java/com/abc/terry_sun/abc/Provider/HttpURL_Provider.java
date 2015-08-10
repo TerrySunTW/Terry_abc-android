@@ -10,4 +10,5 @@ public class HttpURL_Provider {
     public static final String GetUserCard= ServerURL + "WebService/GetUserCard";
     public static final String ToggleFavoriteSetting= ServerURL + "WebService/SetFavoriteCard";
     public static final String AddNewCard= ServerURL + "WebService/UserAddNewCard";
+    public static final String GetUserCardIDByEntityID= ServerURL + "WebService/GetUserCardIDByEntityID";
 }

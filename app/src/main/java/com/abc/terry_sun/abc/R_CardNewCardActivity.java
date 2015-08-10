@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskHttpRequest;
 import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskProcessingInterface;
+import com.abc.terry_sun.abc.Entities.Cards;
 import com.abc.terry_sun.abc.Models.GalleryItem;
 import com.abc.terry_sun.abc.Service.CardService;
 import com.abc.terry_sun.abc.Service.ProcessControlService;
@@ -37,6 +38,7 @@ public class R_CardNewCardActivity extends BasicActivity {
     String TAG="R_CardNewCardActivity";
     Handler messageHandler;
     Thread ProcessThread;
+    int GotCardID=0;
     static String LastReadEntityID="";
     @InjectView(R.id.scanner)
     ScannerView scanner;
@@ -61,23 +63,43 @@ public class R_CardNewCardActivity extends BasicActivity {
             public boolean onCodeScanned(final String EntityCardID) {
                 //scanner.stopScanner();
                 Log.i(TAG, "QRdata=" + EntityCardID);
-                if(!EntityCardID.equals(LastReadEntityID)) {
-                    Log.i(TAG, "InProcessing");
-                    LastReadEntityID = EntityCardID;
-                    if (ProcessThread == null) {
-                        ProcessControlService.ShowProgressDialog(MainActivity.GetMainActivityContext(), "取得資料處理中...", "");
-                        ProcessThread = new Thread(new Runnable() {
-                            public void run() {
-                                ServerCommunicationService.getInstance().AddNewCard(EntityCardID);
-                                ServerCommunicationService.getInstance().GetUserCardInfo();
-                                Message msg = new Message();
-                                msg.what = 1;
-                                messageHandler.sendMessage(msg);
-                            }
-                        });
-                        ProcessThread.start();
-                    }
+                scanner.stopScanner();
+                //same card with previous
+                if (EntityCardID.equals(LastReadEntityID)) {
+                    return true;
                 }
+
+                //local card
+                Cards ScannedCard = CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
+                if (ScannedCard != null) {
+                    CardService.getInstance().CloseCardDetailDialog();
+                    CardService.getInstance().ShowCardDetailDialog(ScannedCard.getEntityCardID(), MainActivity.GetMainActivityContext());
+                    return true;
+                }
+
+                Log.i(TAG, "InProcessing");
+                LastReadEntityID = EntityCardID;
+                if (ProcessThread == null) {
+                    ProcessControlService.ShowProgressDialog(MainActivity.GetMainActivityContext(), "取得資料處理中...", "");
+                    ProcessThread = new Thread(new Runnable() {
+                        public void run() {
+                            Message msg = new Message();
+
+                            //add new card
+                            GotCardID = ServerCommunicationService.getInstance().AddNewCard(EntityCardID);
+                            if (GotCardID>0) {
+                                ServerCommunicationService.getInstance().GetUserCardInfo();
+
+                                msg.what = 1;
+                            } else {
+                                msg.what = 99;
+                            }
+                            messageHandler.sendMessage(msg);
+                        }
+                    });
+                    ProcessThread.start();
+                }
+
                 return true;
             }
         });
@@ -100,8 +122,14 @@ public class R_CardNewCardActivity extends BasicActivity {
             public void handleMessage(Message msg) {
                 switch(msg.what){
                     case 1:
+
+                        String NewEntityID=CardService.getInstance().GetCardsByCardID(String.valueOf(GotCardID)).getEntityCardID();
                         CardService.getInstance().CloseCardDetailDialog();
-                        CardService.getInstance().ShowCardDetailDialog(LastReadEntityID, MainActivity.GetMainActivityContext());
+                        CardService.getInstance().ShowCardDetailDialog(NewEntityID, MainActivity.GetMainActivityContext());
+                        ProcessThread.interrupt();
+                        ProcessThread=null;
+                        break;
+                    case 99:
                         ProcessThread.interrupt();
                         ProcessThread=null;
                         break;

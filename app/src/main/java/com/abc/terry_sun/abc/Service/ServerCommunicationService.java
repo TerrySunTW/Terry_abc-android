@@ -55,23 +55,39 @@ public class ServerCommunicationService {
         _AsyncTaskHttpRequest.execute();
     }
 
-    public void AddNewCard(final String EntityCardID)
+    public int AddNewCard(final String EntityCardID)
     {
+        int result=0;//0:fail >0:CardID:
         try {
             List<BasicNameValuePair> UrlParams = new LinkedList<BasicNameValuePair>();
             UrlParams.add(new BasicNameValuePair("UserFacebookID", VariableProvider.getInstance().getFacebookID()));
             UrlParams.add(new BasicNameValuePair("EntityCardID", EntityCardID));
-            if(OkHttpUtil.getBooleanFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.AddNewCard, UrlParams)))
+            result=OkHttpUtil.getIntFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.AddNewCard, UrlParams));
+            if (result>0)
             {
                 ServerCommunicationService.getInstance().GetUserCardInfo();
-
             }
-
         }
         catch (Exception ex)
         {
             Log.e(TAG,ex.getMessage());
         }
+        return result;
+    }
+    public String GetCardByEntityID(final String EntityCardID)
+    {
+        String CardID="";
+        try {
+            List<BasicNameValuePair> UrlParams = new LinkedList<BasicNameValuePair>();
+            UrlParams.add(new BasicNameValuePair("UserFacebookID", VariableProvider.getInstance().getFacebookID()));
+            UrlParams.add(new BasicNameValuePair("EntityCardID", EntityCardID));
+            CardID=OkHttpUtil.getStringFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.GetUserCardIDByEntityID, UrlParams));
+        }
+        catch (Exception ex)
+        {
+            Log.e(TAG,ex.getMessage());
+        }
+        return CardID;
     }
 
     public void  GetUserCardInfo() {
