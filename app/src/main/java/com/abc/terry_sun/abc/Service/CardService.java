@@ -180,9 +180,11 @@ public class CardService {
     {
         return Cards.listAll(Cards.class);
     }
+
+    static Dialog CardDetailDialog;
     public void ShowCardDetailDialog(final String EntityCardID,final Context context)
     {
-        final Dialog CardDetailDialog=new Dialog(context);
+        CardDetailDialog=new Dialog(context);
         final Cards SelectedCardInfo=CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
 
         CardDetailDialog.setContentView(R.layout.dialog_card_info);
@@ -258,5 +260,13 @@ public class CardService {
             }
         });
         CardDetailDialog.show();
+    }
+    public void CloseCardDetailDialog()
+    {
+        if(CardDetailDialog!=null)
+        {
+            CardDetailDialog.dismiss();
+            CardDetailDialog=null;
+        }
     }
 }

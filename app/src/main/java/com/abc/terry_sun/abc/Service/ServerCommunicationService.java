@@ -57,32 +57,24 @@ public class ServerCommunicationService {
 
     public void AddNewCard(final String EntityCardID)
     {
-        AsyncTaskHttpRequest _AsyncTaskHttpRequest = new AsyncTaskHttpRequest(
-                MainActivity.GetMainActivityContext(),
-                new AsyncTaskProcessingInterface() {
-                    @Override
-                    public void DoProcessing() {
-                        try {
-                            List<BasicNameValuePair> UrlParams = new LinkedList<BasicNameValuePair>();
-                            UrlParams.add(new BasicNameValuePair("UserFacebookID", VariableProvider.getInstance().getFacebookID()));
-                            UrlParams.add(new BasicNameValuePair("EntityCardID", EntityCardID));
-                            if(OkHttpUtil.getBooleanFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.AddNewCard, UrlParams)))
-                            {
-                                ServerCommunicationService.getInstance().GetUserCardInfo();
+        try {
+            List<BasicNameValuePair> UrlParams = new LinkedList<BasicNameValuePair>();
+            UrlParams.add(new BasicNameValuePair("UserFacebookID", VariableProvider.getInstance().getFacebookID()));
+            UrlParams.add(new BasicNameValuePair("EntityCardID", EntityCardID));
+            if(OkHttpUtil.getBooleanFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.AddNewCard, UrlParams)))
+            {
+                ServerCommunicationService.getInstance().GetUserCardInfo();
 
-                            }
+            }
 
-                        }
-                        catch (Exception ex)
-                        {
-                            Log.e(TAG,ex.getMessage());
-                        }
-                    }
-                });
-        _AsyncTaskHttpRequest.execute();
+        }
+        catch (Exception ex)
+        {
+            Log.e(TAG,ex.getMessage());
+        }
     }
 
-    public void GetUserCardInfo() {
+    public void  GetUserCardInfo() {
         List<BasicNameValuePair> UrlParams= new LinkedList<BasicNameValuePair>();
         UrlParams.add(new BasicNameValuePair("UserFacebookID",VariableProvider.getInstance().getFacebookID()));
         Gson gson = new Gson();
