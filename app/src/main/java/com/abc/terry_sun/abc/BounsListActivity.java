@@ -36,9 +36,7 @@ public class BounsListActivity extends Activity {
 
 	private void UI_Setting() {
 		List<ListItem_Actions> data=new ArrayList<ListItem_Actions>();
-		data.add(new ListItem_Actions("10% off Baseball Game ticket(Y/X)",""));
-		data.add(new ListItem_Actions("簽名球一顆(95/100)",""));
-		listview_activity_list.setAdapter(new Adapter_ActionList(this, data));
+		//listview_activity_list.setAdapter(new Adapter_ActionList(this, data));
 	}
 
 	@Override

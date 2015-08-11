@@ -74,12 +74,17 @@ public class CardsActivity extends BasicActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context=this.getParent();
-        InitialParameter();
         setContentView(R.layout.activity_cards);
         ButterKnife.inject(this);
 
-        Log.i("INFO","size.x="+String.valueOf(ScreenService.GetScreenWidth(this)));
+        Log.i("INFO", "size.x=" + String.valueOf(ScreenService.GetScreenWidth(this)));
         gridView.setColumnWidth((ScreenService.GetScreenWidth(this).x - 30) / 3);
+
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        InitialParameter();
         GategoryDataSetting();
     }
     void InitialParameter()

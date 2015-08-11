@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.abc.terry_sun.abc.Entities.Cards;
+import com.abc.terry_sun.abc.Entities.Events;
 import com.abc.terry_sun.abc.MainActivity;
 import com.abc.terry_sun.abc.Models.CardInfo;
 import com.abc.terry_sun.abc.Models.CategoryInfo;
@@ -189,7 +190,62 @@ public class CardService {
     {
         return Cards.listAll(Cards.class);
     }
+    public List<Events> GetAllEvents()
+    {
+        return Events.listAll(Events.class);
+    }
+    public List<Cards> GetFavorateCards()
+    {
+        List<Cards> CardList=Cards.find(Cards.class, "Is_Favorite=?", "True");
+        if(CardList.size()>0)
+        {
+            return CardList;
+        }
+        return null;
+    }
+    public Boolean CheckCardIDIsFavorate(String CardID)
+    {
+        List<Cards> CardList=Cards.find(Cards.class, "Card_ID=?", CardID);
+        if(CardList.size()>0)
+        {
+            return CardList.get(0).getIsFavorite();
+        }
+        return false;
+    }
+    public List<Events> GetFavorateEvents()
+    {
+        List<Cards> FavorateCards=GetFavorateCards();
+        List<Events> EventList=GetAllEvents();
+        List<Events> TempEventList=new ArrayList<Events>();
+        for(Events item:EventList) {
+            if (CheckCardIDIsFavorate(item.getCardID())) {
+                TempEventList.add(item);
+            }
+        }
+        return TempEventList;
+    }
+    //option would be "", when user didn't select anything
+    public List<Events> GetFilteredEvents(String CategoryID,String GroupID,String RepresentativeID)
+    {
+        List<Events> EventList=GetAllEvents();
+        List<Events> TempEventList=new ArrayList<Events>();
 
+        for(Events item:EventList) {
+            if((CategoryID.equals("")||CategoryID.equals(item.getCategoryID()))&&
+                (GroupID.equals("")||GroupID.equals(item.getGroupID()))&&
+                (RepresentativeID.equals("")||RepresentativeID.equals(item.getRepresentativeID()))
+            )
+            {
+                TempEventList.add(item);
+            }
+        }
+
+        return TempEventList;
+    }
+    public void RemoveAllEvents()
+    {
+        Events.deleteAll(Events.class);
+    }
     static Dialog CardDetailDialog;
     public void ShowCardDetailDialog(final String EntityCardID,final Context context)
     {
@@ -277,5 +333,10 @@ public class CardService {
             CardDetailDialog.dismiss();
             CardDetailDialog=null;
         }
+    }
+    public Bitmap GetCardImageByCardID(String CardID)
+    {
+        Cards card=CardService.getInstance().GetCardsByCardID(CardID);
+        return BitmapFactory.decodeFile(StorageService.GetImagePath(card.getCardImage()));
     }
 }

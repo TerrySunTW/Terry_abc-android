@@ -7,6 +7,7 @@ import com.abc.terry_sun.abc.CustomClass.Application.ABCApplication;
 import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskHttpRequest;
 import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskProcessingInterface;
 import com.abc.terry_sun.abc.Entities.Cards;
+import com.abc.terry_sun.abc.Entities.Events;
 import com.abc.terry_sun.abc.MainActivity;
 import com.abc.terry_sun.abc.Provider.HttpURL_Provider;
 import com.abc.terry_sun.abc.Provider.VariableProvider;
@@ -89,7 +90,11 @@ public class ServerCommunicationService {
         }
         return CardID;
     }
-
+    public void UpdateServerInfo()
+    {
+        GetUserCardInfo();
+        GetUserEventInfo();
+    }
     public void  GetUserCardInfo() {
         List<BasicNameValuePair> UrlParams= new LinkedList<BasicNameValuePair>();
         UrlParams.add(new BasicNameValuePair("UserFacebookID",VariableProvider.getInstance().getFacebookID()));
@@ -150,6 +155,27 @@ public class ServerCommunicationService {
                 _Cards.save();
             }
         }
+    }
+    public void  GetUserEventInfo() {
+        List<BasicNameValuePair> UrlParams= new LinkedList<BasicNameValuePair>();
+        UrlParams.add(new BasicNameValuePair("UserFacebookID",VariableProvider.getInstance().getFacebookID()));
+        Gson gson = new Gson();
+        String JsonData="";
+        try {
+            JsonData = OkHttpUtil.getStringFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.GetUserEvent, UrlParams));
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+        Events[] OnlineEvents = gson.fromJson(JsonData, Events[].class);
 
+        CardService.getInstance().RemoveAllEvents();
+
+
+        for (Events Item:OnlineEvents)
+        {
+            Item.save();
+        }
     }
 }

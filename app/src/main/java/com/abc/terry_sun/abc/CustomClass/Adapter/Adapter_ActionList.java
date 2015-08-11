@@ -5,11 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.abc.terry_sun.abc.Entities.Events;
 import com.abc.terry_sun.abc.Models.ListItem_Actions;
 import com.abc.terry_sun.abc.R;
+import com.abc.terry_sun.abc.Service.CardService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,13 +21,30 @@ import java.util.List;
  */
 public class Adapter_ActionList extends BaseAdapter {
     private Activity activity;
-    private List<ListItem_Actions> stringPairList;
+    private List<ListItem_Actions> stringPairList=new ArrayList<ListItem_Actions>();
 
 
-    public Adapter_ActionList(Activity activity, List<ListItem_Actions> stringPairList) {
+    public Adapter_ActionList(Activity activity, List<Events> CardEventList) {
         super();
         this.activity = activity;
-        this.stringPairList = stringPairList;
+        for (Events item:CardEventList)
+        {
+            stringPairList.add(new ListItem_Actions(
+                    CardService.getInstance().GetCardImageByCardID(item.getCardID()),
+                    item.getEventTitle(),
+                    item.getEventDescription()));
+        }
+    }
+    public void UpdateData(List<Events> CardEventList)
+    {
+        stringPairList.clear();
+        for (Events item:CardEventList)
+        {
+            stringPairList.add(new ListItem_Actions(
+                    CardService.getInstance().GetCardImageByCardID(item.getCardID()),
+                    item.getEventTitle(),
+                    item.getEventDescription()));
+        }
     }
 
     @Override
@@ -49,9 +70,12 @@ public class Adapter_ActionList extends BaseAdapter {
             LayoutInflater inflater = activity.getLayoutInflater();
             convertView = inflater.inflate(R.layout.activity_actions_item, null);
         }
+
+        ImageButton imageButton1 = (ImageButton) convertView.findViewById(R.id.imageButton);
+        imageButton1.setImageBitmap(stringPairList.get(position).getItemImage());
+
         TextView ItemInfo1 = (TextView) convertView.findViewById(R.id.ItemInfo1);
         TextView ItemInfo2 = (TextView) convertView.findViewById(R.id.ItemInfo2);
-
         ItemInfo1.setText(((ListItem_Actions)stringPairList.get(position)).getTitle1());
         ItemInfo2.setText(((ListItem_Actions)stringPairList.get(position)).getTitle2());
 

@@ -139,7 +139,7 @@ public class LoginActivity extends Activity {
                                     //login
                                     OkHttpUtil.getStringFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.FacebookLogin, LoginParams));
                                     //get user card info
-                                    ServerCommunicationService.getInstance().GetUserCardInfo();
+                                    ServerCommunicationService.getInstance().UpdateServerInfo();
                                 } catch (Exception e) {
                                     if (e!=null) {
                                         Log.e("Error", e.getMessage());

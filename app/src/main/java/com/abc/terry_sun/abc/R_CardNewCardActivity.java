@@ -88,7 +88,7 @@ public class R_CardNewCardActivity extends BasicActivity {
                             //add new card
                             GotCardID = ServerCommunicationService.getInstance().AddNewCard(EntityCardID);
                             if (GotCardID>0) {
-                                ServerCommunicationService.getInstance().GetUserCardInfo();
+                                ServerCommunicationService.getInstance().UpdateServerInfo();
 
                                 msg.what = 1;
                             } else {
