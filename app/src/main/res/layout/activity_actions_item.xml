@@ -6,22 +6,26 @@
     <ImageButton
         android:layout_width="100sp"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButton" />
+        android:id="@+id/CardButton" />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
-        <TextView android:id="@+id/ItemInfo1"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="111111"/>
+            android:orientation="vertical">
+            <TextView android:id="@+id/action1_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="111111"/>
 
-        <TextView android:id="@+id/ItemInfo2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="222222222"/>
+            <TextView android:id="@+id/action1_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="222222222"/>
 
+        </LinearLayout>
     </LinearLayout>
-
 
 </LinearLayout>

@@ -55,6 +55,27 @@ public class ServerCommunicationService {
         });
         _AsyncTaskHttpRequest.execute();
     }
+    public void SetMainCard(final String EntityCardID)
+    {
+        AsyncTaskHttpRequest _AsyncTaskHttpRequest = new AsyncTaskHttpRequest(
+                MainActivity.GetMainActivityContext(),
+                new AsyncTaskProcessingInterface() {
+                    @Override
+                    public void DoProcessing() {
+                        try {
+                            List<BasicNameValuePair> UrlParams = new LinkedList<BasicNameValuePair>();
+                            UrlParams.add(new BasicNameValuePair("UserFacebookID", VariableProvider.getInstance().getFacebookID()));
+                            UrlParams.add(new BasicNameValuePair("EntityCardID", EntityCardID));
+                            OkHttpUtil.getStringFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.SetMainCardSetting, UrlParams));
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.e(TAG,ex.getMessage());
+                        }
+                    }
+                });
+        _AsyncTaskHttpRequest.execute();
+    }
 
     public int AddNewCard(final String EntityCardID)
     {

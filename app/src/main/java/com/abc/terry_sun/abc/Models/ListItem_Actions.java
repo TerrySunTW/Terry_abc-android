@@ -11,6 +11,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor(suppressConstructorProperties = true)
 public class ListItem_Actions {
+    private String EntityCardID;
     private Bitmap ItemImage;
     private String Title1;
     private String Title2;

@@ -24,6 +24,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
+
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile 'com.jakewharton:butterknife:6.1.0'
@@ -43,6 +44,8 @@ dependencies {
     compile('eu.livotov.labs:zxscanlib:2.0.1@aar') { transitive = true }
     //ACRA
     compile files('libs/acra-4.6.2.jar')
+
+
     //compile 'com.github.chrisbanes.photoview:library:1.2.+' //photo gallery
     //http://satyan.github.io/sugar/index.html
     //compile 'com.bluelinelabs:logansquare:1.0.6'

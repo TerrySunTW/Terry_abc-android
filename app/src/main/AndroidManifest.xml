@@ -36,11 +36,7 @@
         <activity android:name=".SettingActivity" />
         <activity android:name=".CardsActivity" />
         <activity android:name=".TabGroup_Cards" />
-        <activity android:name=".CardDetailMainActivity" />
         <activity android:name=".CardDetailEmulateActivity" />
-        <activity android:name=".CardDetailInfoActivity" />
-        <activity android:name=".CardDetailBonusActivity" />
-        <activity android:name=".CardDetailSettingsActivity" />
         <activity android:name=".ReadCardActivity" />
         <activity android:name=".TabGroup_R_Card" />
         <activity android:name=".R_CardHomeActivity" />

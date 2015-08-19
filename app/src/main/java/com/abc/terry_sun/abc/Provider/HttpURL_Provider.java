@@ -12,4 +12,5 @@ public class HttpURL_Provider {
     public static final String AddNewCard= ServerURL + "WebService/UserAddNewCard";
     public static final String GetUserCardIDByEntityID= ServerURL + "WebService/GetUserCardIDByEntityID";
     public static final String GetUserEvent= ServerURL + "WebService/GetUserEvent";
+    public static final String SetMainCardSetting= ServerURL + "WebService/SetMainCard";
 }

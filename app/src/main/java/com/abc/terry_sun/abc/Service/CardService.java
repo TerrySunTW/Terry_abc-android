@@ -179,6 +179,7 @@ public class CardService {
         Cards.executeQuery("UPDATE CARDS set IS_MAIN_CARD=0");
         Card.setIsMainCard(true);
         Card.save();
+        ServerCommunicationService.getInstance().SetMainCard(Card.getEntityCardID());
     }
     public void ToggleIsCardFavorite(Cards Card)
     {
@@ -338,5 +339,10 @@ public class CardService {
     {
         Cards card=CardService.getInstance().GetCardsByCardID(CardID);
         return BitmapFactory.decodeFile(StorageService.GetImagePath(card.getCardImage()));
+    }
+    public String GetEntityCardIDByCardID(String CardID)
+    {
+        Cards card=CardService.getInstance().GetCardsByCardID(CardID);
+        return card.getEntityCardID();
     }
 }

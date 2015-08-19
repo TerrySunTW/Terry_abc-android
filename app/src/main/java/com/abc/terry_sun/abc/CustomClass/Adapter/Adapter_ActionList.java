@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.abc.terry_sun.abc.Entities.Events;
+import com.abc.terry_sun.abc.MainActivity;
 import com.abc.terry_sun.abc.Models.ListItem_Actions;
 import com.abc.terry_sun.abc.R;
 import com.abc.terry_sun.abc.Service.CardService;
@@ -30,6 +31,7 @@ public class Adapter_ActionList extends BaseAdapter {
         for (Events item:CardEventList)
         {
             stringPairList.add(new ListItem_Actions(
+                    CardService.getInstance().GetEntityCardIDByCardID(item.getCardID()),
                     CardService.getInstance().GetCardImageByCardID(item.getCardID()),
                     item.getEventTitle(),
                     item.getEventDescription()));
@@ -41,6 +43,7 @@ public class Adapter_ActionList extends BaseAdapter {
         for (Events item:CardEventList)
         {
             stringPairList.add(new ListItem_Actions(
+                    CardService.getInstance().GetEntityCardIDByCardID(item.getCardID()),
                     CardService.getInstance().GetCardImageByCardID(item.getCardID()),
                     item.getEventTitle(),
                     item.getEventDescription()));
@@ -71,13 +74,22 @@ public class Adapter_ActionList extends BaseAdapter {
             convertView = inflater.inflate(R.layout.activity_actions_item, null);
         }
 
-        ImageButton imageButton1 = (ImageButton) convertView.findViewById(R.id.imageButton);
-        imageButton1.setImageBitmap(stringPairList.get(position).getItemImage());
+        ListItem_Actions _ListItem_Actions=stringPairList.get(position);
+        ImageButton CardButton = (ImageButton) convertView.findViewById(R.id.CardButton);
+        CardButton.setImageBitmap(_ListItem_Actions.getItemImage());
+        CardButton.setTag(_ListItem_Actions.getEntityCardID());
+        CardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        TextView ItemInfo1 = (TextView) convertView.findViewById(R.id.ItemInfo1);
-        TextView ItemInfo2 = (TextView) convertView.findViewById(R.id.ItemInfo2);
-        ItemInfo1.setText(((ListItem_Actions)stringPairList.get(position)).getTitle1());
-        ItemInfo2.setText(((ListItem_Actions)stringPairList.get(position)).getTitle2());
+                CardService.getInstance().ShowCardDetailDialog(view.getTag().toString(), MainActivity.GetMainActivityContext());
+            }
+        });
+
+        TextView ItemInfo1 = (TextView) convertView.findViewById(R.id.action1_title);
+        TextView ItemInfo2 = (TextView) convertView.findViewById(R.id.action1_content);
+        ItemInfo1.setText(_ListItem_Actions.getTitle1());
+        ItemInfo2.setText(_ListItem_Actions.getTitle2());
 
         return convertView;
     }
