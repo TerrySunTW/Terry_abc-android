@@ -12,6 +12,7 @@ import com.abc.terry_sun.abc.Entities.Events;
 import com.abc.terry_sun.abc.MainActivity;
 import com.abc.terry_sun.abc.Models.ListItem_Actions;
 import com.abc.terry_sun.abc.R;
+import com.abc.terry_sun.abc.Service.BonusService;
 import com.abc.terry_sun.abc.Service.CardService;
 
 import java.util.ArrayList;
@@ -81,15 +82,31 @@ public class Adapter_ActionList extends BaseAdapter {
         CardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 CardService.getInstance().ShowCardDetailDialog(view.getTag().toString(), MainActivity.GetMainActivityContext());
             }
         });
 
         TextView ItemInfo1 = (TextView) convertView.findViewById(R.id.action1_title);
         TextView ItemInfo2 = (TextView) convertView.findViewById(R.id.action1_content);
+        ItemInfo1.setTag(_ListItem_Actions.getEntityCardID());
+        ItemInfo2.setTag(_ListItem_Actions.getEntityCardID());
+
         ItemInfo1.setText(_ListItem_Actions.getTitle1());
         ItemInfo2.setText(_ListItem_Actions.getTitle2());
+
+        ItemInfo1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BonusService.getInstance().ShowBonusDialog(view.getTag().toString());
+            }
+        });
+
+        ItemInfo2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BonusService.getInstance().ShowBonusDialog(view.getTag().toString());
+            }
+        });
 
         return convertView;
     }

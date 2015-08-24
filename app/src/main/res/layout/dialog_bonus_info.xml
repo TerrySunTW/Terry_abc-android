@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:stretchColumns="*">
+                <TableRow>
+                    <Button
+                        android:id="@+id/Button_ActionLink"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Action Link??"
+                        android:layout_gravity="center_horizontal" />
+                    <Button
+                        android:id="@+id/Button_Exchange"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="兌換"
+                        android:layout_gravity="center_horizontal" />
+                </TableRow>
+            </TableLayout>
+            <TextView
+                android:id="@+id/TextView_BonusTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="10% off Baseball Game ticket(2/5)" />
+            <TextView
+                android:id="@+id/TextView_BonusContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="
+                Due date
+                兌換期限
+                From Whom (Link Chain)
+                Who did the actions(50).
+                Suggest who to R-Card.
+                " />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
