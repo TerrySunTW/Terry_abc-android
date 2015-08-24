@@ -307,6 +307,16 @@ public class CardService {
             }
         });
 
+        Button Button_Bonus = (Button)CardDetailDialog.findViewById(R.id.Button_Bonus);
+        Button_Bonus.setTag(SelectedCardInfo.getEntityCardID());
+        Button_Bonus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CardDetailDialog.dismiss();
+                BonusService.getInstance().ShowBonusDialog(view.getTag().toString());
+            }
+        });
+
 
 
 
