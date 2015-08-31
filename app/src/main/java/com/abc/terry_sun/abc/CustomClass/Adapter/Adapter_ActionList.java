@@ -72,7 +72,7 @@ public class Adapter_ActionList extends BaseAdapter {
 
         if (convertView == null) {
             LayoutInflater inflater = activity.getLayoutInflater();
-            convertView = inflater.inflate(R.layout.activity_actions_item, null);
+            convertView = inflater.inflate(R.layout.activity_bonus_item, null);
         }
 
         ListItem_Actions _ListItem_Actions=stringPairList.get(position);
