@@ -67,7 +67,7 @@ public class MainActivity extends TabActivity {
 	private void setTabs() {
 
 		addTab("Cards", R.drawable.tab_home, TabGroup_Cards.class);
-		addTab("Bonus", R.drawable.tab_search, ActionsListActivity.class);
+		addTab("Bonus", R.drawable.tab_search, BonusListActivity.class);
 		addTab("Fake", R.drawable.tab_search, CardDetailEmulateActivity.class);
         addTab("Link", R.drawable.tab_search, ReadCardActivity.class);
 		addTab("R-Card", R.drawable.tab_search, TabGroup_R_Card.class);
