@@ -1,5 +1,6 @@
 package com.abc.terry_sun.abc.Service;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -14,7 +15,9 @@ public class ProcessControlService {
     public static void ShowProgressDialog(Context _Context,String Title,String Message)
     {
         CloseProgressDialog();
-        MyProgressDialog = ProgressDialog.show(_Context,Title,Message, true);
+        if(!((Activity) _Context).isFinishing()) {
+            MyProgressDialog = ProgressDialog.show(_Context, Title, Message, true);
+        }
     }
     public static void CloseProgressDialog()
     {
