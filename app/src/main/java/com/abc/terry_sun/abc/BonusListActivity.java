@@ -34,7 +34,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 
-public class ActionsListActivity extends Activity {
+public class BonusListActivity extends Activity {
 	/** Called when the activity is first created. */
 	Handler messageHandler;
 	@InjectView(R.id.listview_activity_list)
@@ -69,7 +69,7 @@ public class ActionsListActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.e("Event", "onCreate");
-		setContentView(R.layout.activity_actions_list);
+		setContentView(R.layout.activity_bonus_list);
 		super.onCreate(savedInstanceState);
 		ButterKnife.inject(this);
 
