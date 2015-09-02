@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.abc.terry_sun.abc.Entities.Events;
+import com.abc.terry_sun.abc.Entities.DB_Events;
 import com.abc.terry_sun.abc.MainActivity;
 import com.abc.terry_sun.abc.Models.ListItem_Actions;
 import com.abc.terry_sun.abc.R;
@@ -21,15 +21,15 @@ import java.util.List;
 /**
  * Created by Terry on 2015/5/14.
  */
-public class Adapter_ActionList extends BaseAdapter {
+public class Adapter_BonusList extends BaseAdapter {
     private Activity activity;
     private List<ListItem_Actions> stringPairList=new ArrayList<ListItem_Actions>();
 
 
-    public Adapter_ActionList(Activity activity, List<Events> CardEventList) {
+    public Adapter_BonusList(Activity activity, List<DB_Events> CardEventList) {
         super();
         this.activity = activity;
-        for (Events item:CardEventList)
+        for (DB_Events item:CardEventList)
         {
             stringPairList.add(new ListItem_Actions(
                     CardService.getInstance().GetEntityCardIDByCardID(item.getCardID()),
@@ -38,10 +38,10 @@ public class Adapter_ActionList extends BaseAdapter {
                     item.getEventDescription()));
         }
     }
-    public void UpdateData(List<Events> CardEventList)
+    public void UpdateData(List<DB_Events> CardEventList)
     {
         stringPairList.clear();
-        for (Events item:CardEventList)
+        for (DB_Events item:CardEventList)
         {
             stringPairList.add(new ListItem_Actions(
                     CardService.getInstance().GetEntityCardIDByCardID(item.getCardID()),

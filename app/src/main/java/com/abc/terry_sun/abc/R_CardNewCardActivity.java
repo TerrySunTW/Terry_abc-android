@@ -1,34 +1,17 @@
 package com.abc.terry_sun.abc;
 
-import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.PopupMenu;
-import android.widget.Toast;
 
-import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskHttpRequest;
-import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskProcessingInterface;
-import com.abc.terry_sun.abc.Entities.Cards;
-import com.abc.terry_sun.abc.Models.GalleryItem;
+import com.abc.terry_sun.abc.Entities.DB_Cards;
 import com.abc.terry_sun.abc.Service.CardService;
 import com.abc.terry_sun.abc.Service.ProcessControlService;
 import com.abc.terry_sun.abc.Service.ServerCommunicationService;
-import com.facebook.appevents.AppEventsLogger;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
-import eu.livotov.labs.android.camview.CAMView;
 import eu.livotov.zxscan.ScannerView;
 
 /**
@@ -70,7 +53,7 @@ public class R_CardNewCardActivity extends BasicActivity {
                 }
 
                 //local card
-                Cards ScannedCard = CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
+                DB_Cards ScannedCard = CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
                 if (ScannedCard != null) {
                     CardService.getInstance().CloseCardDetailDialog();
                     CardService.getInstance().ShowCardDetailDialog(ScannedCard.getEntityCardID(), MainActivity.GetMainActivityContext());

@@ -4,19 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 
-import com.abc.terry_sun.abc.CustomClass.Adapter.AdapterCardsImage;
-import com.abc.terry_sun.abc.CustomClass.Adapter.Adapter_ActionList;
-import com.abc.terry_sun.abc.Entities.Cards;
-import com.abc.terry_sun.abc.Entities.Events;
+import com.abc.terry_sun.abc.CustomClass.Adapter.Adapter_BonusList;
+import com.abc.terry_sun.abc.Entities.DB_Events;
 import com.abc.terry_sun.abc.Models.CardInfo;
 import com.abc.terry_sun.abc.Models.CategoryInfo;
 import com.abc.terry_sun.abc.Models.GalleryItem;
@@ -24,7 +19,6 @@ import com.abc.terry_sun.abc.Models.GroupInfo;
 import com.abc.terry_sun.abc.Models.ListItem_Actions;
 import com.abc.terry_sun.abc.Models.RepresentativeInfo;
 import com.abc.terry_sun.abc.Service.CardService;
-import com.abc.terry_sun.abc.Service.ImageService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +58,7 @@ public class BonusListActivity extends Activity {
 	String SelectedGroupID="";
 	String SelectedRepresentativeID="";
 	String SelectedEntityCardID;
-	Adapter_ActionList _Adapter_ActionList;
+	Adapter_BonusList _Adapter_ActionList;
 	Context context;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,9 +81,9 @@ public class BonusListActivity extends Activity {
 	}
 	private void List_Setting() {
 		List<ListItem_Actions> data=new ArrayList<ListItem_Actions>();
-		List<Events> CardEvents = CardService.getInstance().GetAllEvents();
+		List<DB_Events> cardEvents = CardService.getInstance().GetAllEvents();
 
-		_Adapter_ActionList=new Adapter_ActionList(this,CardEvents);
+		_Adapter_ActionList=new Adapter_BonusList(this, cardEvents);
 		listview_activity_list.setAdapter(_Adapter_ActionList);
 	}
 	private void Update_List(Boolean IsFavorate) {

@@ -26,11 +26,13 @@ public class InternetUtil {
         try {
             URL url = new URL(Url);
             connection = (HttpURLConnection) url.openConnection();
+            connection.setInstanceFollowRedirects(true);
             connection.connect();
 
             // expect HTTP 200 OK, so we don't mistakenly save error report
             // instead of the file
-            if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+            if (connection.getResponseCode() != HttpURLConnection.HTTP_OK &&
+                    connection.getResponseCode() !=HttpURLConnection.HTTP_MOVED_TEMP) {
                 return "Server returned HTTP " + connection.getResponseCode()
                         + " " + connection.getResponseMessage();
             }
@@ -41,6 +43,46 @@ public class InternetUtil {
 
             // download the file
             input = connection.getInputStream();
+            output = new FileOutputStream(LocalPath);
+
+            byte data[] = new byte[4096];
+            long total = 0;
+            int count;
+            while ((count = input.read(data)) != -1) {
+                total += count;
+                output.write(data, 0, count);
+            }
+        } catch (Exception e) {
+            return e.toString();
+        } finally {
+            try {
+                if (output != null)
+                    output.close();
+                if (input != null)
+                    input.close();
+            } catch (IOException ignored) {
+            }
+
+            if (connection != null)
+                connection.disconnect();
+        }
+        return "";
+    }
+
+    public static String DownloadFacebookProfilePictureFile(String Url,String LocalPath)
+    {
+        File ImageFile = new File(LocalPath);
+        if(ImageFile.exists()&&ImageFile.length()>100)
+        {
+            //file exist
+            return "";
+        }
+        InputStream input = null;
+        OutputStream output = null;
+        HttpURLConnection connection = null;
+        try {
+            URL url = new URL(Url);
+            input = url.openConnection().getInputStream();
             output = new FileOutputStream(LocalPath);
 
             byte data[] = new byte[4096];

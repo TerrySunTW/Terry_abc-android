@@ -13,22 +13,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.abc.terry_sun.abc.Entities.Cards;
-import com.abc.terry_sun.abc.Entities.Events;
+import com.abc.terry_sun.abc.Entities.DB_Cards;
+import com.abc.terry_sun.abc.Entities.DB_Events;
+import com.abc.terry_sun.abc.Entities.DB_Friend;
 import com.abc.terry_sun.abc.MainActivity;
 import com.abc.terry_sun.abc.Models.CardInfo;
 import com.abc.terry_sun.abc.Models.CategoryInfo;
 import com.abc.terry_sun.abc.Models.GroupInfo;
 import com.abc.terry_sun.abc.Models.RepresentativeInfo;
-import com.abc.terry_sun.abc.NFC.NfcStorage;
 import com.abc.terry_sun.abc.R;
-import com.orm.query.Condition;
-import com.orm.query.Select;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import lombok.AllArgsConstructor;
 
 /**
  * Created by terry_sun on 2015/7/1.
@@ -41,8 +37,8 @@ public class CardService {
     public List<CategoryInfo> GetAllCategory()
     {
         List<CategoryInfo> CategoryInfoList=new ArrayList<CategoryInfo>();
-        List<Cards> CardList = Cards.findWithQuery(Cards.class, "Select * from CARDS group by CATEGORY_ID,CATEGORY_NAME,CATEGORY_IMAGE", null);
-        for(Cards Item:CardList)
+        List<DB_Cards> CardList = DB_Cards.findWithQuery(DB_Cards.class, "Select * from "+DB_Cards.getTableName(DB_Cards.class)+" group by CATEGORY_ID,CATEGORY_NAME,CATEGORY_IMAGE", null);
+        for(DB_Cards Item:CardList)
         {
             CategoryInfoList.add(
                     new CategoryInfo(
@@ -56,8 +52,8 @@ public class CardService {
     public List<GroupInfo> GetAllGroup()
     {
         List<GroupInfo> GroupInfoList=new ArrayList<GroupInfo>();
-        List<Cards> CardList = Cards.findWithQuery(Cards.class, "Select * from CARDS group by GROUP_ID,GROUP_NAME,GROUP_IMAGE", null);
-        for(Cards Item:CardList)
+        List<DB_Cards> CardList = DB_Cards.findWithQuery(DB_Cards.class, "Select * from "+DB_Cards.getTableName(DB_Cards.class)+"  group by GROUP_ID,GROUP_NAME,GROUP_IMAGE", null);
+        for(DB_Cards Item:CardList)
         {
             GroupInfoList.add(
                     new GroupInfo(
@@ -85,8 +81,8 @@ public class CardService {
     public List<RepresentativeInfo> GetAllRepresentative()
     {
         List<RepresentativeInfo> RepresentativeInfoList=new ArrayList<RepresentativeInfo>();
-        List<Cards> CardList = Cards.findWithQuery(Cards.class, "Select * from CARDS group by REPRESENTATIVE_ID,REPRESENTATIVE_NAME,REPRESENTATIVE_IMAGE", null);
-        for(Cards Item:CardList)
+        List<DB_Cards> CardList = DB_Cards.findWithQuery(DB_Cards.class, "Select * from "+DB_Cards.getTableName(DB_Cards.class)+ " group by REPRESENTATIVE_ID,REPRESENTATIVE_NAME,REPRESENTATIVE_IMAGE", null);
+        for(DB_Cards Item:CardList)
         {
             RepresentativeInfoList.add(
                     new RepresentativeInfo(
@@ -113,9 +109,9 @@ public class CardService {
     }
     public List<CardInfo> GetCardsByRepresentativeID(String RepresentativeID)
     {
-        List<Cards> CardList=Cards.find(Cards.class, "REPRESENTATIVE_ID=?", RepresentativeID);
+        List<DB_Cards> CardList= DB_Cards.find(DB_Cards.class, "REPRESENTATIVE_ID=?", RepresentativeID);
         List<CardInfo> CardInfoList=new ArrayList<CardInfo>();
-        for(Cards Item:CardList)
+        for(DB_Cards Item:CardList)
         {
             CardInfoList.add(new CardInfo(Item.getRepresentativeID(),Item.getEntityCardID(),Item.getCardName(),Item.getCardImage()));
         }
@@ -123,9 +119,9 @@ public class CardService {
     }
     public List<CardInfo> GetFavoriteCardsInfo()
     {
-        List<Cards> CardList=Cards.find(Cards.class, "IS_FAVORITE=?", "1");
+        List<DB_Cards> CardList= DB_Cards.find(DB_Cards.class, "IS_FAVORITE=?", "1");
         List<CardInfo> CardInfoList=new ArrayList<CardInfo>();
-        for(Cards Item:CardList)
+        for(DB_Cards Item:CardList)
         {
             CardInfoList.add(new CardInfo(Item.getRepresentativeID(),Item.getEntityCardID(),Item.getCardName(),Item.getCardImage()));
         }
@@ -133,71 +129,71 @@ public class CardService {
     }
     public List<CardInfo> GetAllCardsInfo()
     {
-        List<Cards> CardList=Cards.listAll(Cards.class);
+        List<DB_Cards> CardList= DB_Cards.listAll(DB_Cards.class);
         List<CardInfo> CardInfoList=new ArrayList<CardInfo>();
-        for(Cards Item:CardList)
+        for(DB_Cards Item:CardList)
         {
             CardInfoList.add(new CardInfo(Item.getRepresentativeID(),Item.getEntityCardID(),Item.getCardName(),Item.getCardImage()));
         }
         return CardInfoList;
     }
-    public Cards GetCardsByEntityCardID(String EntityCardID)
+    public DB_Cards GetCardsByEntityCardID(String EntityCardID)
     {
-        List<Cards> CardList=Cards.find(Cards.class, "ENTITY_CARD_ID=?", EntityCardID);
+        List<DB_Cards> CardList= DB_Cards.find(DB_Cards.class, "ENTITY_CARD_ID=?", EntityCardID);
         if(CardList.size()>0)
         {
             return CardList.get(0);
         }
         return null;
     }
-    public Cards GetCardsByCardID(String CardID)
+    public DB_Cards GetCardsByCardID(String CardID)
     {
-        List<Cards> CardList=Cards.find(Cards.class, "CARD_ID=?", CardID);
+        List<DB_Cards> CardList= DB_Cards.find(DB_Cards.class, "CARD_ID=?", CardID);
         if(CardList.size()>0)
         {
             return CardList.get(0);
         }
         return null;
     }
-    public Cards GetMainCards()
+    public DB_Cards GetMainCards()
     {
-        List<Cards> CardList=Cards.find(Cards.class, "IS_MAIN_CARD=?", "1");
+        List<DB_Cards> CardList= DB_Cards.find(DB_Cards.class, "IS_MAIN_CARD=?", "1");
         if(CardList.size()>0)
         {
             return CardList.get(0);
         }
-        CardList=Cards.listAll(Cards.class);
+        CardList= DB_Cards.listAll(DB_Cards.class);
         if(CardList.size()>0)
         {
-            Cards.listAll(Cards.class).get(0);
+            DB_Cards.listAll(DB_Cards.class).get(0);
         }
         return null;
     }
-    public void SetMainCards(Cards Card)
+    public void SetMainCards(DB_Cards Card)
     {
-        List<Cards> CardList= GetAllCards();
-        Cards.executeQuery("UPDATE CARDS set IS_MAIN_CARD=0");
+        List<DB_Cards> CardList= GetAllCards();
+        DB_Cards.executeQuery("UPDATE "+DB_Cards.getTableName(DB_Cards.class)+"  set IS_MAIN_CARD=0");
         Card.setIsMainCard(true);
         Card.save();
         ServerCommunicationService.getInstance().SetMainCard(Card.getEntityCardID());
     }
-    public void ToggleIsCardFavorite(Cards Card)
+    public void ToggleIsCardFavorite(DB_Cards Card)
     {
         Card.setIsFavorite(!Card.getIsFavorite());
         Card.save();
         ServerCommunicationService.getInstance().ChangeFavoriteCard(Card.getEntityCardID());
     }
-    public List<Cards> GetAllCards()
+    public List<DB_Cards> GetAllCards()
     {
-        return Cards.listAll(Cards.class);
+        return DB_Cards.listAll(DB_Cards.class);
     }
-    public List<Events> GetAllEvents()
+    public List<DB_Events> GetAllEvents()
     {
-        return Events.listAll(Events.class);
+        return DB_Events.listAll(DB_Events.class);
     }
-    public List<Cards> GetFavorateCards()
+    public List<DB_Cards> GetFavorateCards()
     {
-        List<Cards> CardList=Cards.find(Cards.class, "Is_Favorite=?", "True");
+        List<DB_Cards> CardList= DB_Cards.find(DB_Cards.class, "Is_Favorite=?", "True");
         if(CardList.size()>0)
         {
             return CardList;
@@ -206,19 +202,19 @@ public class CardService {
     }
     public Boolean CheckCardIDIsFavorate(String CardID)
     {
-        List<Cards> CardList=Cards.find(Cards.class, "Card_ID=?", CardID);
+        List<DB_Cards> CardList= DB_Cards.find(DB_Cards.class, "Card_ID=?", CardID);
         if(CardList.size()>0)
         {
             return CardList.get(0).getIsFavorite();
         }
         return false;
     }
-    public List<Events> GetFavorateEvents()
+    public List<DB_Events> GetFavorateEvents()
     {
-        List<Cards> FavorateCards=GetFavorateCards();
-        List<Events> EventList=GetAllEvents();
-        List<Events> TempEventList=new ArrayList<Events>();
-        for(Events item:EventList) {
+        List<DB_Cards> favorateCards =GetFavorateCards();
+        List<DB_Events> EventList=GetAllEvents();
+        List<DB_Events> TempEventList=new ArrayList<DB_Events>();
+        for(DB_Events item:EventList) {
             if (CheckCardIDIsFavorate(item.getCardID())) {
                 TempEventList.add(item);
             }
@@ -226,12 +222,12 @@ public class CardService {
         return TempEventList;
     }
     //option would be "", when user didn't select anything
-    public List<Events> GetFilteredEvents(String CategoryID,String GroupID,String RepresentativeID)
+    public List<DB_Events> GetFilteredEvents(String CategoryID,String GroupID,String RepresentativeID)
     {
-        List<Events> EventList=GetAllEvents();
-        List<Events> TempEventList=new ArrayList<Events>();
+        List<DB_Events> EventList=GetAllEvents();
+        List<DB_Events> TempEventList=new ArrayList<DB_Events>();
 
-        for(Events item:EventList) {
+        for(DB_Events item:EventList) {
             if((CategoryID.equals("")||CategoryID.equals(item.getCategoryID()))&&
                 (GroupID.equals("")||GroupID.equals(item.getGroupID()))&&
                 (RepresentativeID.equals("")||RepresentativeID.equals(item.getRepresentativeID()))
@@ -245,13 +241,17 @@ public class CardService {
     }
     public void RemoveAllEvents()
     {
-        Events.deleteAll(Events.class);
+        DB_Events.deleteAll(DB_Events.class);
+    }
+    public void RemoveAllFriends()
+    {
+        DB_Friend.deleteAll(DB_Friend.class);
     }
     static Dialog CardDetailDialog;
     public void ShowCardDetailDialog(final String EntityCardID,final Context context)
     {
         CardDetailDialog=new Dialog(context);
-        final Cards SelectedCardInfo=CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
+        final DB_Cards SelectedCardInfo=CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
 
         CardDetailDialog.setContentView(R.layout.dialog_card_info);
         Window window = CardDetailDialog.getWindow();
@@ -329,10 +329,12 @@ public class CardService {
         });
 
         Button Button_Emulation = (Button)CardDetailDialog.findViewById(R.id.Button_Emulation);
+        Button_Emulation.setTag(SelectedCardInfo.getEntityCardID());
         Button_Emulation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NfcStorage.SetAccount(context,SelectedCardInfo.getEntityCardID());
+                CardDetailDialog.dismiss();
+                EmulatorService.getInstance().ShowEmulatorDialog(view.getTag().toString());
             }
         });
         CardDetailDialog.show();
@@ -347,12 +349,12 @@ public class CardService {
     }
     public Bitmap GetCardImageByCardID(String CardID)
     {
-        Cards card=CardService.getInstance().GetCardsByCardID(CardID);
+        DB_Cards card=CardService.getInstance().GetCardsByCardID(CardID);
         return BitmapFactory.decodeFile(StorageService.GetImagePath(card.getCardImage()));
     }
     public String GetEntityCardIDByCardID(String CardID)
     {
-        Cards card=CardService.getInstance().GetCardsByCardID(CardID);
+        DB_Cards card=CardService.getInstance().GetCardsByCardID(CardID);
         return card.getEntityCardID();
     }
 }

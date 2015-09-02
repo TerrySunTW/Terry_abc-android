@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TabHost;
@@ -15,11 +14,10 @@ import android.widget.TabWidget;
 import android.widget.TextView;
 
 import com.abc.terry_sun.abc.CustomClass.Application.ABCApplication;
-import com.abc.terry_sun.abc.Entities.Cards;
+import com.abc.terry_sun.abc.Entities.DB_Cards;
 import com.abc.terry_sun.abc.NFC.NfcStorage;
 import com.abc.terry_sun.abc.Service.CardService;
 import com.abc.terry_sun.abc.Service.ImageService;
-import com.abc.terry_sun.abc.Service.StorageService;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -39,7 +37,7 @@ public class MainActivity extends TabActivity {
 		ButterKnife.inject(this);
 		MainCardImageButton=ImageButtonMainCard;
 
-		Cards MainCard= CardService.getInstance().GetMainCards();
+		DB_Cards MainCard= CardService.getInstance().GetMainCards();
 		if(MainCard!=null) {
 			ChangeMainCardImage(ImageService.GetBitmapFromImageName(MainCard.getCardImage()), MainCard.getEntityCardID());
 
@@ -69,10 +67,9 @@ public class MainActivity extends TabActivity {
 		addTab("Cards", R.drawable.tab_home, TabGroup_Cards.class);
 		addTab("Bonus", R.drawable.tab_search, BonusListActivity.class);
 		addTab("Fake", R.drawable.tab_search, CardDetailEmulateActivity.class);
-        addTab("Link", R.drawable.tab_search, ReadCardActivity.class);
+        addTab("Link", R.drawable.tab_search, FriendsListActivity.class);
 		addTab("R-Card", R.drawable.tab_search, TabGroup_R_Card.class);
 		TabWidgetSetting();
-
 	}
 	private void TabWidgetSetting()
 	{

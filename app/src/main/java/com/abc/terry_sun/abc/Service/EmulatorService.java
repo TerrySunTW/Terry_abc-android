@@ -10,8 +10,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.abc.terry_sun.abc.Entities.Cards;
-import com.abc.terry_sun.abc.Entities.Events;
+import com.abc.terry_sun.abc.Entities.DB_Cards;
 import com.abc.terry_sun.abc.MainActivity;
 import com.abc.terry_sun.abc.NFC.NfcStorage;
 import com.abc.terry_sun.abc.R;
@@ -29,7 +28,7 @@ public class EmulatorService {
     {
         Context context= MainActivity.GetMainActivityContext();
         EmulatorDialog=new Dialog(context);
-        final Cards SelectedCardInfo=CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
+        final DB_Cards SelectedCardInfo=CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
 
         EmulatorDialog.setContentView(R.layout.dialog_emulator);
         Window window = EmulatorDialog.getWindow();

@@ -1,17 +1,11 @@
 package com.abc.terry_sun.abc.Entities;
 
-import android.content.Context;
-import android.util.Log;
-
 import com.abc.terry_sun.abc.Provider.HttpURL_Provider;
 import com.abc.terry_sun.abc.Service.ImageService;
 import com.abc.terry_sun.abc.Service.StorageService;
 import com.abc.terry_sun.abc.Utilits.InternetUtil;
 import com.orm.SugarRecord;
 
-import org.json.JSONObject;
-
-import java.security.spec.ECField;
 import java.util.Date;
 
 import lombok.Data;
@@ -20,7 +14,7 @@ import lombok.Data;
  * Created by terry_sun on 2015/6/29.
  */
 @Data
-public class Cards extends SugarRecord<Cards> {
+public class DB_Cards extends SugarRecord<DB_Cards> {
 
     String CategoryID;
     String CategoryName;
@@ -54,7 +48,7 @@ public class Cards extends SugarRecord<Cards> {
     String RelationLink;
     String CreatedTime;
     Date CreatedTimeFormated;
-    public void UpdateInfo(Cards NewInfo)
+    public void UpdateInfo(DB_Cards NewInfo)
     {
         this.setRelationLink(NewInfo.getRelationLink());
         this.setIsFavorite(NewInfo.getIsFavorite());

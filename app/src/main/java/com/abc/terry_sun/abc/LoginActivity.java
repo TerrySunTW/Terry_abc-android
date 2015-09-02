@@ -15,14 +15,9 @@ import android.widget.Toast;
 
 import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskHttpRequest;
 import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskProcessingInterface;
-import com.abc.terry_sun.abc.Entities.Cards;
 import com.abc.terry_sun.abc.Provider.HttpURL_Provider;
 import com.abc.terry_sun.abc.Provider.VariableProvider;
-import com.abc.terry_sun.abc.Service.ImageService;
 import com.abc.terry_sun.abc.Service.ServerCommunicationService;
-import com.abc.terry_sun.abc.Service.StorageService;
-import com.abc.terry_sun.abc.Service.StringService;
-import com.abc.terry_sun.abc.Utilits.InternetUtil;
 import com.abc.terry_sun.abc.Utilits.OkHttpUtil;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -31,18 +26,17 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
+import com.facebook.GraphRequestBatch;
 import com.facebook.GraphResponse;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.google.gson.Gson;
 
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -58,12 +52,14 @@ public class LoginActivity extends Activity {
     CallbackManager callbackManager;
     private AccessToken accessToken;
     AccessTokenTracker accessTokenTracker;
-    Context _context;
+    static Context _context;
     List<BasicNameValuePair> LoginParams= new LinkedList<BasicNameValuePair>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         _context=this;
+
+
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         accessTokenTracker = new AccessTokenTracker() {
             @Override
@@ -78,7 +74,7 @@ public class LoginActivity extends Activity {
 
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
         loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setLoginBehavior(LoginBehavior.SSO_WITH_FALLBACK);
+        loginButton.setLoginBehavior(LoginBehavior.SSO_ONLY);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,7 +122,9 @@ public class LoginActivity extends Activity {
                 });
     }
     private void GetFacebookInfoProcess() {
-        GraphRequest request = GraphRequest.newMeRequest(
+        GraphRequestBatch batch = new GraphRequestBatch(
+
+        GraphRequest.newMeRequest(
                 accessToken,
                 new GraphRequest.GraphJSONObjectCallback() {
                     @Override
@@ -154,12 +152,13 @@ public class LoginActivity extends Activity {
                         _AsyncTaskHttpRequest.execute();
 
                     }
-                });
-
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,link,picture");
-        request.setParameters(parameters);
-        request.executeAsync();
+                })
+        );
+        batch.executeAsync();
+        //Bundle parameters = new Bundle();
+        //parameters.putString("fields", "id,name,link,picture");
+        //request.setParameters(parameters);
+        //request.executeAsync();
     }
     String URL;
     private void GetFacebookUserData(JSONObject object) {
@@ -171,16 +170,8 @@ public class LoginActivity extends Activity {
         Log.d("FB",FacebookID);
         Log.d("FB", FacebookName);
         Log.d("FB", FacebookLink);
-        try {
-            JSONObject jsonPicture = object.getJSONObject("picture");
-            JSONObject jsonData = jsonPicture.getJSONObject("data");
-            FacebookPhoto= jsonData.optString("url");
-            Log.d("FB", FacebookPhoto);
-        }
-        catch(Exception e)
-        {
+        FacebookPhoto= "http://graph.facebook.com/"+FacebookID+"/picture?type=large";
 
-        }
         LoginParams.add(new BasicNameValuePair("FacebookLoginID", FacebookID));
         LoginParams.add(new BasicNameValuePair("FacebookImage", FacebookPhoto));
         LoginParams.add(new BasicNameValuePair("UserName", FacebookName));

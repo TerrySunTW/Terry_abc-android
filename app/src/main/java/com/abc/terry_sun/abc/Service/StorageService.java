@@ -18,6 +18,10 @@ public class StorageService {
     {
         return GetAppStoragePath()+ File.separator+ImageService.GetImageFileName(ImageName);
     }
+    public static String GetFriendImagePath(String FriendID)
+    {
+        return GetAppStoragePath()+ File.separator+"Friend"+FriendID;
+    }
     public static String GetAppStoragePath()
     {
         String AppName=ABCApplication.getSugarContext().getString(R.string.app_name);

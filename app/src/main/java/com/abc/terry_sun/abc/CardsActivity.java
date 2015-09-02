@@ -1,34 +1,23 @@
 package com.abc.terry_sun.abc;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.TextView;
 
 import com.abc.terry_sun.abc.CustomClass.Adapter.AdapterCardsImage;
-import com.abc.terry_sun.abc.Entities.Cards;
 import com.abc.terry_sun.abc.Models.CardInfo;
 import com.abc.terry_sun.abc.Models.CategoryInfo;
 import com.abc.terry_sun.abc.Models.GalleryItem;
 import com.abc.terry_sun.abc.Models.GroupInfo;
 import com.abc.terry_sun.abc.Models.RepresentativeInfo;
 import com.abc.terry_sun.abc.Service.CardService;
-import com.abc.terry_sun.abc.Service.ImageService;
 import com.abc.terry_sun.abc.Service.ScreenService;
-import com.abc.terry_sun.abc.Service.StorageService;
 
 import java.util.ArrayList;
 import java.util.List;

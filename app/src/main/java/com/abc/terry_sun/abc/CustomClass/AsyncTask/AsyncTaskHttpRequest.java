@@ -22,7 +22,7 @@ public class AsyncTaskHttpRequest  extends AsyncTask<Void, Integer, Integer> {
     public AsyncTaskHttpRequest(Context context,AsyncTaskProcessingInterface asyncTaskProcessingInterfac){
         this._AsyncTaskProcessingInterface=asyncTaskProcessingInterfac;
         this.context=context;
-        ProcessControlService.ShowProgressDialog(context,"作業處理中...","請稍待...");
+        ProcessControlService.ShowProgressDialog(context, "作業處理中...", "請稍待...");
     }
     @Override
     protected void onPreExecute()

@@ -1,13 +1,13 @@
 package com.abc.terry_sun.abc.Service;
 
-import android.content.Context;
+import android.os.Environment;
 import android.util.Log;
 
-import com.abc.terry_sun.abc.CustomClass.Application.ABCApplication;
 import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskHttpRequest;
 import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskProcessingInterface;
-import com.abc.terry_sun.abc.Entities.Cards;
-import com.abc.terry_sun.abc.Entities.Events;
+import com.abc.terry_sun.abc.Entities.DB_Cards;
+import com.abc.terry_sun.abc.Entities.DB_Events;
+import com.abc.terry_sun.abc.Entities.DB_Friend;
 import com.abc.terry_sun.abc.MainActivity;
 import com.abc.terry_sun.abc.Provider.HttpURL_Provider;
 import com.abc.terry_sun.abc.Provider.VariableProvider;
@@ -17,13 +17,14 @@ import com.google.gson.Gson;
 
 import org.apache.http.message.BasicNameValuePair;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.ContentHandler;
-import java.util.Arrays;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
-
-import lombok.eclipse.agent.ExtensionMethodCompletionProposal;
 
 /**
  * Created by terry_sun on 2015/7/24.
@@ -115,6 +116,7 @@ public class ServerCommunicationService {
     {
         GetUserCardInfo();
         GetUserEventInfo();
+        GetUserFriendInfo();
     }
     public void  GetUserCardInfo() {
         List<BasicNameValuePair> UrlParams= new LinkedList<BasicNameValuePair>();
@@ -129,17 +131,17 @@ public class ServerCommunicationService {
 
         }
         Log.i("info","JsonArray.UserCardsInJson:"+ UserCardsInJson);
-        Cards[] OnlineCardsArray = gson.fromJson(UserCardsInJson, Cards[].class);
+        DB_Cards[] onlineDBCardsArray = gson.fromJson(UserCardsInJson, DB_Cards[].class);
         StorageService.GetAppStorageFolderInitial();
-        Log.i("info", "OnlineCardsArray:"+OnlineCardsArray.length);
+        Log.i("info", "OnlineCardsArray:"+ onlineDBCardsArray.length);
         String Result="";
-        List<Cards> LocalCardList=CardService.getInstance().GetAllCards();
+        List<DB_Cards> LocalCardList=CardService.getInstance().GetAllCards();
 
         //remove  item (sync with server)
-        for(Cards OldItem:LocalCardList)
+        for(DB_Cards OldItem:LocalCardList)
         {
             boolean IsNeedRemove=true;
-            for (Cards Item:OnlineCardsArray)
+            for (DB_Cards Item: onlineDBCardsArray)
             {
                 if(Item.getCardID().equals(OldItem.getCardID()))
                 {
@@ -153,10 +155,10 @@ public class ServerCommunicationService {
             }
         }
 
-        for (Cards Item:OnlineCardsArray)
+        for (DB_Cards Item: onlineDBCardsArray)
         {
             //add & update
-            List<Cards> CardList = Cards.find(Cards.class, "ENTITY_CARD_ID = ?", Item.getEntityCardID());
+            List<DB_Cards> CardList = DB_Cards.find(DB_Cards.class, "ENTITY_CARD_ID = ?", Item.getEntityCardID());
             if(CardList.size()==0)
             {
                 //create
@@ -171,9 +173,9 @@ public class ServerCommunicationService {
             else
             {
                 //update
-                Cards _Cards=CardList.get(0);
-                _Cards.UpdateInfo(Item);
-                _Cards.save();
+                DB_Cards _DB_Cards =CardList.get(0);
+                _DB_Cards.UpdateInfo(Item);
+                _DB_Cards.save();
             }
         }
     }
@@ -189,14 +191,49 @@ public class ServerCommunicationService {
         {
             ex.printStackTrace();
         }
-        Events[] OnlineEvents = gson.fromJson(JsonData, Events[].class);
+        DB_Events[] onlineEvents = gson.fromJson(JsonData, DB_Events[].class);
 
         CardService.getInstance().RemoveAllEvents();
 
 
-        for (Events Item:OnlineEvents)
+        for (DB_Events Item: onlineEvents)
         {
             Item.save();
+        }
+    }
+
+    public void  GetUserFriendInfo() {
+        List<BasicNameValuePair> UrlParams= new LinkedList<BasicNameValuePair>();
+        UrlParams.add(new BasicNameValuePair("UserFacebookID",VariableProvider.getInstance().getFacebookID()));
+        Gson gson = new Gson();
+        String JsonData="";
+        try {
+            JsonData = OkHttpUtil.getStringFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.GetUserFriends, UrlParams));
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+        DB_Friend[] online_Friend = gson.fromJson(JsonData, DB_Friend[].class);
+
+        CardService.getInstance().RemoveAllFriends();
+
+
+        for (DB_Friend Item: online_Friend)
+        {
+            DownLoadFriendImage(Item.getFriendImage(),Item.getFriendID());
+            Item.save();
+        }
+    }
+
+    public static void DownLoadFriendImage(String _URL,String FriendID)
+    {
+        try {
+            InternetUtil.DownloadFacebookProfilePictureFile(_URL,StorageService.GetFriendImagePath(FriendID));
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
         }
     }
 }

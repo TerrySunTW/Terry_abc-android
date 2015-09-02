@@ -2,15 +2,13 @@ package com.abc.terry_sun.abc.Service;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.abc.terry_sun.abc.Entities.Cards;
-import com.abc.terry_sun.abc.Entities.Events;
+import com.abc.terry_sun.abc.Entities.DB_Cards;
+import com.abc.terry_sun.abc.Entities.DB_Events;
 import com.abc.terry_sun.abc.MainActivity;
 import com.abc.terry_sun.abc.R;
 
@@ -29,12 +27,12 @@ public class BonusService {
     {
         Context context=MainActivity.GetMainActivityContext();
         BonusDialog=new Dialog(context);
-        final Cards SelectedCardInfo=CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
-        final Events _Events=GetEventsByCardID(SelectedCardInfo.getCardID());
+        final DB_Cards SelectedCardInfo=CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
+        final DB_Events _DB_Events =GetEventsByCardID(SelectedCardInfo.getCardID());
 
         BonusDialog.setContentView(R.layout.dialog_bonus_info);
         Window window = BonusDialog.getWindow();
-        window.setBackgroundDrawable(new ColorDrawable(0));
+        //window.setBackgroundDrawable(new ColorDrawable(0));
         window.setLayout(ScreenService.GetScreenWidth(context).x - 100, ScreenService.GetScreenWidth(context).y - 300);
 
 
@@ -55,19 +53,19 @@ public class BonusService {
         });
 
         TextView TextView_BonusTitle=(TextView)BonusDialog.findViewById(R.id.TextView_BonusTitle);
-        TextView_BonusTitle.setText(_Events.getEventTitle());
+        TextView_BonusTitle.setText(_DB_Events.getEventTitle());
 
         TextView TextView_BonusContent=(TextView)BonusDialog.findViewById(R.id.TextView_BonusContent);
-        TextView_BonusContent.setText(_Events.getEventDescription());
+        TextView_BonusContent.setText(_DB_Events.getEventDescription());
 
         BonusDialog.show();
     }
-    public Events GetEventsByCardID(String CardID)
+    public DB_Events GetEventsByCardID(String CardID)
     {
-        List<Events> EventsList=Events.find(Events.class, "CARD_ID=?", CardID);
-        if(EventsList.size()>0)
+        List<DB_Events> DBEventsList = DB_Events.find(DB_Events.class, "CARD_ID=?", CardID);
+        if(DBEventsList.size()>0)
         {
-            return EventsList.get(0);
+            return DBEventsList.get(0);
         }
         return null;
     }
