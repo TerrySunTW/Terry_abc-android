@@ -14,6 +14,7 @@ public class DB_Events extends SugarRecord<DB_Events> {
     String CategoryID;
     String GroupID;
     String RepresentativeID;
+    String CardType;
     String EventID;
     String EventTitle;
     String EventDescription;

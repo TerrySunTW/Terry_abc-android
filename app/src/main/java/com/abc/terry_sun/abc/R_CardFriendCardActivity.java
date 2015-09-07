@@ -41,7 +41,7 @@ public class R_CardFriendCardActivity extends BasicActivity {
     @OnClick(R.id.ButtonHasRealCard)
     protected void onButtonClicked_ButtonHasRealCard() {
         Log.i(TAG,"onButtonClicked_ButtonHasRealCard");
-        Intent _Intent = new Intent(this,R_CardNewCardActivity.class);
+        Intent _Intent = new Intent(this,R_CardRealFriendCardActivity.class);
         TabGroup_R_Card.ChangeActivity( _Intent, true);
     }
     @OnClick(R.id.ButtonNoRealCard)

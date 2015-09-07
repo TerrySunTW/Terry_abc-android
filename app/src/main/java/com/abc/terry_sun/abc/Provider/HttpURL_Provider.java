@@ -11,8 +11,9 @@ public class HttpURL_Provider {
     public static final String GetUserFriends= ServerURL + "WebService/GetUserFriends";
     public static final String ToggleFavoriteSetting= ServerURL + "WebService/SetFavoriteCard";
     public static final String AddNewCard= ServerURL + "WebService/UserAddNewCard";
+    public static final String AddFriendEntityCard= ServerURL + "WebService/AddFriendEntityCard";
+    public static final String AddFriendNFCCard= ServerURL + "WebService/AddFriendNFCCard";
     public static final String GetUserCardIDByEntityID= ServerURL + "WebService/GetUserCardIDByEntityID";
     public static final String GetUserEvent= ServerURL + "WebService/GetUserEvent";
     public static final String SetMainCardSetting= ServerURL + "WebService/SetMainCard";
-
 }

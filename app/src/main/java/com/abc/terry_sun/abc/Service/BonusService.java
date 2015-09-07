@@ -23,16 +23,19 @@ public class BonusService {
     public static BonusService getInstance() {
         return _BonusService;
     }
-    public void ShowBonusDialog(final String EntityCardID)
+    public void ShowBonusDialog(final String CardEventID)
     {
         Context context=MainActivity.GetMainActivityContext();
+
+        final DB_Events _DB_Events=GetEventsByEventID(CardEventID);
+        //EntityCardID
+        String EntityCardID=CardService.getInstance().GetCardsByCardID(_DB_Events.getCardID()).getEntityCardID();
         BonusDialog=new Dialog(context);
         final DB_Cards SelectedCardInfo=CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
-        final DB_Events _DB_Events =GetEventsByCardID(SelectedCardInfo.getCardID());
+
 
         BonusDialog.setContentView(R.layout.dialog_bonus_info);
         Window window = BonusDialog.getWindow();
-        //window.setBackgroundDrawable(new ColorDrawable(0));
         window.setLayout(ScreenService.GetScreenWidth(context).x - 100, ScreenService.GetScreenWidth(context).y - 300);
 
 
@@ -63,6 +66,15 @@ public class BonusService {
     public DB_Events GetEventsByCardID(String CardID)
     {
         List<DB_Events> DBEventsList = DB_Events.find(DB_Events.class, "CARD_ID=?", CardID);
+        if(DBEventsList.size()>0)
+        {
+            return DBEventsList.get(0);
+        }
+        return null;
+    }
+    public DB_Events GetEventsByEventID(String EventID)
+    {
+        List<DB_Events> DBEventsList = DB_Events.find(DB_Events.class, "EVENT_ID=?", EventID);
         if(DBEventsList.size()>0)
         {
             return DBEventsList.get(0);

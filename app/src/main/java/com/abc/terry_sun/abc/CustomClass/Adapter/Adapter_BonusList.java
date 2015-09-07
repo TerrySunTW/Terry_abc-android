@@ -1,6 +1,8 @@
 package com.abc.terry_sun.abc.CustomClass.Adapter;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,12 +10,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.abc.terry_sun.abc.Entities.DB_Cards;
 import com.abc.terry_sun.abc.Entities.DB_Events;
 import com.abc.terry_sun.abc.MainActivity;
 import com.abc.terry_sun.abc.Models.ListItem_Actions;
 import com.abc.terry_sun.abc.R;
 import com.abc.terry_sun.abc.Service.BonusService;
 import com.abc.terry_sun.abc.Service.CardService;
+import com.abc.terry_sun.abc.Service.StorageService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,18 +30,44 @@ public class Adapter_BonusList extends BaseAdapter {
     private List<ListItem_Actions> stringPairList=new ArrayList<ListItem_Actions>();
 
 
-    public Adapter_BonusList(Activity activity, List<DB_Events> CardEventList) {
+    public Adapter_BonusList(Activity activity, List<DB_Cards> CardList) {
         super();
         this.activity = activity;
-        for (DB_Events item:CardEventList)
+        UpdateListItem(CardList);
+    }
+
+    private void UpdateListItem(List<DB_Cards> CardList) {
+        for (DB_Cards item:CardList)
         {
-            stringPairList.add(new ListItem_Actions(
-                    CardService.getInstance().GetEntityCardIDByCardID(item.getCardID()),
-                    CardService.getInstance().GetCardImageByCardID(item.getCardID()),
-                    item.getEventTitle(),
-                    item.getEventDescription()));
+            ListItem_Actions _ListItem_Actions=new ListItem_Actions();
+            _ListItem_Actions.setItemImage(BitmapFactory.decodeFile(StorageService.GetImagePath(item.getCardImage())));
+            _ListItem_Actions.setEntityCardID(item.getEntityCardID());
+
+            //get card bonus
+            //Entity Event
+            DB_Events EntityCardEvent= CardService.getInstance().GetEntityEventsByCardID(item.getCardID());
+            if(EntityCardEvent!=null)
+            {
+                _ListItem_Actions.setBonus1_EventID(EntityCardEvent.getEventID());
+                _ListItem_Actions.setBonus1_Title(EntityCardEvent.getEventTitle());
+                _ListItem_Actions.setBonus1_Description(EntityCardEvent.getEventDescription());
+                _ListItem_Actions.setBonus1_CardType(EntityCardEvent.getCardType());
+            }
+            //Entity Event
+            DB_Events VirtualCardEvent=CardService.getInstance().GetVirtualEventsByCardID(item.getCardID());
+            if(VirtualCardEvent!=null)
+            {
+                _ListItem_Actions.setBonus2_EventID(VirtualCardEvent.getEventID());
+                _ListItem_Actions.setBonus2_Title(VirtualCardEvent.getEventTitle());
+                _ListItem_Actions.setBonus2_Description(VirtualCardEvent.getEventDescription());
+                _ListItem_Actions.setBonus2_CardType(VirtualCardEvent.getCardType());
+            }
+
+            stringPairList.add(_ListItem_Actions);
         }
     }
+
+    /**
     public void UpdateData(List<DB_Events> CardEventList)
     {
         stringPairList.clear();
@@ -49,8 +79,12 @@ public class Adapter_BonusList extends BaseAdapter {
                     item.getEventTitle(),
                     item.getEventDescription()));
         }
+    }**/
+    public void UpdateData(List<DB_Cards> CardList)
+    {
+        stringPairList.clear();
+        UpdateListItem(CardList);
     }
-
     @Override
     public int getCount() {
         return stringPairList.size();
@@ -86,22 +120,49 @@ public class Adapter_BonusList extends BaseAdapter {
             }
         });
 
-        TextView ItemInfo1 = (TextView) convertView.findViewById(R.id.action1_title);
-        TextView ItemInfo2 = (TextView) convertView.findViewById(R.id.action1_content);
-        ItemInfo1.setTag(_ListItem_Actions.getEntityCardID());
-        ItemInfo2.setTag(_ListItem_Actions.getEntityCardID());
+        TextView Bonus1_Title = (TextView) convertView.findViewById(R.id.action1_title);
+        TextView Bonus1_Content = (TextView) convertView.findViewById(R.id.action1_content);
+        Bonus1_Title.setTag(_ListItem_Actions.getBonus1_EventID());
+        Bonus1_Content.setTag(_ListItem_Actions.getBonus1_EventID());
 
-        ItemInfo1.setText(_ListItem_Actions.getTitle1());
-        ItemInfo2.setText(_ListItem_Actions.getTitle2());
+        Bonus1_Title.setText(_ListItem_Actions.getBonus1_Title());
+        Bonus1_Content.setText(_ListItem_Actions.getBonus1_Description());
 
-        ItemInfo1.setOnClickListener(new View.OnClickListener() {
+
+        TextView Bonus2_Title = (TextView) convertView.findViewById(R.id.action2_title);
+        TextView Bonus2_Content = (TextView) convertView.findViewById(R.id.action2_content);
+
+        Bonus2_Title.setTag(_ListItem_Actions.getBonus2_EventID());
+        Bonus2_Content.setTag(_ListItem_Actions.getBonus2_EventID());
+
+        Bonus2_Title.setText(_ListItem_Actions.getBonus2_Title());
+        Bonus2_Content.setText(_ListItem_Actions.getBonus2_Description());
+
+
+
+        Bonus1_Title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 BonusService.getInstance().ShowBonusDialog(view.getTag().toString());
             }
         });
 
-        ItemInfo2.setOnClickListener(new View.OnClickListener() {
+        Bonus1_Content.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BonusService.getInstance().ShowBonusDialog(view.getTag().toString());
+            }
+        });
+
+
+        Bonus2_Title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BonusService.getInstance().ShowBonusDialog(view.getTag().toString());
+            }
+        });
+
+        Bonus2_Content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 BonusService.getInstance().ShowBonusDialog(view.getTag().toString());

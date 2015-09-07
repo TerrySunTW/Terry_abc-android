@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskSendNFCCardToServer;
 import com.abc.terry_sun.abc.CustomClass.Interface.OnTagDiscoveredEvent;
 
 
@@ -61,39 +62,16 @@ public class CardReaderFragment extends Fragment implements LoyaltyCardReader.Ac
             mAccountField = (TextView) v.findViewById(R.id.card_account_field);
             mAccountField.setText("Waiting...");
 
+
             mLoyaltyCardReader = new LoyaltyCardReader(this);
-            mLoyaltyCardReader.SetReadCardEvent(new OnTagDiscoveredEvent() {
-                @Override
-                public void ReadProcessing(String CardInlfo) {
-                    LastCardInfo=CardInlfo;
-                    Message msg = new Message();
-                    msg.what = 0;
-                    messageHandler.sendMessage(msg);
-                }
-            });
+
             // Disable Android Beam and register our card reader callback
             enableReaderMode();
         }
 
         return v;
     }
-    private void HandlerSetting() {
-        messageHandler = new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                switch(msg.what){
-                    case 0:
-                        mAccountField.setText(LastCardInfo);
-                        break;
 
-                    default:
-                        //login fail
-                        break;
-                }
-                super.handleMessage(msg);
-            }
-        };
-    }
     @Override
     public void onPause() {
         super.onPause();
@@ -125,13 +103,14 @@ public class CardReaderFragment extends Fragment implements LoyaltyCardReader.Ac
     }
 
     @Override
-    public void onAccountReceived(final String account) {
+    public void onAccountReceived(final String NFC_CardID) {
         // This callback is run on a background thread, but updates to UI elements must be performed
         // on the UI thread.
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mAccountField.setText(account);
+                new AsyncTaskSendNFCCardToServer(MainActivity.MainActivityContext,NFC_CardID).execute();
+                //mAccountField.setText(NFC_CardID+"AAA");
             }
         });
     }

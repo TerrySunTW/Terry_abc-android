@@ -187,9 +187,45 @@ public class CardService {
     {
         return DB_Cards.listAll(DB_Cards.class);
     }
+    public List<DB_Cards> GetFilteredCards(String CategoryID,String GroupID,String RepresentativeID)
+    {
+        List<DB_Cards> CardList=GetAllCards();
+        List<DB_Cards> TempCardList=new ArrayList<DB_Cards>();
+
+        for(DB_Cards item:CardList) {
+            if((CategoryID.equals("")||CategoryID.equals(item.getCategoryID()))&&
+                    (GroupID.equals("")||GroupID.equals(item.getGroupID()))&&
+                    (RepresentativeID.equals("")||RepresentativeID.equals(item.getRepresentativeID()))
+                    )
+            {
+                TempCardList.add(item);
+            }
+        }
+
+        return TempCardList;
+    }
     public List<DB_Events> GetAllEvents()
     {
         return DB_Events.listAll(DB_Events.class);
+    }
+
+    public DB_Events GetEntityEventsByCardID(String CardID)
+    {
+        List<DB_Events> DataList=DB_Events.find(DB_Events.class, "Card_ID=? and Card_Type='entity'", CardID);
+        if(DataList.size()>0)
+        {
+            return DataList.get(0);
+        }
+        return null;
+    }
+    public DB_Events GetVirtualEventsByCardID(String CardID)
+    {
+        List<DB_Events> DataList=DB_Events.find(DB_Events.class, "Card_ID=? and Card_Type='vitual'", CardID);
+        if(DataList.size()>0)
+        {
+            return DataList.get(0);
+        }
+        return null;
     }
     public List<DB_Cards> GetFavorateCards()
     {

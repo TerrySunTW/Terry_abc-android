@@ -26,6 +26,16 @@
                 android:layout_height="wrap_content"
                 android:text="222222222"/>
 
+            <TextView android:id="@+id/action2_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="111111"/>
+
+            <TextView android:id="@+id/action2_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="222222222"/>
+
         </LinearLayout>
     </LinearLayout>
 

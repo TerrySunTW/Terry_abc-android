@@ -97,6 +97,44 @@ public class ServerCommunicationService {
         }
         return result;
     }
+    public int AddFriendEntityCard(final String EntityCardID)
+    {
+        int result=0;//0:fail >0:CardID:
+        try {
+            List<BasicNameValuePair> UrlParams = new LinkedList<BasicNameValuePair>();
+            UrlParams.add(new BasicNameValuePair("UserFacebookID", VariableProvider.getInstance().getFacebookID()));
+            UrlParams.add(new BasicNameValuePair("EntityCardID", EntityCardID));
+            result=OkHttpUtil.getIntFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.AddFriendEntityCard, UrlParams));
+            if (result>0)
+            {
+                ServerCommunicationService.getInstance().GetUserCardInfo();
+            }
+        }
+        catch (Exception ex)
+        {
+            Log.e(TAG,ex.getMessage());
+        }
+        return result;
+    }
+    public int AddFriendNFCCard(final String NFCCardID)
+    {
+        int result=0;//0:fail >0:CardID:
+        try {
+            List<BasicNameValuePair> UrlParams = new LinkedList<BasicNameValuePair>();
+            UrlParams.add(new BasicNameValuePair("UserFacebookID", VariableProvider.getInstance().getFacebookID()));
+            UrlParams.add(new BasicNameValuePair("NFCCardID", NFCCardID));
+            result=OkHttpUtil.getIntFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.AddFriendNFCCard, UrlParams));
+            if (result>0)
+            {
+                ServerCommunicationService.getInstance().GetUserCardInfo();
+            }
+        }
+        catch (Exception ex)
+        {
+            Log.e(TAG,ex.getMessage());
+        }
+        return result;
+    }
     public String GetCardByEntityID(final String EntityCardID)
     {
         String CardID="";
@@ -229,7 +267,7 @@ public class ServerCommunicationService {
     public static void DownLoadFriendImage(String _URL,String FriendID)
     {
         try {
-            InternetUtil.DownloadFacebookProfilePictureFile(_URL,StorageService.GetFriendImagePath(FriendID));
+            InternetUtil.DownloadFacebookProfilePictureFile(_URL, StorageService.GetFriendImagePath(FriendID));
         }
         catch (Exception ex)
         {

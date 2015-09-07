@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 
 import com.abc.terry_sun.abc.CustomClass.Adapter.Adapter_BonusList;
+import com.abc.terry_sun.abc.Entities.DB_Cards;
 import com.abc.terry_sun.abc.Entities.DB_Events;
 import com.abc.terry_sun.abc.Models.CardInfo;
 import com.abc.terry_sun.abc.Models.CategoryInfo;
@@ -81,19 +82,20 @@ public class BonusListActivity extends Activity {
 	}
 	private void List_Setting() {
 		List<ListItem_Actions> data=new ArrayList<ListItem_Actions>();
-		List<DB_Events> cardEvents = CardService.getInstance().GetAllEvents();
+		List<DB_Cards> AllCards = CardService.getInstance().GetAllCards();
 
-		_Adapter_ActionList=new Adapter_BonusList(this, cardEvents);
+		_Adapter_ActionList=new Adapter_BonusList(this, AllCards);
 		listview_activity_list.setAdapter(_Adapter_ActionList);
 	}
 	private void Update_List(Boolean IsFavorate) {
 		if(IsFavorate)
 		{
-			_Adapter_ActionList.UpdateData(CardService.getInstance().GetFavorateEvents());
+			//_Adapter_ActionList.UpdateData(CardService.getInstance().GetFavorateEvents());
+			_Adapter_ActionList.UpdateData(CardService.getInstance().GetFavorateCards());
 		}
 		else
 		{
-			_Adapter_ActionList.UpdateData(CardService.getInstance().GetFilteredEvents(SelectedCategoryID, SelectedGroupID, SelectedRepresentativeID));
+			_Adapter_ActionList.UpdateData(CardService.getInstance().GetFilteredCards(SelectedCategoryID, SelectedGroupID, SelectedRepresentativeID));
 		}
 		_Adapter_ActionList.notifyDataSetChanged();
 	}
