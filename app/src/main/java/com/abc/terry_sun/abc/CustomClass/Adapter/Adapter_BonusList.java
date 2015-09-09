@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.abc.terry_sun.abc.Entities.DB_Cards;
@@ -42,6 +43,10 @@ public class Adapter_BonusList extends BaseAdapter {
             ListItem_Actions _ListItem_Actions=new ListItem_Actions();
             _ListItem_Actions.setItemImage(BitmapFactory.decodeFile(StorageService.GetImagePath(item.getCardImage())));
             _ListItem_Actions.setEntityCardID(item.getEntityCardID());
+            _ListItem_Actions.setDirectPoint(item.getDirectPoint());
+            _ListItem_Actions.setIndirectPoint(item.getIndirectPoint());
+
+
 
             //get card bonus
             //Entity Event
@@ -52,6 +57,8 @@ public class Adapter_BonusList extends BaseAdapter {
                 _ListItem_Actions.setBonus1_Title(EntityCardEvent.getEventTitle());
                 _ListItem_Actions.setBonus1_Description(EntityCardEvent.getEventDescription());
                 _ListItem_Actions.setBonus1_CardType(EntityCardEvent.getCardType());
+                _ListItem_Actions.setDirectPointTarget1(EntityCardEvent.getDirectPointTarget());
+                _ListItem_Actions.setIndirectPointTarget1(EntityCardEvent.getIndirectPointTarget());
             }
             //Entity Event
             DB_Events VirtualCardEvent=CardService.getInstance().GetVirtualEventsByCardID(item.getCardID());
@@ -61,25 +68,14 @@ public class Adapter_BonusList extends BaseAdapter {
                 _ListItem_Actions.setBonus2_Title(VirtualCardEvent.getEventTitle());
                 _ListItem_Actions.setBonus2_Description(VirtualCardEvent.getEventDescription());
                 _ListItem_Actions.setBonus2_CardType(VirtualCardEvent.getCardType());
+                _ListItem_Actions.setDirectPointTarget2(VirtualCardEvent.getDirectPointTarget());
+                _ListItem_Actions.setIndirectPointTarget2(VirtualCardEvent.getIndirectPointTarget());
             }
 
             stringPairList.add(_ListItem_Actions);
         }
     }
 
-    /**
-    public void UpdateData(List<DB_Events> CardEventList)
-    {
-        stringPairList.clear();
-        for (DB_Events item:CardEventList)
-        {
-            stringPairList.add(new ListItem_Actions(
-                    CardService.getInstance().GetEntityCardIDByCardID(item.getCardID()),
-                    CardService.getInstance().GetCardImageByCardID(item.getCardID()),
-                    item.getEventTitle(),
-                    item.getEventDescription()));
-        }
-    }**/
     public void UpdateData(List<DB_Cards> CardList)
     {
         stringPairList.clear();
@@ -122,52 +118,42 @@ public class Adapter_BonusList extends BaseAdapter {
 
         TextView Bonus1_Title = (TextView) convertView.findViewById(R.id.action1_title);
         TextView Bonus1_Content = (TextView) convertView.findViewById(R.id.action1_content);
-        Bonus1_Title.setTag(_ListItem_Actions.getBonus1_EventID());
-        Bonus1_Content.setTag(_ListItem_Actions.getBonus1_EventID());
 
-        Bonus1_Title.setText(_ListItem_Actions.getBonus1_Title());
+        Bonus1_Title.setText(_ListItem_Actions.getBonus1_Title()+"("+_ListItem_Actions.getDirectPoint()+"/"+_ListItem_Actions.getDirectPointTarget1()+")");
         Bonus1_Content.setText(_ListItem_Actions.getBonus1_Description());
 
 
         TextView Bonus2_Title = (TextView) convertView.findViewById(R.id.action2_title);
         TextView Bonus2_Content = (TextView) convertView.findViewById(R.id.action2_content);
 
-        Bonus2_Title.setTag(_ListItem_Actions.getBonus2_EventID());
-        Bonus2_Content.setTag(_ListItem_Actions.getBonus2_EventID());
 
-        Bonus2_Title.setText(_ListItem_Actions.getBonus2_Title());
+        Bonus2_Title.setText(_ListItem_Actions.getBonus2_Title() + "(" + _ListItem_Actions.getIndirectPoint() + "/" + _ListItem_Actions.getIndirectPointTarget2() + ")");
         Bonus2_Content.setText(_ListItem_Actions.getBonus2_Description());
+        if(_ListItem_Actions.getBonus2_Title()==null||_ListItem_Actions.getIndirectPointTarget2()==null) {
+            Bonus2_Title.setVisibility(View.GONE);
+            Bonus2_Content.setVisibility(View.GONE);
+        }
 
 
 
-        Bonus1_Title.setOnClickListener(new View.OnClickListener() {
+        LinearLayout LinearLayout1 = (LinearLayout) convertView.findViewById(R.id.LinearLayout1);
+        LinearLayout1.setTag(_ListItem_Actions.getBonus1_EventID());
+        LinearLayout1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 BonusService.getInstance().ShowBonusDialog(view.getTag().toString());
             }
         });
 
-        Bonus1_Content.setOnClickListener(new View.OnClickListener() {
+        LinearLayout LinearLayout2 = (LinearLayout) convertView.findViewById(R.id.LinearLayout2);
+        LinearLayout2.setTag(_ListItem_Actions.getBonus2_EventID());
+        LinearLayout2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 BonusService.getInstance().ShowBonusDialog(view.getTag().toString());
             }
         });
 
-
-        Bonus2_Title.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                BonusService.getInstance().ShowBonusDialog(view.getTag().toString());
-            }
-        });
-
-        Bonus2_Content.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                BonusService.getInstance().ShowBonusDialog(view.getTag().toString());
-            }
-        });
 
         return convertView;
     }

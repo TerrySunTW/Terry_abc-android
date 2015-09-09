@@ -18,4 +18,8 @@ public class DB_Events extends SugarRecord<DB_Events> {
     String EventID;
     String EventTitle;
     String EventDescription;
+    String DirectPointTarget;
+    String IndirectPointTarget;
+
+
 }

@@ -11,6 +11,9 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 
 import com.abc.terry_sun.abc.CustomClass.Adapter.Adapter_BonusList;
+import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskHttpRequest;
+import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskPostProcessingInterface;
+import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskProcessingInterface;
 import com.abc.terry_sun.abc.Entities.DB_Cards;
 import com.abc.terry_sun.abc.Entities.DB_Events;
 import com.abc.terry_sun.abc.Models.CardInfo;
@@ -20,6 +23,7 @@ import com.abc.terry_sun.abc.Models.GroupInfo;
 import com.abc.terry_sun.abc.Models.ListItem_Actions;
 import com.abc.terry_sun.abc.Models.RepresentativeInfo;
 import com.abc.terry_sun.abc.Service.CardService;
+import com.abc.terry_sun.abc.Service.ServerCommunicationService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,9 +80,22 @@ public class BonusListActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		UpdateServerData();
 		InitialParameter();
-		GategoryDataSetting();
-		List_Setting();
+
+	}
+	private void UpdateServerData() {
+		new AsyncTaskHttpRequest(MainActivity.MainActivityContext, new AsyncTaskProcessingInterface() {
+			@Override
+			public void DoProcessing() {
+				ServerCommunicationService.getInstance().UpdateServerInfo();
+			}
+		}, new AsyncTaskPostProcessingInterface() {
+			@Override
+			public void DoProcessing() {
+				List_Setting();
+			}
+		}).execute();
 	}
 	private void List_Setting() {
 		List<ListItem_Actions> data=new ArrayList<ListItem_Actions>();
@@ -109,9 +126,6 @@ public class BonusListActivity extends Activity {
 		}
 	}
 
-	private void GategoryDataSetting() {
-
-	}
 
 	private void GroupDataSetting() {
 		GroupList=CardService.getInstance().GetGroupByCategoryID(SelectedCategoryID);
@@ -150,7 +164,6 @@ public class BonusListActivity extends Activity {
 				if (item.getItemId() == 1) {
 					//Select all && Reset Menu
 					ResetMenuStatusForChangeCategory();
-					GategoryDataSetting();
 					Update_List(false);
 				}
 				else if (item.getItemId() == 2) {

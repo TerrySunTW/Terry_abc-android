@@ -18,9 +18,19 @@ import com.abc.terry_sun.abc.Service.ProcessControlService;
  */
 public class AsyncTaskHttpRequest  extends AsyncTask<Void, Integer, Integer> {
     AsyncTaskProcessingInterface _AsyncTaskProcessingInterface;
+    AsyncTaskPostProcessingInterface _AsyncTaskPostProcessingInterface;
     Context context;
-    public AsyncTaskHttpRequest(Context context,AsyncTaskProcessingInterface asyncTaskProcessingInterfac){
+    public AsyncTaskHttpRequest(Context context,
+                                AsyncTaskProcessingInterface asyncTaskProcessingInterfac
+    ){
+        this(context, asyncTaskProcessingInterfac, null);
+    }
+    public AsyncTaskHttpRequest(Context context,
+                                AsyncTaskProcessingInterface asyncTaskProcessingInterfac,
+                                AsyncTaskPostProcessingInterface asyncTaskPostProcessingInterfac
+    ){
         this._AsyncTaskProcessingInterface=asyncTaskProcessingInterfac;
+        this._AsyncTaskPostProcessingInterface=asyncTaskPostProcessingInterfac;
         this.context=context;
         ProcessControlService.ShowProgressDialog(context, "作業處理中...", "請稍待...");
     }
@@ -38,6 +48,10 @@ public class AsyncTaskHttpRequest  extends AsyncTask<Void, Integer, Integer> {
     protected void onPostExecute(Integer result) {
         //Log.i("Event", "AsyncTaskPurchaseStock.onPostExecute.CheckResulteIsPass="+String.valueOf(CheckResulteIsPass));
         ProcessControlService.CloseProgressDialog();
+        if(_AsyncTaskPostProcessingInterface!=null)
+        {
+            _AsyncTaskPostProcessingInterface.DoProcessing();
+        }
     }
 
 }

@@ -19,9 +19,16 @@ public class ListItem_Actions {
     private String Bonus1_Title;
     private String Bonus1_Description;
     private String Bonus1_CardType;
+    private String DirectPointTarget1;
+    private String IndirectPointTarget1;
 
     private String Bonus2_EventID;
     private String Bonus2_Title;
     private String Bonus2_Description;
     private String Bonus2_CardType;
+    private String DirectPointTarget2;
+    private String IndirectPointTarget2;
+
+    private String DirectPoint;
+    private String IndirectPoint;
 }

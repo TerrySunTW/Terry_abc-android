@@ -47,6 +47,8 @@ public class DB_Cards extends SugarRecord<DB_Cards> {
     Boolean IsMainCard;
     String RelationLink;
     String CreatedTime;
+    String DirectPoint;
+    String IndirectPoint;
     Date CreatedTimeFormated;
     public void UpdateInfo(DB_Cards NewInfo)
     {
@@ -60,23 +62,26 @@ public class DB_Cards extends SugarRecord<DB_Cards> {
         this.setCategoryImage(NewInfo.getCategoryImage());
         this.setCategoryVersion(NewInfo.getCategoryVersion());
 
-        InternetUtil.DownloadFile(HttpURL_Provider.ImageServerLocation+ImageService.GetImageFileName(NewInfo.getGroupImage()), StorageService.GetImagePath(ImageService.GetImageFileName(NewInfo.getGroupImage())));
+        InternetUtil.DownloadFile(HttpURL_Provider.ImageServerLocation + ImageService.GetImageFileName(NewInfo.getGroupImage()), StorageService.GetImagePath(ImageService.GetImageFileName(NewInfo.getGroupImage())));
         this.setGroupName(NewInfo.getGroupName());
         this.setGroupImage(NewInfo.getGroupImage());
         this.setGroupVersion(NewInfo.getGroupVersion());
 
         //update to
-        InternetUtil.DownloadFile(HttpURL_Provider.ImageServerLocation+ImageService.GetImageFileName(NewInfo.getRepresentativeImage()), StorageService.GetImagePath(ImageService.GetImageFileName(NewInfo.getRepresentativeImage())));
+        InternetUtil.DownloadFile(HttpURL_Provider.ImageServerLocation + ImageService.GetImageFileName(NewInfo.getRepresentativeImage()), StorageService.GetImagePath(ImageService.GetImageFileName(NewInfo.getRepresentativeImage())));
         this.setRepresentativeName(NewInfo.getRepresentativeName());
         this.setRepresentativeImage(NewInfo.getRepresentativeImage());
         this.setRepresentativeVersion(NewInfo.getRepresentativeVersion());
 
         //update to
-        InternetUtil.DownloadFile(HttpURL_Provider.ImageServerLocation+ImageService.GetImageFileName(NewInfo.getCardImage()), StorageService.GetImagePath( ImageService.GetImageFileName(NewInfo.getCardImage())));
+        InternetUtil.DownloadFile(HttpURL_Provider.ImageServerLocation + ImageService.GetImageFileName(NewInfo.getCardImage()), StorageService.GetImagePath(ImageService.GetImageFileName(NewInfo.getCardImage())));
         this.setCardName(NewInfo.getCardName());
         this.setCardImage(NewInfo.getCardImage());
         this.setCardDescription(NewInfo.getCardDescription());
         this.setCardVersion(NewInfo.getCardVersion());
+
+        this.setDirectPoint(NewInfo.getDirectPoint());
+        this.setIndirectPoint(NewInfo.getIndirectPoint());
 
     }
 }
