@@ -1,6 +1,7 @@
 package com.abc.terry_sun.abc.CustomClass.Adapter;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,11 +64,18 @@ public class Adapter_FriendsList extends BaseAdapter {
                 ImageService.GetBitmapFromPath(StorageService.GetFriendImagePath(_ListItem_Friend.getFriendID()))
                 );
 
+
         TextView TextView_Name = (TextView) convertView.findViewById(R.id.TextView_Name);
         TextView TextView_Content = (TextView) convertView.findViewById(R.id.TextView_Content);
 
         TextView_Name.setText(_ListItem_Friend.getFriendName());
         TextView_Content.setText("Card:"+_ListItem_Friend.getCardCount());
+
+        if(position==0)
+        {
+            TextView_Name.setBackgroundColor(Color.BLUE);
+        }
+
         return convertView;
     }
 }

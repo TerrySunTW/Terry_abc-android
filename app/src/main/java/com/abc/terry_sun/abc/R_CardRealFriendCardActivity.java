@@ -63,14 +63,6 @@ public class R_CardRealFriendCardActivity extends BasicActivity {
                     return true;
                 }
 
-                //local card
-                DB_Cards ScannedCard = CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
-                if (ScannedCard != null) {
-                    CardService.getInstance().CloseCardDetailDialog();
-                    CardService.getInstance().ShowCardDetailDialog(ScannedCard.getEntityCardID(), MainActivity.GetMainActivityContext());
-                    return true;
-                }
-
                 Log.i(TAG, "InProcessing");
                 LastReadEntityID = EntityCardID;
                 if (ProcessThread == null) {

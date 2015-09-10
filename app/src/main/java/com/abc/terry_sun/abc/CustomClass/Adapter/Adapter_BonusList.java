@@ -119,7 +119,7 @@ public class Adapter_BonusList extends BaseAdapter {
         TextView Bonus1_Title = (TextView) convertView.findViewById(R.id.action1_title);
         TextView Bonus1_Content = (TextView) convertView.findViewById(R.id.action1_content);
 
-        Bonus1_Title.setText(_ListItem_Actions.getBonus1_Title()+"("+_ListItem_Actions.getDirectPoint()+"/"+_ListItem_Actions.getDirectPointTarget1()+")");
+        Bonus1_Title.setText(_ListItem_Actions.getBonus1_Title()+" -DP:("+_ListItem_Actions.getDirectPoint()+"/"+_ListItem_Actions.getDirectPointTarget1()+")");
         Bonus1_Content.setText(_ListItem_Actions.getBonus1_Description());
 
 
@@ -127,7 +127,7 @@ public class Adapter_BonusList extends BaseAdapter {
         TextView Bonus2_Content = (TextView) convertView.findViewById(R.id.action2_content);
 
 
-        Bonus2_Title.setText(_ListItem_Actions.getBonus2_Title() + "(" + _ListItem_Actions.getIndirectPoint() + "/" + _ListItem_Actions.getIndirectPointTarget2() + ")");
+        Bonus2_Title.setText(_ListItem_Actions.getBonus2_Title() + "-IP:(" + _ListItem_Actions.getIndirectPoint() + "/" + _ListItem_Actions.getIndirectPointTarget2() + ")");
         Bonus2_Content.setText(_ListItem_Actions.getBonus2_Description());
         if(_ListItem_Actions.getBonus2_Title()==null||_ListItem_Actions.getIndirectPointTarget2()==null) {
             Bonus2_Title.setVisibility(View.GONE);
@@ -141,7 +141,7 @@ public class Adapter_BonusList extends BaseAdapter {
         LinearLayout1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BonusService.getInstance().ShowBonusDialog(view.getTag().toString());
+                BonusService.getInstance().ShowSingleBonusDialog(view.getTag().toString());
             }
         });
 
@@ -150,7 +150,7 @@ public class Adapter_BonusList extends BaseAdapter {
         LinearLayout2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BonusService.getInstance().ShowBonusDialog(view.getTag().toString());
+                BonusService.getInstance().ShowSingleBonusDialog(view.getTag().toString());
             }
         });
 

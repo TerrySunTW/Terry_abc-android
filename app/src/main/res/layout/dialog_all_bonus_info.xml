@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="實體卡Event" />
+            <TextView
+                android:id="@+id/TextView_Bonus1Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="10% off Baseball Game ticket(2/5)" />
+            <TextView
+                android:id="@+id/TextView_Bonus1Content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="
+                Due date
+                " />
+            <Button
+                android:id="@+id/Button_Exchange1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="兌換"
+                android:layout_gravity="center_horizontal" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dip"
+                android:background="#FF909090" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="虛擬卡Event" />
+            <TextView
+                android:id="@+id/TextView_Bonus2Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="10% off Baseball Game ticket(2/5)" />
+            <TextView
+                android:id="@+id/TextView_Bonus2Content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="
+                Due date
+                " />
+            <Button
+                android:id="@+id/Button_Exchange2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="兌換"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

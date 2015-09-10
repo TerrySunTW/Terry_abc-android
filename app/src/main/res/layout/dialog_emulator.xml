@@ -12,7 +12,8 @@
         android:id="@+id/TextView_Info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Exit"
+        android:background="@color/background_floating_material_dark"
+        android:text="Your phone is now Emu as Spider man."
         android:layout_weight="0"/>
     <Button
         android:id="@+id/Button_Exit"

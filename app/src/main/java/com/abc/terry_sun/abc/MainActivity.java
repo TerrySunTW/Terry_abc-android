@@ -40,7 +40,6 @@ public class MainActivity extends TabActivity {
 		DB_Cards MainCard= CardService.getInstance().GetMainCards();
 		if(MainCard!=null) {
 			ChangeMainCardImage(ImageService.GetBitmapFromImageName(MainCard.getCardImage()), MainCard.getEntityCardID());
-
 		}
 
 		setTabs();

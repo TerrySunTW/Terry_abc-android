@@ -130,7 +130,7 @@ public class LoginActivity extends Activity {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         GetFacebookUserData(object);
-                        AsyncTaskHttpRequest _AsyncTaskHttpRequest=new AsyncTaskHttpRequest(_context,new AsyncTaskProcessingInterface() {
+                         AsyncTaskHttpRequest _AsyncTaskHttpRequest=new AsyncTaskHttpRequest(_context,new AsyncTaskProcessingInterface() {
                             @Override
                             public void DoProcessing() {
                                 try {

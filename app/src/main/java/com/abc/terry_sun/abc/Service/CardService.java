@@ -298,6 +298,14 @@ public class CardService {
         ImageView _ImageView=(ImageView)CardDetailDialog.findViewById(R.id.ImageView_ItemImage);
         Bitmap Img = BitmapFactory.decodeFile(StorageService.GetImagePath(SelectedCardInfo.getCardImage()));
         _ImageView.setImageBitmap(Img);
+        _ImageView.setTag(SelectedCardInfo.getEntityCardID());
+        _ImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CardDetailDialog.dismiss();
+                EmulatorService.getInstance().ShowEmulatorDialog(view.getTag().toString());
+            }
+        });
 
         TextView TextView_ItemName=(TextView)CardDetailDialog.findViewById(R.id.TextView_ItemName);
         TextView_ItemName.setText(SelectedCardInfo.getCardName());
@@ -349,7 +357,7 @@ public class CardService {
             @Override
             public void onClick(View view) {
                 CardDetailDialog.dismiss();
-                BonusService.getInstance().ShowBonusDialog(view.getTag().toString());
+                BonusService.getInstance().ShowAllBonusDialog(view.getTag().toString());
             }
         });
 
