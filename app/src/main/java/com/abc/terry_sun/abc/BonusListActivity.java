@@ -59,11 +59,12 @@ public class BonusListActivity extends Activity {
 	List<GalleryItem> RepresentativeGalleryItemList;
 	List<GalleryItem> CardGalleryItemList;
 
-	String SelectedCategoryID="";
-	String SelectedGroupID="";
-	String SelectedRepresentativeID="";
+	static String SelectedCategoryID="";
+	static String SelectedGroupID="";
+	static String SelectedRepresentativeID="";
 	String SelectedEntityCardID;
-	Adapter_BonusList _Adapter_ActionList;
+	static Adapter_BonusList _Adapter_ActionList;
+	static boolean IsFavorate=false;
 	Context context;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +105,7 @@ public class BonusListActivity extends Activity {
 		_Adapter_ActionList=new Adapter_BonusList(this, AllCards);
 		listview_activity_list.setAdapter(_Adapter_ActionList);
 	}
-	private void Update_List(Boolean IsFavorate) {
+	public static void Update_List() {
 		if(IsFavorate)
 		{
 			//_Adapter_ActionList.UpdateData(CardService.getInstance().GetFavorateEvents());
@@ -164,11 +165,13 @@ public class BonusListActivity extends Activity {
 				if (item.getItemId() == 1) {
 					//Select all && Reset Menu
 					ResetMenuStatusForChangeCategory();
-					Update_List(false);
+					IsFavorate=false;
+					Update_List();
 				}
 				else if (item.getItemId() == 2) {
 					//select Favorite
-					Update_List(true);
+					IsFavorate=true;
+					Update_List();
 				}
 				else {
 					for (CategoryInfo CategoryInfoItem : CategoryList) {
@@ -207,7 +210,8 @@ public class BonusListActivity extends Activity {
 						if (GroupGalleryItem.getTitle().equals(item.getTitle().toString())) {
 							ButtonGroup.setText(item.getTitle().toString());
 							SelectedGroupID = GroupGalleryItem.getItemID();
-							Update_List(false);
+							IsFavorate=false;
+							Update_List();
 							RepresentativeListDataSetting();
 						}
 					}
@@ -233,7 +237,8 @@ public class BonusListActivity extends Activity {
 						if (RepresentativeGalleryItem.getTitle().equals(item.getTitle().toString())) {
 							ButtonRepresentative.setText(item.getTitle().toString());
 							SelectedRepresentativeID = RepresentativeGalleryItem.getItemID();
-							Update_List(false);
+							IsFavorate=false;
+							Update_List();
 							CardListDataSetting(SelectedRepresentativeID);
 						}
 					}

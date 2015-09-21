@@ -2,14 +2,22 @@ package com.abc.terry_sun.abc.Service;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.location.Location;
+import android.location.LocationManager;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.abc.terry_sun.abc.BonusListActivity;
+import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskHttpRequest;
+import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskPostProcessingInterface;
+import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskProcessingInterface;
 import com.abc.terry_sun.abc.Entities.DB_Cards;
 import com.abc.terry_sun.abc.Entities.DB_Events;
 import com.abc.terry_sun.abc.MainActivity;
+import com.abc.terry_sun.abc.Models.BaseReturnModel;
+import com.abc.terry_sun.abc.Provider.VariableProvider;
 import com.abc.terry_sun.abc.R;
 
 import java.util.List;
@@ -23,13 +31,12 @@ public class BonusService {
     public static BonusService getInstance() {
         return _BonusService;
     }
-    public void ShowSingleBonusDialog(final String CardEventID)
+    public void ShowSingleBonusDialog(final String CardEventID,final String EntityCardID)
     {
         Context context=MainActivity.GetMainActivityContext();
 
         final DB_Events _DB_Events=GetEventsByEventID(CardEventID);
         //EntityCardID
-        String EntityCardID=CardService.getInstance().GetCardsByCardID(_DB_Events.getCardID()).getEntityCardID();
         BonusDialog=new Dialog(context);
         final DB_Cards SelectedCardInfo=CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
 
@@ -40,10 +47,60 @@ public class BonusService {
 
 
 
-        Button Button_Exchange=(Button)BonusDialog.findViewById(R.id.Button_Exchange);
+        final Button Button_Exchange=(Button)BonusDialog.findViewById(R.id.Button_Exchange);
+        Button_Exchange.setVisibility(View.INVISIBLE);
+        if(
+            Integer.parseInt(SelectedCardInfo.getDirectPoint())>=Integer.parseInt(_DB_Events.getDirectPointTarget()) &&
+            Integer.parseInt(SelectedCardInfo.getIndirectPoint())>=Integer.parseInt(_DB_Events.getIndirectPointTarget())
+                )
+        {
+            Button_Exchange.setVisibility(View.VISIBLE);
+        }
+        if(_DB_Events.getHasExchanged())
+        {
+            Button_Exchange.setEnabled(false);
+            Button_Exchange.setText("已兌換");
+        }
         Button_Exchange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                GPSService mGPS = new GPSService(MainActivity.GetMainActivityContext());
+                if (mGPS.canGetLocation) {
+                    mGPS.getLocation();
+                    VariableProvider.getInstance().setLastLatitude(String.valueOf(mGPS.getLatitude()));
+                    VariableProvider.getInstance().setLastLongitude(String.valueOf(mGPS.getLongitude()));
+                }
+                AsyncTaskHttpRequest _AsyncTaskHttpRequest = new AsyncTaskHttpRequest(MainActivity.GetMainActivityContext(),
+                        new AsyncTaskProcessingInterface() {
+                            @Override
+                            public void DoProcessing() {
+                                VariableProvider.getInstance().setExchangeResult(0);
+                                BaseReturnModel _BaseReturnModel = ServerCommunicationService.getInstance().ExchangeBonus(_DB_Events, SelectedCardInfo);
+                                if (_BaseReturnModel.getCode() > 0) {
+                                    VariableProvider.getInstance().setExchangeResult(_BaseReturnModel.getCode());
+                                    ServerCommunicationService.getInstance().UpdateServerInfo();
+                                }
+                            }
+                        },
+                        new AsyncTaskPostProcessingInterface() {
+                            @Override
+                            public void DoProcessing() {
+                                if(VariableProvider.getInstance().getExchangeResult()>0)
+                                {
+                                    ProcessControlService.AlertMessage(MainActivity.GetMainActivityContext(),"兌換成功!!");
+                                    Button_Exchange.setText("已兌換");
+                                    Button_Exchange.setEnabled(false);
+                                    BonusListActivity.Update_List();
+                                }
+                                else
+                                {
+                                    ProcessControlService.AlertMessage(MainActivity.GetMainActivityContext(),"兌換失敗!!");
+                                }
+                            }
+                        }
+                );
+                _AsyncTaskHttpRequest.execute();
 
             }
         });
@@ -64,7 +121,6 @@ public class BonusService {
         //EntityCardID
         BonusDialog=new Dialog(context);
         final DB_Cards SelectedCardInfo=CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
-
         BonusDialog.setContentView(R.layout.dialog_all_bonus_info);
         Window window = BonusDialog.getWindow();
         window.setLayout(ScreenService.GetScreenWidth(context).x - 100, ScreenService.GetScreenWidth(context).y - 300);

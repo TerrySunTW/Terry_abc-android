@@ -21,5 +21,16 @@ public final class VariableProvider {
     private String FacebookUserName;
     private String FacebookLink;
     private String FacebookPhotoURL;
+    private String LastLatitude;
+    private String LastLongitude;
+    public String GetLocation()
+    {
+        if(LastLatitude!=null &&  LastLongitude !=null)
+        {
+            return LastLatitude+","+LastLongitude;
+        }
+        return "";
+    }
+    public int ExchangeResult=0;
 
 }

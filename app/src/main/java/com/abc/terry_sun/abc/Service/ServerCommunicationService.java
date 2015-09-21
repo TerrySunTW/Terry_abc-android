@@ -9,6 +9,8 @@ import com.abc.terry_sun.abc.Entities.DB_Cards;
 import com.abc.terry_sun.abc.Entities.DB_Events;
 import com.abc.terry_sun.abc.Entities.DB_Friend;
 import com.abc.terry_sun.abc.MainActivity;
+import com.abc.terry_sun.abc.Models.BaseReturnModel;
+import com.abc.terry_sun.abc.Models.CardInfo;
 import com.abc.terry_sun.abc.Provider.HttpURL_Provider;
 import com.abc.terry_sun.abc.Provider.VariableProvider;
 import com.abc.terry_sun.abc.Utilits.InternetUtil;
@@ -273,5 +275,25 @@ public class ServerCommunicationService {
         {
             ex.printStackTrace();
         }
+    }
+    public BaseReturnModel ExchangeBonus(final DB_Events _DB_Events,final DB_Cards _DB_Cards)
+    {
+        BaseReturnModel _BaseReturnModel=new BaseReturnModel();
+        Gson gson = new Gson();
+        try {
+            List<BasicNameValuePair> UrlParams = new LinkedList<BasicNameValuePair>();
+            UrlParams.add(new BasicNameValuePair("UserFacebookID", VariableProvider.getInstance().getFacebookID()));
+            UrlParams.add(new BasicNameValuePair("EntityCardID", _DB_Cards.getEntityCardID()));
+            UrlParams.add(new BasicNameValuePair("CardID", _DB_Events.getCardID()));
+            UrlParams.add(new BasicNameValuePair("EventID", _DB_Events.getEventID()));
+            UrlParams.add(new BasicNameValuePair("Location", VariableProvider.getInstance().GetLocation()));
+            String JsonData=OkHttpUtil.getStringFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.ExchangeBonus, UrlParams));
+            _BaseReturnModel = gson.fromJson(JsonData, BaseReturnModel.class);
+        }
+        catch (Exception ex)
+        {
+            Log.e(TAG, ex.getMessage());
+        }
+        return _BaseReturnModel;
     }
 }
