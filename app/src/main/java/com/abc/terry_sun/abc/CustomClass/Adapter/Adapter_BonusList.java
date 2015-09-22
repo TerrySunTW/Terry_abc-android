@@ -117,7 +117,7 @@ public class Adapter_BonusList extends BaseAdapter {
         TextView Bonus1_Content = (TextView) convertView.findViewById(R.id.action1_content);
 
         Bonus1_Title.setText(EntityCardEvent.getEventTitle()+
-                " -DP:("+_ListItem_Actions.getDirectPoint()+"/"+
+                "-DP:("+_ListItem_Actions.getDirectPoint()+"/"+
                 EntityCardEvent.getDirectPointTarget()+")");
         Bonus1_Content.setText(EntityCardEvent.getEventDescription());
 
