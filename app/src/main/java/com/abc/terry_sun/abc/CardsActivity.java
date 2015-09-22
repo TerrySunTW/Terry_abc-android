@@ -131,7 +131,7 @@ public class CardsActivity extends BasicActivity {
                 ButtonRepresentative.setText(RepresentativeGalleryItemList.get(position).getTitle());
                 SelectedRepresentativeID = RepresentativeGalleryItemList.get(position).getItemID();
                 Log.i("Info", "SelectedRepresentativeID" + SelectedRepresentativeID);
-                CardListDataSetting(SelectedRepresentativeID);
+                CardListDataSetting(SelectedGroupID,SelectedRepresentativeID);
             }
         });
     }
@@ -154,8 +154,8 @@ public class CardsActivity extends BasicActivity {
         });
     }
 
-    private void CardListDataSetting(String RepresentativeID) {
-        CardList=CardService.getInstance().GetCardsByRepresentativeID(RepresentativeID);
+    private void CardListDataSetting(String GroupID,String RepresentativeID) {
+        CardList=CardService.getInstance().GetCardsByRepresentativeID(GroupID,RepresentativeID);
         CardGalleryItemList = new ArrayList<GalleryItem>();
         for(CardInfo Item:CardList)
         {
@@ -249,7 +249,7 @@ public class CardsActivity extends BasicActivity {
                         if (RepresentativeGalleryItem.getTitle().equals(item.getTitle().toString())) {
                             ButtonRepresentative.setText(item.getTitle().toString());
                             SelectedRepresentativeID = RepresentativeGalleryItem.getItemID();
-                            CardListDataSetting(SelectedRepresentativeID);
+                            CardListDataSetting(SelectedGroupID,SelectedRepresentativeID);
                         }
                     }
                     return false;

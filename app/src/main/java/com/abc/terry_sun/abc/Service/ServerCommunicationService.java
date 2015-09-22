@@ -198,7 +198,7 @@ public class ServerCommunicationService {
         for (DB_Cards Item: onlineDBCardsArray)
         {
             //add & update
-            List<DB_Cards> CardList = DB_Cards.find(DB_Cards.class, "ENTITY_CARD_ID = ?", Item.getEntityCardID());
+            List<DB_Cards> CardList = DB_Cards.find(DB_Cards.class, "ENTITY_CARD_ID = ? and GROUP_ID=?", Item.getEntityCardID(),Item.getGroupID());
             if(CardList.size()==0)
             {
                 //create

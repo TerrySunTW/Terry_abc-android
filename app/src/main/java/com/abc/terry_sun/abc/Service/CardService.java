@@ -81,7 +81,7 @@ public class CardService {
     public List<RepresentativeInfo> GetAllRepresentative()
     {
         List<RepresentativeInfo> RepresentativeInfoList=new ArrayList<RepresentativeInfo>();
-        List<DB_Cards> CardList = DB_Cards.findWithQuery(DB_Cards.class, "Select * from "+DB_Cards.getTableName(DB_Cards.class)+ " group by REPRESENTATIVE_ID,REPRESENTATIVE_NAME,REPRESENTATIVE_IMAGE", null);
+        List<DB_Cards> CardList = DB_Cards.findWithQuery(DB_Cards.class, "Select * from "+DB_Cards.getTableName(DB_Cards.class)+ " group by GROUP_ID,REPRESENTATIVE_ID,REPRESENTATIVE_NAME,REPRESENTATIVE_IMAGE", null);
         for(DB_Cards Item:CardList)
         {
             RepresentativeInfoList.add(
@@ -107,9 +107,9 @@ public class CardService {
         }
         return NewRepresentativeInfoList;
     }
-    public List<CardInfo> GetCardsByRepresentativeID(String RepresentativeID)
+    public List<CardInfo> GetCardsByRepresentativeID(String GroupID,String RepresentativeID)
     {
-        List<DB_Cards> CardList= DB_Cards.find(DB_Cards.class, "REPRESENTATIVE_ID=?", RepresentativeID);
+        List<DB_Cards> CardList= DB_Cards.find(DB_Cards.class, "Group_ID=? and REPRESENTATIVE_ID=?",GroupID, RepresentativeID);
         List<CardInfo> CardInfoList=new ArrayList<CardInfo>();
         for(DB_Cards Item:CardList)
         {
