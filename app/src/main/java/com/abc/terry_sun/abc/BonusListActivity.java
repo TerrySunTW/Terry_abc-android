@@ -147,13 +147,12 @@ public class BonusListActivity extends Activity {
 	}
 
 	private void CardListDataSetting(String RepresentativeID) {
-		CardList=CardService.getInstance().GetCardsByRepresentativeID(RepresentativeID);
+		CardList=CardService.getInstance().GetCardsByRepresentativeID(SelectedGroupID,RepresentativeID);
 		CardGalleryItemList = new ArrayList<GalleryItem>();
 		for(CardInfo Item:CardList)
 		{
 			CardGalleryItemList.add(new GalleryItem(Item.getEntityCardID(),Item.getCardName(),Item.getCardImage()));
 		}
-
 	}
 
 	@OnClick(R.id.ButtonCategory)
@@ -178,6 +177,7 @@ public class BonusListActivity extends Activity {
 						if (CategoryInfoItem.getCategoryName().equals(item.getTitle().toString())) {
 							ButtonCategory.setText(item.getTitle().toString());
 							SelectedCategoryID = CategoryInfoItem.getCategoryID();
+							Update_List();
 							GroupDataSetting();
 						}
 					}
