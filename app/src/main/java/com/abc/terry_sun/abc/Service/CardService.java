@@ -243,12 +243,17 @@ public class CardService {
     }
     public List<DB_Cards> GetFavorateCards()
     {
-        List<DB_Cards> CardList= DB_Cards.find(DB_Cards.class, "Is_Favorite=?", "True");
-        if(CardList.size()>0)
-        {
-            return CardList;
+        List<DB_Cards> CardList= DB_Cards.find(DB_Cards.class, "IS_FAVORITE=?", "1");
+        List<DB_Cards> NewCardList = new ArrayList<DB_Cards>();
+        List<String> CardIDList = new ArrayList<String>();
+        for(DB_Cards item:CardList) {
+            if(!CardIDList.contains(item.getCardID()))
+            {
+                CardIDList.add(item.getCardID());
+                NewCardList.add(item);
+            }
         }
-        return null;
+        return NewCardList;
     }
     public Boolean CheckCardIDIsFavorate(String CardID)
     {
