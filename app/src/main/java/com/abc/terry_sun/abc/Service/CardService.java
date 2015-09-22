@@ -109,7 +109,7 @@ public class CardService {
     }
     public List<CardInfo> GetCardsByRepresentativeID(String GroupID,String RepresentativeID)
     {
-        List<DB_Cards> CardList= DB_Cards.find(DB_Cards.class, "Group_ID=? and REPRESENTATIVE_ID=?",GroupID, RepresentativeID);
+        List<DB_Cards> CardList= DB_Cards.find(DB_Cards.class, "Group_ID=? and REPRESENTATIVE_ID=?", GroupID, RepresentativeID);
         List<CardInfo> CardInfoList=new ArrayList<CardInfo>();
         for(DB_Cards Item:CardList)
         {
@@ -123,13 +123,17 @@ public class CardService {
         List<CardInfo> CardInfoList=new ArrayList<CardInfo>();
         for(DB_Cards Item:CardList)
         {
-            CardInfoList.add(new CardInfo(Item.getRepresentativeID(),Item.getEntityCardID(),Item.getCardName(),Item.getCardImage()));
+            CardInfo _CardInfo=new CardInfo(Item.getRepresentativeID(),Item.getEntityCardID(),Item.getCardName(),Item.getCardImage());
+            if(!CardInfoList.contains(_CardInfo))
+            {
+                CardInfoList.add(_CardInfo);
+            }
         }
         return CardInfoList;
     }
     public List<CardInfo> GetAllCardsInfo()
     {
-        List<DB_Cards> CardList= DB_Cards.listAll(DB_Cards.class);
+        List<DB_Cards> CardList = DB_Cards.listAll(DB_Cards.class);
         List<CardInfo> CardInfoList=new ArrayList<CardInfo>();
         for(DB_Cards Item:CardList)
         {
