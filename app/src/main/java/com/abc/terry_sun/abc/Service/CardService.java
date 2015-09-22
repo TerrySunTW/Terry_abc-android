@@ -189,7 +189,17 @@ public class CardService {
     }
     public List<DB_Cards> GetAllCards()
     {
-        return DB_Cards.listAll(DB_Cards.class);
+        List<DB_Cards> AllCardList = DB_Cards.listAll(DB_Cards.class);
+        List<DB_Cards> NewCardList = new ArrayList<DB_Cards>();
+        List<String> CardIDList = new ArrayList<String>();
+        for(DB_Cards item:AllCardList) {
+            if(!CardIDList.contains(item.getCardID()))
+            {
+                CardIDList.add(item.getCardID());
+                NewCardList.add(item);
+            }
+        }
+        return NewCardList;
     }
     public List<DB_Cards> GetFilteredCards(String CategoryID,String GroupID,String RepresentativeID)
     {
