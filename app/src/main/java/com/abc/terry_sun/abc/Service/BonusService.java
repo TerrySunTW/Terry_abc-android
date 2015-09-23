@@ -126,7 +126,7 @@ public class BonusService {
         window.setLayout(ScreenService.GetScreenWidth(context).x - 100, ScreenService.GetScreenWidth(context).y - 300);
 
 
-        DB_Events EntityCardEvent= CardService.getInstance().GetEntityEventsByCardID(SelectedCardInfo.getCardID());
+        final DB_Events EntityCardEvent= CardService.getInstance().GetEntityEventsByCardID(SelectedCardInfo.getCardID());
         if(EntityCardEvent!=null)
         {
             TextView TextView_BonusTitle=(TextView)BonusDialog.findViewById(R.id.TextView_Bonus1Title);
@@ -135,16 +135,17 @@ public class BonusService {
             TextView TextView_BonusContent=(TextView)BonusDialog.findViewById(R.id.TextView_Bonus1Content);
             TextView_BonusContent.setText(EntityCardEvent.getEventDescription());
 
-            Button Button_Exchange=(Button)BonusDialog.findViewById(R.id.Button_Exchange1);
-            Button_Exchange.setOnClickListener(new View.OnClickListener() {
+            Button Button_View1=(Button)BonusDialog.findViewById(R.id.Button_View1);
+            Button_View1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    BonusDialog.dismiss();
+                    BonusService.getInstance().ShowSingleBonusDialog(EntityCardEvent.getEventID(),SelectedCardInfo.getEntityCardID());
                 }
             });
         }
 
-        DB_Events VirtualCardEvent=CardService.getInstance().GetVirtualEventsByCardID(SelectedCardInfo.getCardID());
+        final DB_Events VirtualCardEvent=CardService.getInstance().GetVirtualEventsByCardID(SelectedCardInfo.getCardID());
         if(EntityCardEvent!=null)
         {
             TextView TextView_BonusTitle=(TextView)BonusDialog.findViewById(R.id.TextView_Bonus2Title);
@@ -153,11 +154,12 @@ public class BonusService {
             TextView TextView_BonusContent=(TextView)BonusDialog.findViewById(R.id.TextView_Bonus2Content);
             TextView_BonusContent.setText(VirtualCardEvent.getEventDescription());
 
-            Button Button_Exchange=(Button)BonusDialog.findViewById(R.id.Button_Exchange2);
-            Button_Exchange.setOnClickListener(new View.OnClickListener() {
+            Button Button_View2=(Button)BonusDialog.findViewById(R.id.Button_View2);
+            Button_View2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    BonusDialog.dismiss();
+                    BonusService.getInstance().ShowSingleBonusDialog(VirtualCardEvent.getEventID(), SelectedCardInfo.getEntityCardID());
                 }
             });
         }
