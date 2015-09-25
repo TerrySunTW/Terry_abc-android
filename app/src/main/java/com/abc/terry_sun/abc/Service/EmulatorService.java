@@ -50,6 +50,6 @@ public class EmulatorService {
         TextView_Info.setText("Your phone is now Emu as "+SelectedCardInfo.getCardName());
 
         EmulatorDialog.show();
-        NfcStorage.SetAccount(context, SelectedCardInfo.getEntityCardID());
+        NfcStorage.SetAccount(context, SelectedCardInfo.getUserCardID());
     }
 }

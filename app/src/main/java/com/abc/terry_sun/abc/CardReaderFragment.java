@@ -113,7 +113,7 @@ public class CardReaderFragment extends Fragment implements LoyaltyCardReader.Ac
     }
 
     @Override
-    public void onAccountReceived(final String NFC_CardID) {
+    public void onAccountReceived(final String NFC_UserCardID) {
         // This callback is run on a background thread, but updates to UI elements must be performed
         // on the UI thread.
         getActivity().runOnUiThread(new Runnable() {
@@ -124,7 +124,7 @@ public class CardReaderFragment extends Fragment implements LoyaltyCardReader.Ac
                     @Override
                     public void DoProcessing() {
                         //send to server
-                        ServerCommunicationService.getInstance().AddFriendNFCCard(NFC_CardID);
+                        ServerCommunicationService.getInstance().AddFriendNFCCard(NFC_UserCardID);
                         //download new card
                         ServerCommunicationService.getInstance().UpdateServerInfo();
                     }
