@@ -141,6 +141,15 @@ public class CardService {
         }
         return CardInfoList;
     }
+    public DB_Cards GetUserOwnCardsByEntityCardID(String EntityCardID)
+    {
+        List<DB_Cards> CardList= DB_Cards.find(DB_Cards.class, "ENTITY_CARD_ID=? and Introducer_ID=Owner_ID", EntityCardID);
+        if(CardList.size()>0)
+        {
+            return CardList.get(0);
+        }
+        return null;
+    }
     public DB_Cards GetCardsByEntityCardID(String EntityCardID)
     {
         List<DB_Cards> CardList= DB_Cards.find(DB_Cards.class, "ENTITY_CARD_ID=?", EntityCardID);
@@ -305,6 +314,10 @@ public class CardService {
     static Dialog CardDetailDialog;
     public void ShowCardDetailDialog(final String EntityCardID,final Context context)
     {
+        if(CardDetailDialog!=null)
+        {
+            CardDetailDialog.dismiss();
+        }
         CardDetailDialog=new Dialog(context);
         final DB_Cards SelectedCardInfo=CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
 

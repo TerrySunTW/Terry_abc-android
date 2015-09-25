@@ -1,12 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <eu.livotov.zxscan.ScannerView
-        android:id="@+id/scanner"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <eu.livotov.zxscan.ScannerView
+                android:id="@+id/scanner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:paddingLeft="15px"
+                android:paddingTop="15px"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="70px"
+                    android:layout_height="70px"
+                    android:src="@drawable/circle_red"
+                    android:id="@+id/ImageView_Scanner"
+                    />
+                <TextView
+                    android:text="Please scan the QR code of the card"
+                    android:paddingLeft="15px"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:paddingLeft="15px"
+                android:paddingTop="15px"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="70px"
+                    android:layout_height="70px"
+                    android:src="@drawable/circle_red"
+                    android:id="@+id/ImageView_NFC"
+                    />
+                <TextView
+                    android:text="Please read your friend's phone card by NFC"
+                    android:paddingLeft="15px"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    />
+            </LinearLayout>
+            <FrameLayout
+                android:id="@+id/fragmentlayout_readcard"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+    </LinearLayout>
+
 
 </LinearLayout>

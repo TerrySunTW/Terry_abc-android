@@ -22,7 +22,6 @@
 		android:layout_height="100sp"
 		android:layout_alignParentBottom="true"
 		android:layout_centerHorizontal="true"
-		android:src="@drawable/card1"
 		android:background="@drawable/cards_center_tab_indicator"
 		android:scaleType="centerInside"/>
 </RelativeLayout>

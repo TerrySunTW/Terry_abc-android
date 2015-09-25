@@ -42,7 +42,6 @@ public class DB_Cards extends SugarRecord<DB_Cards> {
     String UserCardID;
     String IntroducerID;
     String OwnerID;
-    String CardLevel;
     Boolean IsFavorite;
     Boolean IsMainCard;
     String RelationLink;

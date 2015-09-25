@@ -2,6 +2,7 @@ package com.abc.terry_sun.abc;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,9 +11,11 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 
+import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskPostProcessingInterface;
 import com.abc.terry_sun.abc.Entities.DB_Cards;
 import com.abc.terry_sun.abc.Models.GalleryItem;
 import com.abc.terry_sun.abc.Service.CardService;
@@ -36,6 +39,11 @@ public class R_CardRealFriendCardActivity extends BasicActivity {
     static String LastReadEntityID="";
     @InjectView(R.id.scanner)
     ScannerView scanner;
+    @InjectView(R.id.ImageView_Scanner)
+    ImageView ImageView_Scanner;
+    @InjectView(R.id.ImageView_NFC)
+    ImageView ImageView_NFC;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +51,23 @@ public class R_CardRealFriendCardActivity extends BasicActivity {
         ButterKnife.inject(this);
         HandlerSetting();
 
+        //NFC
+        if (savedInstanceState == null) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+            CardReaderFragment fragment = new CardReaderFragment();
+            fragment.SetAsyncTaskPostProcessing(
+            new AsyncTaskPostProcessingInterface(){
+                @Override
+                public void DoProcessing() {
+                    ImageView_NFC.setImageDrawable(getResources().getDrawable(R.drawable.circle_green));
+                }
+            });
+            transaction.replace(R.id.fragmentlayout_readcard, fragment);
+            transaction.commit();
+        }
+
+        //QR_Code
         scanner.setScannerViewEventListener(new ScannerView.ScannerViewEventListener() {
             @Override
             public void onScannerReady() {
@@ -108,8 +133,8 @@ public class R_CardRealFriendCardActivity extends BasicActivity {
             public void handleMessage(Message msg) {
                 switch(msg.what){
                     case 1:
-                        CardService.getInstance().CloseCardDetailDialog();
-                        CardService.getInstance().ShowCardDetailDialog(LastReadEntityID, MainActivity.GetMainActivityContext());
+                        //success
+                        ImageView_Scanner.setImageDrawable(getResources().getDrawable(R.drawable.circle_green));
                         ProcessThread.interrupt();
                         ProcessThread=null;
                         break;

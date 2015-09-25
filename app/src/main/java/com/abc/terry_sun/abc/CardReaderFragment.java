@@ -28,8 +28,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskHttpRequest;
+import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskPostProcessingInterface;
+import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskProcessingInterface;
 import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskSendNFCCardToServer;
 import com.abc.terry_sun.abc.CustomClass.Interface.OnTagDiscoveredEvent;
+import com.abc.terry_sun.abc.Service.CardService;
+import com.abc.terry_sun.abc.Service.ProcessControlService;
+import com.abc.terry_sun.abc.Service.ServerCommunicationService;
 
 
 /**
@@ -46,8 +52,12 @@ public class CardReaderFragment extends Fragment implements LoyaltyCardReader.Ac
             NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK;
     public LoyaltyCardReader mLoyaltyCardReader;
     private static TextView mAccountField;
-
+    AsyncTaskPostProcessingInterface _AsyncTaskPostProcessingInterface;
     /** Called when sample is created. Displays generic UI with welcome text. */
+    public void SetAsyncTaskPostProcessing( AsyncTaskPostProcessingInterface _AsyncTaskPostProcessingInterface)
+    {
+        this._AsyncTaskPostProcessingInterface=_AsyncTaskPostProcessingInterface;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,8 +119,16 @@ public class CardReaderFragment extends Fragment implements LoyaltyCardReader.Ac
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                new AsyncTaskSendNFCCardToServer(MainActivity.MainActivityContext,NFC_CardID).execute();
-                //mAccountField.setText(NFC_CardID+"AAA");
+                //new AsyncTaskSendNFCCardToServer(MainActivity.MainActivityContext,NFC_CardID).execute();
+                new AsyncTaskHttpRequest(MainActivity.MainActivityContext, new AsyncTaskProcessingInterface() {
+                    @Override
+                    public void DoProcessing() {
+                        //send to server
+                        ServerCommunicationService.getInstance().AddFriendNFCCard(NFC_CardID);
+                        //download new card
+                        ServerCommunicationService.getInstance().UpdateServerInfo();
+                    }
+                },_AsyncTaskPostProcessingInterface).execute();
             }
         });
     }

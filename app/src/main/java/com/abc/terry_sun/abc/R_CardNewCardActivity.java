@@ -53,7 +53,7 @@ public class R_CardNewCardActivity extends BasicActivity {
                 }
 
                 //local card
-                DB_Cards ScannedCard = CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
+                DB_Cards ScannedCard = CardService.getInstance().GetUserOwnCardsByEntityCardID(EntityCardID);
                 if (ScannedCard != null) {
                     CardService.getInstance().CloseCardDetailDialog();
                     CardService.getInstance().ShowCardDetailDialog(ScannedCard.getEntityCardID(), MainActivity.GetMainActivityContext());

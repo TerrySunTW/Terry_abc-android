@@ -72,16 +72,7 @@ public class Photo_ImageAdapter extends BaseAdapter {
 	}
 
 	// References to our images in res > drawable
-	public int[] mThumbIds = {
-            R.drawable.card1,
-            R.drawable.card2,
-            R.drawable.card3,
-            R.drawable.card4,
-            R.drawable.card5,
-            R.drawable.card6,
-            R.drawable.card7,
-            R.drawable.card8
-    };
+	public int[] mThumbIds;
 	float startScale;
 	Photo_HackyViewPager viewPager;
 	Rect startBounds;
