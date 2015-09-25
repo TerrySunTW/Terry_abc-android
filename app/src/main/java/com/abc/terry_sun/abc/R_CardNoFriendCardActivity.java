@@ -12,9 +12,12 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 
 import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskPostProcessingInterface;
+import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskProcessingInterface;
 import com.abc.terry_sun.abc.Models.GalleryItem;
+import com.abc.terry_sun.abc.Provider.VariableProvider;
 import com.abc.terry_sun.abc.Service.CardService;
 import com.abc.terry_sun.abc.Service.ProcessControlService;
+import com.abc.terry_sun.abc.Service.ServerCommunicationService;
 import com.facebook.appevents.AppEventsLogger;
 
 import butterknife.ButterKnife;
@@ -36,6 +39,15 @@ public class R_CardNoFriendCardActivity extends BasicActivity {
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             CardReaderFragment fragment = new CardReaderFragment();
+            fragment.SetAsyncTaskProcessingInterface(new AsyncTaskProcessingInterface() {
+                @Override
+                public void DoProcessing() {
+                    //send to server
+                    ServerCommunicationService.getInstance().AddFriendNFCCard(VariableProvider.getInstance().getLastNFCKey());
+                    //download new card
+                    ServerCommunicationService.getInstance().UpdateServerInfo();
+                }
+            });
             transaction.replace(R.id.fragmentlayout_readcard, fragment);
             transaction.commit();
         }

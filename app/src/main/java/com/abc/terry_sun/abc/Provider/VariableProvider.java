@@ -1,5 +1,7 @@
 package com.abc.terry_sun.abc.Provider;
 
+import com.abc.terry_sun.abc.BonusListActivity;
+
 import lombok.Data;
 
 /**
@@ -8,13 +10,14 @@ import lombok.Data;
 @Data
 public final class VariableProvider {
     private static final VariableProvider _VariableProvider = new VariableProvider();
-    public static final String[] AcoountStatus = new String[] {
-            "啟用中","帳號停用"
+    public static final String[] AcoountStatus = new String[]{
+            "啟用中", "帳號停用"
     };
 
     public static VariableProvider getInstance() {
         return _VariableProvider;
     }
+
     private boolean IsRuningServiceThread;
 
     private String FacebookID;
@@ -23,14 +26,27 @@ public final class VariableProvider {
     private String FacebookPhotoURL;
     private String LastLatitude;
     private String LastLongitude;
-    public String GetLocation()
-    {
-        if(LastLatitude!=null &&  LastLongitude !=null)
-        {
-            return LastLatitude+","+LastLongitude;
+
+    public String GetLocation() {
+        if (LastLatitude != null && LastLongitude != null) {
+            return LastLatitude + "," + LastLongitude;
         }
         return "";
     }
-    public int ExchangeResult=0;
+
+    public int ExchangeResult = 0;
+    public String LastNFCKey;
+
+    public String getLastNFCKey()
+    {
+        String ReturnValue=LastNFCKey;
+        LastNFCKey=null;
+        return ReturnValue;
+    }
+    public boolean CheckLastNFCKeyIsNotNull()
+    {
+        return LastNFCKey!=null;
+    }
+
 
 }

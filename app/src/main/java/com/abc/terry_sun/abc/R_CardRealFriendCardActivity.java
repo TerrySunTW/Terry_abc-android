@@ -18,6 +18,7 @@ import android.widget.PopupMenu;
 import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskPostProcessingInterface;
 import com.abc.terry_sun.abc.Entities.DB_Cards;
 import com.abc.terry_sun.abc.Models.GalleryItem;
+import com.abc.terry_sun.abc.Provider.VariableProvider;
 import com.abc.terry_sun.abc.Service.CardService;
 import com.abc.terry_sun.abc.Service.ProcessControlService;
 import com.abc.terry_sun.abc.Service.ServerCommunicationService;
@@ -36,7 +37,7 @@ public class R_CardRealFriendCardActivity extends BasicActivity {
     Handler messageHandler;
     Thread ProcessThread;
     int GotCardID=0;
-    static String LastReadEntityID="";
+    static String LastReadQR_EntityID="";
     @InjectView(R.id.scanner)
     ScannerView scanner;
     @InjectView(R.id.ImageView_Scanner)
@@ -57,12 +58,32 @@ public class R_CardRealFriendCardActivity extends BasicActivity {
 
             CardReaderFragment fragment = new CardReaderFragment();
             fragment.SetAsyncTaskPostProcessing(
-            new AsyncTaskPostProcessingInterface(){
-                @Override
-                public void DoProcessing() {
-                    ImageView_NFC.setImageDrawable(getResources().getDrawable(R.drawable.circle_green));
-                }
-            });
+                    new AsyncTaskPostProcessingInterface() {
+                        @Override
+                        public void DoProcessing() {
+                            ImageView_NFC.setImageDrawable(getResources().getDrawable(R.drawable.circle_green));
+                            if (ProcessThread == null && VariableProvider.getInstance().CheckLastNFCKeyIsNotNull()) {
+                                ProcessControlService.ShowProgressDialog(MainActivity.GetMainActivityContext(), "取得資料處理中...", "");
+                                ProcessThread = new Thread(new Runnable() {
+                                    public void run() {
+                                        Message msg = new Message();
+
+                                        //add new card
+                                        GotCardID = ServerCommunicationService.getInstance().AddFriendEntityCard(LastReadQR_EntityID);
+                                        if (GotCardID>0) {
+                                            ServerCommunicationService.getInstance().UpdateServerInfo();
+
+                                            msg.what = 1;
+                                        } else {
+                                            msg.what = 99;
+                                        }
+                                        messageHandler.sendMessage(msg);
+                                    }
+                                });
+                                ProcessThread.start();
+                            }
+                        }
+                    });
             transaction.replace(R.id.fragmentlayout_readcard, fragment);
             transaction.commit();
         }
@@ -83,34 +104,14 @@ public class R_CardRealFriendCardActivity extends BasicActivity {
                 //scanner.stopScanner();
                 Log.i(TAG, "QRdata=" + EntityCardID);
                 scanner.stopScanner();
-                //same card with previous
-                if (EntityCardID.equals(LastReadEntityID)) {
+                //same card with previous, do nothing
+                if (EntityCardID.equals(LastReadQR_EntityID)) {
                     return true;
                 }
 
                 Log.i(TAG, "InProcessing");
-                LastReadEntityID = EntityCardID;
-                if (ProcessThread == null) {
-                    ProcessControlService.ShowProgressDialog(MainActivity.GetMainActivityContext(), "取得資料處理中...", "");
-                    ProcessThread = new Thread(new Runnable() {
-                        public void run() {
-                            Message msg = new Message();
-
-                            //add new card
-                            GotCardID = ServerCommunicationService.getInstance().AddFriendEntityCard(EntityCardID);
-                            if (GotCardID>0) {
-                                ServerCommunicationService.getInstance().UpdateServerInfo();
-
-                                msg.what = 1;
-                            } else {
-                                msg.what = 99;
-                            }
-                            messageHandler.sendMessage(msg);
-                        }
-                    });
-                    ProcessThread.start();
-                }
-
+                LastReadQR_EntityID = EntityCardID;
+                ImageView_Scanner.setImageDrawable(getResources().getDrawable(R.drawable.circle_green));
                 return true;
             }
         });
@@ -134,7 +135,7 @@ public class R_CardRealFriendCardActivity extends BasicActivity {
                 switch(msg.what){
                     case 1:
                         //success
-                        ImageView_Scanner.setImageDrawable(getResources().getDrawable(R.drawable.circle_green));
+                        CardService.getInstance().ShowCardDetailDialog(LastReadQR_EntityID, MainActivity.MainActivityContext);
                         ProcessThread.interrupt();
                         ProcessThread=null;
                         break;

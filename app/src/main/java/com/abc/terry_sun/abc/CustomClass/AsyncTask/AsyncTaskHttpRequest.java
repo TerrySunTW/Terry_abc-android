@@ -42,7 +42,9 @@ public class AsyncTaskHttpRequest  extends AsyncTask<Void, Integer, Integer> {
 
     @Override
     protected Integer doInBackground(Void... params) {
-        _AsyncTaskProcessingInterface.DoProcessing();
+        if(_AsyncTaskProcessingInterface!=null) {
+            _AsyncTaskProcessingInterface.DoProcessing();
+        }
         return null;
     }
     protected void onPostExecute(Integer result) {
