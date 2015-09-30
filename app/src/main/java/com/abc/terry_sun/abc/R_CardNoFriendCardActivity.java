@@ -13,6 +13,7 @@ import android.widget.PopupMenu;
 
 import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskPostProcessingInterface;
 import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskProcessingInterface;
+import com.abc.terry_sun.abc.Entities.DB_Cards;
 import com.abc.terry_sun.abc.Models.GalleryItem;
 import com.abc.terry_sun.abc.Provider.VariableProvider;
 import com.abc.terry_sun.abc.Service.CardService;
@@ -46,6 +47,12 @@ public class R_CardNoFriendCardActivity extends BasicActivity {
                     ServerCommunicationService.getInstance().AddFriendNFCCard(VariableProvider.getInstance().getLastNFCKey());
                     //download new card
                     ServerCommunicationService.getInstance().UpdateServerInfo();
+                }
+            });
+            fragment.SetAsyncTaskPostProcessing(new AsyncTaskPostProcessingInterface() {
+                @Override
+                public void DoProcessing() {
+                    CardService.getInstance().ShowCardDetailDialog(VariableProvider.getInstance().getLastNFCKey(),MainActivity.GetMainActivityContext());
                 }
             });
             transaction.replace(R.id.fragmentlayout_readcard, fragment);

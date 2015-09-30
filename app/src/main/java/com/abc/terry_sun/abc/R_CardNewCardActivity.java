@@ -105,7 +105,6 @@ public class R_CardNewCardActivity extends BasicActivity {
             public void handleMessage(Message msg) {
                 switch(msg.what){
                     case 1:
-
                         String NewEntityID=CardService.getInstance().GetCardsByCardID(String.valueOf(GotCardID)).getEntityCardID();
                         CardService.getInstance().ShowCardDetailDialog(NewEntityID, MainActivity.GetMainActivityContext());
                         ProcessThread.interrupt();
@@ -115,6 +114,7 @@ public class R_CardNewCardActivity extends BasicActivity {
                         ProcessControlService.AlertMessage(MainActivity.MainActivityContext,"卡片無效!!");
                         ProcessThread.interrupt();
                         ProcessThread=null;
+                        LastReadEntityID=null;
                         break;
                 }
                 super.handleMessage(msg);

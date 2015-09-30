@@ -126,7 +126,7 @@ public class ServerCommunicationService {
         try {
             List<BasicNameValuePair> UrlParams = new LinkedList<BasicNameValuePair>();
             UrlParams.add(new BasicNameValuePair("UserFacebookID", VariableProvider.getInstance().getFacebookID()));
-            UrlParams.add(new BasicNameValuePair("NFCCardID", NFCCardID));
+            UrlParams.add(new BasicNameValuePair("NFC_UserCardID", NFCCardID));
             result=OkHttpUtil.getIntFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.AddFriendNFCCard, UrlParams));
             if (result>0)
             {

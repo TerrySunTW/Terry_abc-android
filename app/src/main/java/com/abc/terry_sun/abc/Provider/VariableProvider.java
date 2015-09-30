@@ -37,12 +37,7 @@ public final class VariableProvider {
     public int ExchangeResult = 0;
     public String LastNFCKey;
 
-    public String getLastNFCKey()
-    {
-        String ReturnValue=LastNFCKey;
-        LastNFCKey=null;
-        return ReturnValue;
-    }
+
     public boolean CheckLastNFCKeyIsNotNull()
     {
         return LastNFCKey!=null;

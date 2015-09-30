@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 
 import com.abc.terry_sun.abc.Models.GalleryItem;
+import com.abc.terry_sun.abc.Provider.VariableProvider;
 import com.facebook.appevents.AppEventsLogger;
 
 import butterknife.ButterKnife;
@@ -28,6 +29,8 @@ public class R_CardFriendCardActivity extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_r_card_friendcard);
         ButterKnife.inject(this);
+        //Clean last value
+        VariableProvider.getInstance().setLastNFCKey(null);
     }
     @Override
     protected void onPause() {
