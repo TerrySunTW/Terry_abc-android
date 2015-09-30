@@ -35,6 +35,7 @@ public final class VariableProvider {
     }
 
     public int ExchangeResult = 0;
+    //UserCardID
     public String LastNFCKey;
 
 

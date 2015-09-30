@@ -31,7 +31,7 @@ import eu.livotov.zxscan.ScannerView;
  */
 public class R_CardNoFriendCardActivity extends BasicActivity {
     String TAG="R_CardNoFriendCardActivity";
-
+    static int NewCardID=0;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +44,7 @@ public class R_CardNoFriendCardActivity extends BasicActivity {
                 @Override
                 public void DoProcessing() {
                     //send to server
-                    ServerCommunicationService.getInstance().AddFriendNFCCard(VariableProvider.getInstance().getLastNFCKey());
+                    NewCardID=ServerCommunicationService.getInstance().AddFriendNFCCard(VariableProvider.getInstance().getLastNFCKey());
                     //download new card
                     ServerCommunicationService.getInstance().UpdateServerInfo();
                 }
@@ -52,7 +52,11 @@ public class R_CardNoFriendCardActivity extends BasicActivity {
             fragment.SetAsyncTaskPostProcessing(new AsyncTaskPostProcessingInterface() {
                 @Override
                 public void DoProcessing() {
-                    CardService.getInstance().ShowCardDetailDialog(VariableProvider.getInstance().getLastNFCKey(),MainActivity.GetMainActivityContext());
+                    DB_Cards _DB_Cards=CardService.getInstance().GetCardsByCardID(String.valueOf(NewCardID));
+                    if(_DB_Cards!=null)
+                    {
+                        CardService.getInstance().ShowCardDetailDialog(_DB_Cards.getEntityCardID(), MainActivity.GetMainActivityContext());
+                    }
                 }
             });
             transaction.replace(R.id.fragmentlayout_readcard, fragment);

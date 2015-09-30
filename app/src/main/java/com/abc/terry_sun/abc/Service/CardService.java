@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -153,6 +154,15 @@ public class CardService {
     public DB_Cards GetCardsByEntityCardID(String EntityCardID)
     {
         List<DB_Cards> CardList= DB_Cards.find(DB_Cards.class, "ENTITY_CARD_ID=?", EntityCardID);
+        if(CardList.size()>0)
+        {
+            return CardList.get(0);
+        }
+        return null;
+    }
+    public DB_Cards GetCardsByUserCardID(String UserCardID)
+    {
+        List<DB_Cards> CardList= DB_Cards.find(DB_Cards.class, "USER_CARD_ID=?", UserCardID);
         if(CardList.size()>0)
         {
             return CardList.get(0);
@@ -320,7 +330,11 @@ public class CardService {
         }
         CardDetailDialog=new Dialog(context);
         final DB_Cards SelectedCardInfo=CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
-
+        if(SelectedCardInfo==null)
+        {
+            Log.e("SelectedCardInfo","SelectedCardInfo is null");
+            return;
+        }
         CardDetailDialog.setContentView(R.layout.dialog_card_info);
         Window window = CardDetailDialog.getWindow();
         window.setBackgroundDrawable(new ColorDrawable(0));

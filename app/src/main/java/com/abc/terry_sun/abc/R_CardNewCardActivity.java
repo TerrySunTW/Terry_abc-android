@@ -70,7 +70,7 @@ public class R_CardNewCardActivity extends BasicActivity {
 
                             //add new card
                             GotCardID = ServerCommunicationService.getInstance().AddNewCard(EntityCardID);
-                            if (GotCardID>0) {
+                            if (GotCardID > 0) {
                                 ServerCommunicationService.getInstance().UpdateServerInfo();
 
                                 msg.what = 1;
@@ -97,6 +97,7 @@ public class R_CardNewCardActivity extends BasicActivity {
     }
     @Override
     protected void onResume() {
+        LastReadEntityID=null;
         super.onResume();
     }
     private void HandlerSetting() {
