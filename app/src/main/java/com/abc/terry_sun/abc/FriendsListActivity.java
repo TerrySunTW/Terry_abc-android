@@ -44,7 +44,6 @@ public class FriendsListActivity extends Activity {
 		List_Setting();
 	}
 	private void List_Setting() {
-		List<ListItem_Actions> data=new ArrayList<ListItem_Actions>();
 		_Adapter_FriendsList=new Adapter_FriendsList(this);
 		listview_activity_list.setAdapter(_Adapter_FriendsList);
 		listview_activity_list.deferNotifyDataSetChanged();
