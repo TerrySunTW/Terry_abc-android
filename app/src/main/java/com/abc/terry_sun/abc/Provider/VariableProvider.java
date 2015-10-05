@@ -10,14 +10,9 @@ import lombok.Data;
 @Data
 public final class VariableProvider {
     private static final VariableProvider _VariableProvider = new VariableProvider();
-    public static final String[] AcoountStatus = new String[]{
-            "啟用中", "帳號停用"
-    };
-
     public static VariableProvider getInstance() {
         return _VariableProvider;
     }
-
     private boolean IsRuningServiceThread;
 
     private String FacebookID;
@@ -43,6 +38,4 @@ public final class VariableProvider {
     {
         return LastNFCKey!=null;
     }
-
-
 }

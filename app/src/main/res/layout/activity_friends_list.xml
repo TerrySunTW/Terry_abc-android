@@ -4,6 +4,80 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="80dip"
+        android:background="#323331"
+        android:id="@+id/LinearLayout_Title">
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*">
+            <TableRow>
+                <ImageButton
+                    android:layout_width="80dip"
+                    android:layout_height="80dip"
+                    android:id="@+id/FriendButton" />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Name:"
+                            android:layout_gravity="right" />
+                        <TextView
+                            android:id="@+id/TextViewName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="aaaaa" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Card:"
+                            android:layout_gravity="right" />
+                        <TextView
+                            android:id="@+id/TextViewCard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="111"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ID:"
+                            android:layout_gravity="right" />
+                        <TextView
+                            android:id="@+id/TextViewID"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="777777"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <Button
+                    android:id="@+id/ButtonAddFriend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="＋" />
+            </TableRow>
+        </TableLayout>
+
+    </LinearLayout>
     <ListView android:id="@+id/listview_activity_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

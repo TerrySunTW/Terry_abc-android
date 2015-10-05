@@ -13,6 +13,7 @@ import com.abc.terry_sun.abc.Models.BaseReturnModel;
 import com.abc.terry_sun.abc.Models.CardInfo;
 import com.abc.terry_sun.abc.Provider.HttpURL_Provider;
 import com.abc.terry_sun.abc.Provider.VariableProvider;
+import com.abc.terry_sun.abc.Provider.VersionProvider;
 import com.abc.terry_sun.abc.Utilits.InternetUtil;
 import com.abc.terry_sun.abc.Utilits.OkHttpUtil;
 import com.google.gson.Gson;
@@ -160,6 +161,10 @@ public class ServerCommunicationService {
         GetUserEventInfo();
         GetUserFriendInfo();
     }
+    public void UpdateFriendInfo()
+    {
+        GetUserFriendInfo();
+    }
     public void  GetUserCardInfo() {
         List<BasicNameValuePair> UrlParams= new LinkedList<BasicNameValuePair>();
         UrlParams.add(new BasicNameValuePair("UserFacebookID",VariableProvider.getInstance().getFacebookID()));
@@ -297,5 +302,33 @@ public class ServerCommunicationService {
             Log.e(TAG, ex.getMessage());
         }
         return _BaseReturnModel;
+    }
+    public String AddFriend(final String FriendID)
+    {
+        String CardID="";
+        try {
+            List<BasicNameValuePair> UrlParams = new LinkedList<BasicNameValuePair>();
+            UrlParams.add(new BasicNameValuePair("UserFacebookID", VariableProvider.getInstance().getFacebookID()));
+            UrlParams.add(new BasicNameValuePair("FriendID", FriendID));
+            CardID=OkHttpUtil.getStringFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.AddFriend, UrlParams));
+        }
+        catch (Exception ex)
+        {
+            Log.e(TAG,ex.getMessage());
+        }
+        return CardID;
+    }
+    public boolean IsVersionSameWithServer()
+    {
+        String ServerVersion="";
+        try
+        {
+            ServerVersion= OkHttpUtil.getStringFromServer(HttpURL_Provider.AppVersion);
+        }
+        catch (Exception ex)
+        {
+            Log.e(TAG,ex.getMessage());
+        }
+        return VersionProvider.CurrentVersion.equals(ServerVersion);
     }
 }

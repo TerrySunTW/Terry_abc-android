@@ -31,6 +31,10 @@ public class Adapter_FriendsList extends BaseAdapter {
     public Adapter_FriendsList(Activity activity) {
         super();
         this.activity = activity;
+        UpdateData();
+    }
+    public void UpdateData()
+    {
         stringPairList=FriendService.getInstance().GetAllFriends();
     }
 
