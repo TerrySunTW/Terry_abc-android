@@ -32,6 +32,7 @@ import java.util.List;
  */
 public class CardService {
     private static final CardService _CardService = new CardService();
+    static String TAG="CardService";
     public static CardService getInstance() {
         return _CardService;
     }
@@ -180,15 +181,19 @@ public class CardService {
     }
     public DB_Cards GetMainCards()
     {
-        List<DB_Cards> CardList= DB_Cards.find(DB_Cards.class, "IS_MAIN_CARD=?", "1");
-        if(CardList.size()>0)
-        {
-            return CardList.get(0);
+        try {
+            List<DB_Cards> CardList = DB_Cards.find(DB_Cards.class, "IS_MAIN_CARD=?", "1");
+            if (CardList.size() > 0) {
+                return CardList.get(0);
+            }
+            CardList = DB_Cards.listAll(DB_Cards.class);
+            if (CardList.size() > 0) {
+                DB_Cards.listAll(DB_Cards.class).get(0);
+            }
         }
-        CardList= DB_Cards.listAll(DB_Cards.class);
-        if(CardList.size()>0)
+        catch (Exception ex)
         {
-            DB_Cards.listAll(DB_Cards.class).get(0);
+            Log.e(TAG,ex.getStackTrace().toString());
         }
         return null;
     }

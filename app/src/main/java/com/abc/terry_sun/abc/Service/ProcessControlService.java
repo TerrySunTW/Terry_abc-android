@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 
 /**
  * Created by terry_sun on 2015/6/2.
@@ -23,7 +24,13 @@ public class ProcessControlService {
     {
         if(MyProgressDialog!=null)
         {
-            MyProgressDialog.dismiss();
+            try
+            {
+                MyProgressDialog.dismiss();
+            }
+            catch (Exception ex)
+            {
+            }
             MyProgressDialog=null;
         }
     }

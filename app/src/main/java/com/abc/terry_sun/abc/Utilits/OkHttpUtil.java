@@ -3,11 +3,15 @@ package com.abc.terry_sun.abc.Utilits;
 /**
  * Created by terry_sun on 2015/6/25.
  */
+import android.content.ContentValues;
+
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -105,8 +109,23 @@ public class OkHttpUtil {
      * @param params
      * @return
      */
-    public static String formatParams(List<BasicNameValuePair> params){
-        return URLEncodedUtils.format(params, CHARSET_NAME);
+    public static String formatParams(ContentValues params){
+        String paramsURL="";
+        Set<Map.Entry<String, Object>> s=params.valueSet();
+        Iterator itr = s.iterator();
+        while(itr.hasNext())
+        {
+            if(paramsURL.length()>0)
+            {
+                paramsURL+="&";
+            }
+            Map.Entry me = (Map.Entry)itr.next();
+            String key = me.getKey().toString();
+            String value =  me.getValue().toString();
+            paramsURL+=key + "=" + URLEncoder.encode(value);
+        }
+        //return URLEncodedUtilsHC4.format(params, CHARSET_NAME);
+        return paramsURL;
     }
     /**
      * 为HttpGet 的 url 方便的添加多个name value 参数。
@@ -114,7 +133,7 @@ public class OkHttpUtil {
      * @param params
      * @return
      */
-    public static String attachHttpGetParams(String url, List<BasicNameValuePair> params){
+    public static String attachHttpGetParams(String url, ContentValues params){
         return url + "?" + formatParams(params);
     }
     /**

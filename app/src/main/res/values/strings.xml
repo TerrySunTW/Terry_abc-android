@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, TabSample!</string>
     <string name="app_name">ABC</string>
-    <string name="facebook_app_id">1607257752894486</string>
+    <string name="facebook_app_id">1636332369974875</string>
     <string name="nfc_service_name">ABC_NFC_Service</string>
     <string name="crash_toast_text">系統出錯，請協助將錯誤記錄寄回處理，以提供更佳的服務!!</string>
     <string-array name="Spinner_Content">

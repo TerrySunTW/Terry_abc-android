@@ -63,7 +63,6 @@ public class SettingActivity extends Activity {
 
 
         loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setLoginBehavior(LoginBehavior.SSO_ONLY);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +70,6 @@ public class SettingActivity extends Activity {
                 LoginManager.getInstance().logOut();
             }
         });
-
     }
 
 

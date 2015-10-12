@@ -24,7 +24,7 @@ public class MyService extends Service {
         Intent notificationIntent = new Intent(this, this.getClass());
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 notificationIntent, 0);
-        notification.setLatestEventInfo(this, "這是通知的標題", "這是通知的內容", pendingIntent);
+        //notification.setLatestEventInfo(this, "這是通知的標題", "這是通知的內容", pendingIntent);
         startForeground(1, notification);
     }
     @Override

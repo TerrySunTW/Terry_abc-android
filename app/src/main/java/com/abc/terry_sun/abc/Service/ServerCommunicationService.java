@@ -1,5 +1,6 @@
 package com.abc.terry_sun.abc.Service;
 
+import android.content.ContentValues;
 import android.os.Environment;
 import android.util.Log;
 
@@ -18,7 +19,6 @@ import com.abc.terry_sun.abc.Utilits.InternetUtil;
 import com.abc.terry_sun.abc.Utilits.OkHttpUtil;
 import com.google.gson.Gson;
 
-import org.apache.http.message.BasicNameValuePair;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -33,7 +33,7 @@ import java.util.List;
  * Created by terry_sun on 2015/7/24.
  */
 public class ServerCommunicationService {
-    String TAG="ServerCommunicationService";
+    static String TAG="ServerCommunicationService";
     private static final ServerCommunicationService _ServerCommunicationService = new ServerCommunicationService();
     public static ServerCommunicationService getInstance() {
         return _ServerCommunicationService;
@@ -46,9 +46,9 @@ public class ServerCommunicationService {
             @Override
             public void DoProcessing() {
                 try {
-                    List<BasicNameValuePair> UrlParams = new LinkedList<BasicNameValuePair>();
-                    UrlParams.add(new BasicNameValuePair("UserFacebookID", VariableProvider.getInstance().getFacebookID()));
-                    UrlParams.add(new BasicNameValuePair("EntityCardID", EntityCardID));
+                    ContentValues UrlParams = new ContentValues();
+                    UrlParams.put("UserFacebookID", VariableProvider.getInstance().getFacebookID());
+                    UrlParams.put("EntityCardID", EntityCardID);
                     OkHttpUtil.getStringFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.ToggleFavoriteSetting, UrlParams));
                 }
                 catch (Exception ex)
@@ -67,9 +67,9 @@ public class ServerCommunicationService {
                     @Override
                     public void DoProcessing() {
                         try {
-                            List<BasicNameValuePair> UrlParams = new LinkedList<BasicNameValuePair>();
-                            UrlParams.add(new BasicNameValuePair("UserFacebookID", VariableProvider.getInstance().getFacebookID()));
-                            UrlParams.add(new BasicNameValuePair("EntityCardID", EntityCardID));
+                            ContentValues UrlParams = new ContentValues();
+                            UrlParams.put("UserFacebookID", VariableProvider.getInstance().getFacebookID());
+                            UrlParams.put("EntityCardID", EntityCardID);
                             OkHttpUtil.getStringFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.SetMainCardSetting, UrlParams));
                         }
                         catch (Exception ex)
@@ -85,9 +85,9 @@ public class ServerCommunicationService {
     {
         int result=0;//0:fail >0:CardID:
         try {
-            List<BasicNameValuePair> UrlParams = new LinkedList<BasicNameValuePair>();
-            UrlParams.add(new BasicNameValuePair("UserFacebookID", VariableProvider.getInstance().getFacebookID()));
-            UrlParams.add(new BasicNameValuePair("EntityCardID", EntityCardID));
+            ContentValues UrlParams = new ContentValues();
+            UrlParams.put("UserFacebookID", VariableProvider.getInstance().getFacebookID());
+            UrlParams.put("EntityCardID", EntityCardID);
             result=OkHttpUtil.getIntFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.AddNewCard, UrlParams));
             if (result>0)
             {
@@ -104,10 +104,10 @@ public class ServerCommunicationService {
     {
         int result=0;//0:fail >0:CardID:
         try {
-            List<BasicNameValuePair> UrlParams = new LinkedList<BasicNameValuePair>();
-            UrlParams.add(new BasicNameValuePair("UserFacebookID", VariableProvider.getInstance().getFacebookID()));
-            UrlParams.add(new BasicNameValuePair("EntityCardID", EntityCardID));
-            UrlParams.add(new BasicNameValuePair("UserCardID", VariableProvider.getInstance().getLastNFCKey()));
+            ContentValues UrlParams = new ContentValues();
+            UrlParams.put("UserFacebookID", VariableProvider.getInstance().getFacebookID());
+            UrlParams.put("EntityCardID", EntityCardID);
+            UrlParams.put("UserCardID", VariableProvider.getInstance().getLastNFCKey());
 
             result=OkHttpUtil.getIntFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.AddFriendEntityCard, UrlParams));
             if (result>0)
@@ -125,9 +125,9 @@ public class ServerCommunicationService {
     {
         int result=0;//0:fail >0:CardID:
         try {
-            List<BasicNameValuePair> UrlParams = new LinkedList<BasicNameValuePair>();
-            UrlParams.add(new BasicNameValuePair("UserFacebookID", VariableProvider.getInstance().getFacebookID()));
-            UrlParams.add(new BasicNameValuePair("NFC_UserCardID", NFCCardID));
+            ContentValues UrlParams = new ContentValues();
+            UrlParams.put("UserFacebookID", VariableProvider.getInstance().getFacebookID());
+            UrlParams.put("NFC_UserCardID", NFCCardID);
             result=OkHttpUtil.getIntFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.AddFriendNFCCard, UrlParams));
             if (result>0)
             {
@@ -144,9 +144,9 @@ public class ServerCommunicationService {
     {
         String CardID="";
         try {
-            List<BasicNameValuePair> UrlParams = new LinkedList<BasicNameValuePair>();
-            UrlParams.add(new BasicNameValuePair("UserFacebookID", VariableProvider.getInstance().getFacebookID()));
-            UrlParams.add(new BasicNameValuePair("EntityCardID", EntityCardID));
+            ContentValues UrlParams = new ContentValues();
+            UrlParams.put("UserFacebookID", VariableProvider.getInstance().getFacebookID());
+            UrlParams.put("EntityCardID", EntityCardID);
             CardID=OkHttpUtil.getStringFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.GetUserCardIDByEntityID, UrlParams));
         }
         catch (Exception ex)
@@ -166,8 +166,8 @@ public class ServerCommunicationService {
         GetUserFriendInfo();
     }
     public void  GetUserCardInfo() {
-        List<BasicNameValuePair> UrlParams= new LinkedList<BasicNameValuePair>();
-        UrlParams.add(new BasicNameValuePair("UserFacebookID",VariableProvider.getInstance().getFacebookID()));
+        ContentValues UrlParams= new ContentValues();
+        UrlParams.put("UserFacebookID", VariableProvider.getInstance().getFacebookID());
         Gson gson = new Gson();
         String UserCardsInJson="";
         try {
@@ -227,8 +227,8 @@ public class ServerCommunicationService {
         }
     }
     public void  GetUserEventInfo() {
-        List<BasicNameValuePair> UrlParams= new LinkedList<BasicNameValuePair>();
-        UrlParams.add(new BasicNameValuePair("UserFacebookID",VariableProvider.getInstance().getFacebookID()));
+        ContentValues UrlParams= new ContentValues();
+        UrlParams.put("UserFacebookID", VariableProvider.getInstance().getFacebookID());
         Gson gson = new Gson();
         String JsonData="";
         try {
@@ -250,8 +250,8 @@ public class ServerCommunicationService {
     }
 
     public void  GetUserFriendInfo() {
-        List<BasicNameValuePair> UrlParams= new LinkedList<BasicNameValuePair>();
-        UrlParams.add(new BasicNameValuePair("UserFacebookID",VariableProvider.getInstance().getFacebookID()));
+        ContentValues UrlParams= new ContentValues();
+        UrlParams.put("UserFacebookID", VariableProvider.getInstance().getFacebookID());
         Gson gson = new Gson();
         String JsonData="";
         try {
@@ -265,11 +265,11 @@ public class ServerCommunicationService {
 
         CardService.getInstance().RemoveAllFriends();
 
-
-        for (DB_Friend Item: online_Friend)
-        {
-            DownLoadFriendImage(Item.getFriendImage(),Item.getFriendID());
-            Item.save();
+        if(online_Friend!=null) {
+            for (DB_Friend Item : online_Friend) {
+                DownLoadFriendImage(Item.getFriendImage(), Item.getFriendID());
+                Item.save();
+            }
         }
     }
 
@@ -280,7 +280,7 @@ public class ServerCommunicationService {
         }
         catch (Exception ex)
         {
-            ex.printStackTrace();
+            Log.e(TAG,ex.getStackTrace().toString());
         }
     }
     public BaseReturnModel ExchangeBonus(final DB_Events _DB_Events,final DB_Cards _DB_Cards)
@@ -288,12 +288,12 @@ public class ServerCommunicationService {
         BaseReturnModel _BaseReturnModel=new BaseReturnModel();
         Gson gson = new Gson();
         try {
-            List<BasicNameValuePair> UrlParams = new LinkedList<BasicNameValuePair>();
-            UrlParams.add(new BasicNameValuePair("UserFacebookID", VariableProvider.getInstance().getFacebookID()));
-            UrlParams.add(new BasicNameValuePair("EntityCardID", _DB_Cards.getEntityCardID()));
-            UrlParams.add(new BasicNameValuePair("CardID", _DB_Events.getCardID()));
-            UrlParams.add(new BasicNameValuePair("EventID", _DB_Events.getEventID()));
-            UrlParams.add(new BasicNameValuePair("Location", VariableProvider.getInstance().GetLocation()));
+            ContentValues UrlParams = new ContentValues();
+            UrlParams.put("UserFacebookID", VariableProvider.getInstance().getFacebookID());
+            UrlParams.put("EntityCardID", _DB_Cards.getEntityCardID());
+            UrlParams.put("CardID", _DB_Events.getCardID());
+            UrlParams.put("EventID", _DB_Events.getEventID());
+            UrlParams.put("Location", VariableProvider.getInstance().GetLocation());
             String JsonData=OkHttpUtil.getStringFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.ExchangeBonus, UrlParams));
             _BaseReturnModel = gson.fromJson(JsonData, BaseReturnModel.class);
         }
@@ -307,9 +307,9 @@ public class ServerCommunicationService {
     {
         String CardID="";
         try {
-            List<BasicNameValuePair> UrlParams = new LinkedList<BasicNameValuePair>();
-            UrlParams.add(new BasicNameValuePair("UserFacebookID", VariableProvider.getInstance().getFacebookID()));
-            UrlParams.add(new BasicNameValuePair("FriendID", FriendID));
+            ContentValues UrlParams = new ContentValues();
+            UrlParams.put("UserFacebookID", VariableProvider.getInstance().getFacebookID());
+            UrlParams.put("FriendID", FriendID);
             CardID=OkHttpUtil.getStringFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.AddFriend, UrlParams));
         }
         catch (Exception ex)

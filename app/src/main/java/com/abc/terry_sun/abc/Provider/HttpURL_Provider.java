@@ -17,4 +17,8 @@ public class HttpURL_Provider {
     public static final String GetUserEvent= ServerURL + "WebService/GetUserEvent";
     public static final String SetMainCardSetting= ServerURL + "WebService/SetMainCard";
     public static final String ExchangeBonus= ServerURL + "WebService/ExchangeBonus";
+    public static final String AddFriend= ServerURL + "WebService/AddFriend";
+
+    public static final String AppVersion= ServerURL + "version/version.txt";
+    public static final String AppURL= ServerURL + "version/ABC.apk";
 }
