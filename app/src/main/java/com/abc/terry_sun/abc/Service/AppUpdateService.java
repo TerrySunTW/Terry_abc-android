@@ -41,19 +41,14 @@ public class AppUpdateService {
     Context context;
     public void DownloadAPK(Context context){
         this.context=context;
-        ProcessControlService.ShowProgressDialog(context,"新版APP","APP更新中...");
+        ProcessControlService.ShowProgressDialog(context, "新版APP", "APP更新中...");
         Thread DownloadAPKThread=new Thread(new Runnable() {
             public void run() {
                 try {
 
                     URL url = new URL(HttpURL_Provider.AppURL);
 
-
-
-                    File sdcard = Environment.getExternalStorageDirectory();
-                    File file = new File(sdcard, "ABC.apk");
-
-                    FileOutputStream fileOutput = new FileOutputStream(file);
+                    FileOutputStream fileOutput = new FileOutputStream(GetApkFile());
                     InputStream inputStream = url.openStream();
 
                     byte[] buffer = new byte[1024];
@@ -75,12 +70,21 @@ public class AppUpdateService {
     }
     private void InstallAPK(){
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        File sdcard = Environment.getExternalStorageDirectory();
-        File file = new File(sdcard, "ABC.apk");
-        Uri uri = Uri.fromFile(file);
+        Uri uri = Uri.fromFile(GetApkFile());
         intent.setDataAndType(uri, "application/vnd.android.package-archive");
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+    }
+    public void RemoveAPK(){
+        File ApkFile=GetApkFile();
+        if(ApkFile.exists()) {
+            GetApkFile().delete();
+        }
+    }
+    private File GetApkFile()
+    {
+        File sdcard = Environment.getExternalStorageDirectory();
+        return new File(sdcard, "ABC.apk");
     }
 }
 

@@ -142,7 +142,11 @@ public class LoginActivity extends AppCompatActivity {
                                 }, new AsyncTaskPostProcessingInterface() {
                                     @Override
                                     public void DoProcessing() {
-                                        if(!IsVersionSameWithServer)
+                                        if(IsVersionSameWithServer)
+                                        {
+                                            AppUpdateService.getInstance().RemoveAPK();
+                                        }
+                                        else
                                         {
                                             AppUpdateService.getInstance().DownloadAPK(_context);
                                         }
