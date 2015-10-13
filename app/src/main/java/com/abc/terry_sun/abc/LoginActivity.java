@@ -16,9 +16,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskHttpRequest;
+import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskPostProcessingInterface;
 import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskProcessingInterface;
 import com.abc.terry_sun.abc.Provider.HttpURL_Provider;
 import com.abc.terry_sun.abc.Provider.VariableProvider;
+import com.abc.terry_sun.abc.Service.AppUpdateService;
 import com.abc.terry_sun.abc.Service.FacebookService;
 import com.abc.terry_sun.abc.Service.ServerCommunicationService;
 import com.abc.terry_sun.abc.Utilits.OkHttpUtil;
@@ -56,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
     private AccessToken accessToken;
     AccessTokenTracker accessTokenTracker;
     static Context _context;
+    static Boolean IsVersionSameWithServer=false;
     ContentValues LoginParams= new ContentValues();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.activity_login);
-        Log.e(TAG, "Key:" + FacebookService.GetKeyHash(this));
+        //Log.e(TAG, "Key:" + FacebookService.GetKeyHash(this));
 
 
 
@@ -78,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         // App code
-                        Log.e(TAG, "onSuccess");
+                        //Log.e(TAG, "onSuccess");
                         accessToken = loginResult.getAccessToken();
                         GetFacebookInfoProcess();
                         Toast.makeText(getApplication(), "success", Toast.LENGTH_SHORT).show();
@@ -87,14 +90,14 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onCancel() {
                         // App code
-                        Log.e(TAG, "onCancel");
+                        //Log.e(TAG, "onCancel");
                         Toast.makeText(getApplication(), "fail", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
                         // App code
-                        Log.e(TAG, "onError");
+                        //Log.e(TAG, "onError");
                         Toast.makeText(getApplication(), "error", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -104,7 +107,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void GetFacebookInfoProcess() {
-        Log.e(TAG, "GetFacebookInfoProcess");
+        //Log.e(TAG, "GetFacebookInfoProcess");
+
         GraphRequestBatch batch = new GraphRequestBatch(
 
                 GraphRequest.newMeRequest(
@@ -114,23 +118,34 @@ public class LoginActivity extends AppCompatActivity {
                             public void onCompleted(JSONObject object, GraphResponse response) {
                                 Log.e(TAG, "GraphJSONObjectCallback.onCompleted");
                                 GetFacebookUserData(object);
-                                AsyncTaskHttpRequest _AsyncTaskHttpRequest=new AsyncTaskHttpRequest(_context,new AsyncTaskProcessingInterface() {
+                                AsyncTaskHttpRequest _AsyncTaskHttpRequest=new AsyncTaskHttpRequest(_context, new AsyncTaskProcessingInterface() {
                                     @Override
                                     public void DoProcessing() {
                                         try {
-                                            //login
-                                            OkHttpUtil.getStringFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.FacebookLogin, LoginParams));
-                                            //get user card info
-                                            ServerCommunicationService.getInstance().UpdateServerInfo();
+                                            IsVersionSameWithServer = ServerCommunicationService.getInstance().IsVersionSameWithServer();
+                                            if (IsVersionSameWithServer) {
+                                                //login
+                                                OkHttpUtil.getStringFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.FacebookLogin, LoginParams));
+                                                //get user card info
+                                                ServerCommunicationService.getInstance().UpdateServerInfo();
+                                                Intent intent = new Intent();
+                                                intent.setClass(LoginActivity.this, MainActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                            }
                                         } catch (Exception e) {
-                                            if (e!=null) {
+                                            if (e != null) {
                                                 Log.e("Error", e.getMessage());
                                             }
                                         }
-                                        Intent intent = new Intent();
-                                        intent.setClass(LoginActivity.this, MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
+                                    }
+                                }, new AsyncTaskPostProcessingInterface() {
+                                    @Override
+                                    public void DoProcessing() {
+                                        if(!IsVersionSameWithServer)
+                                        {
+                                            AppUpdateService.getInstance().DownloadAPK(_context);
+                                        }
                                     }
                                 });
                                 _AsyncTaskHttpRequest.execute();
@@ -141,14 +156,14 @@ public class LoginActivity extends AppCompatActivity {
         batch.executeAsync();
     }
     private void GetFacebookUserData(JSONObject object) {
-        Log.e(TAG, "GetFacebookUserData");
+        //Log.e(TAG, "GetFacebookUserData");
         String FacebookID = object.optString("id");
         String FacebookName = object.optString("name");
         String FacebookLink = object.optString("link");
         String FacebookPhoto="";
-        Log.d("FB", "complete");
-        Log.d("FB",FacebookID);
-        Log.d("FB", FacebookName);
+        //Log.d("FB", "complete");
+        //Log.d("FB",FacebookID);
+        //Log.d("FB", FacebookName);
         FacebookPhoto= "https://graph.facebook.com/"+FacebookID+"/picture?type=large";
         LoginParams.put("FacebookLoginID", FacebookID);
         LoginParams.put("FacebookLink", FacebookLink);
@@ -165,14 +180,14 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e(TAG, "onResume");
+        //Log.e(TAG, "onResume");
         // Logs 'install' and 'app activate' App Events.
         AppEventsLogger.activateApp(this);
     }
     @Override
     protected void onPause() {
         super.onPause();
-        Log.e(TAG, "onPause");
+        //Log.e(TAG, "onPause");
 
         // Logs 'app deactivate' App Event.
         AppEventsLogger.deactivateApp(this);
@@ -180,7 +195,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e(TAG, "onActivityResult");
+        //Log.e(TAG, "onActivityResult");
         callbackManager.onActivityResult(requestCode,resultCode, data);
     }
 

@@ -19,6 +19,6 @@ public class HttpURL_Provider {
     public static final String ExchangeBonus= ServerURL + "WebService/ExchangeBonus";
     public static final String AddFriend= ServerURL + "WebService/AddFriend";
 
-    public static final String AppVersion= ServerURL + "version/version.txt";
-    public static final String AppURL= ServerURL + "version/ABC.apk";
+    public static final String AppVersion= ServerURL + "Version/GetVersion";
+    public static final String AppURL= ServerURL + "Version/GetAPK";
 }
