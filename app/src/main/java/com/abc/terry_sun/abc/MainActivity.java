@@ -63,11 +63,11 @@ public class MainActivity extends TabActivity {
 	}
 	private void setTabs() {
 
-		addTab("Cards", R.drawable.tab_home, TabGroup_Cards.class);
-		addTab("Bonus", R.drawable.tab_search, BonusListActivity.class);
-		addTab("Fake", R.drawable.tab_search, CardDetailEmulateActivity.class);
-        addTab("Link", R.drawable.tab_search, FriendsListActivity.class);
-		addTab("R-Card", R.drawable.tab_search, TabGroup_R_Card.class);
+		addTab("Cards", R.drawable.tab_cards, TabGroup_Cards.class);
+		addTab("Bonus", R.drawable.tab_bonus, BonusListActivity.class);
+		addTab("Fake", R.drawable.tab_cards, CardDetailEmulateActivity.class);
+        addTab("Link", R.drawable.tab_link, FriendsListActivity.class);
+		addTab("R-Card", R.drawable.tab_r_card, TabGroup_R_Card.class);
 		TabWidgetSetting();
 	}
 	private void TabWidgetSetting()
