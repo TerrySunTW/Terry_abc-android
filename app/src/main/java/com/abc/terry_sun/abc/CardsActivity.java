@@ -131,31 +131,22 @@ public class CardsActivity extends BasicActivity {
                 ButtonRepresentative.setText(RepresentativeGalleryItemList.get(position).getTitle());
                 SelectedRepresentativeID = RepresentativeGalleryItemList.get(position).getItemID();
                 Log.i("Info", "SelectedRepresentativeID" + SelectedRepresentativeID);
-                CardListDataSetting(SelectedGroupID,SelectedRepresentativeID);
+                CardListDataSetting(SelectedGroupID, SelectedRepresentativeID);
             }
         });
     }
 
     private void FavoriteCardListDataSetting() {
         CardList=CardService.getInstance().GetFavoriteCardsInfo();
-        CardGalleryItemList = new ArrayList<GalleryItem>();
-        for(CardInfo Item:CardList)
-        {
-            CardGalleryItemList.add(new GalleryItem(Item.getEntityCardID(),Item.getCardName(),Item.getCardImage()));
-        }
-        gridView.setAdapter(new AdapterCardsImage(this.getParent(), CardGalleryItemList));
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                SelectedEntityCardID =CardGalleryItemList.get(position).getItemID();
-                CardService.getInstance().ShowCardDetailDialog(SelectedEntityCardID, context);
-                Log.i("Info", "SelectedEntityCardID" + SelectedEntityCardID);
-            }
-        });
+        SetupCardList();
     }
 
     private void CardListDataSetting(String GroupID,String RepresentativeID) {
         CardList=CardService.getInstance().GetCardsByRepresentativeID(GroupID,RepresentativeID);
+        SetupCardList();
+    }
+    private void SetupCardList()
+    {
         CardGalleryItemList = new ArrayList<GalleryItem>();
         for(CardInfo Item:CardList)
         {

@@ -52,7 +52,7 @@ public class AdapterCardsImage extends BaseAdapter {
             ImageView imageView = (ImageView) gridView
                     .findViewById(R.id.grid_item_image);
 
-            Log.i("Info", "ImagePath:" + StorageService.GetImagePath( GalleryItemList.get(position).getImageName()));
+            Log.i("Info", "ImagePath:" + StorageService.GetImagePath(GalleryItemList.get(position).getImageName()));
             Bitmap Img = BitmapFactory.decodeFile(StorageService.GetImagePath(GalleryItemList.get(position).getImageName()));
             imageView.setImageBitmap(Img);
 
