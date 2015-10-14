@@ -13,4 +13,9 @@ public class CardInfo {
     String EntityCardID;
     String CardName;
     String CardImage;
+    Boolean HasRealCard;
+    public CardInfo(String RepresentativeID, String EntityCardID, String CardName, String CardImage)
+    {
+        this(RepresentativeID, EntityCardID, CardName, CardImage,false);
+    }
 }

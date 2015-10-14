@@ -115,7 +115,12 @@ public class CardService {
         List<CardInfo> CardInfoList=new ArrayList<CardInfo>();
         for(DB_Cards Item:CardList)
         {
-            CardInfoList.add(new CardInfo(Item.getRepresentativeID(),Item.getEntityCardID(),Item.getCardName(),Item.getCardImage()));
+            CardInfoList.add(new CardInfo(
+                    Item.getRepresentativeID(),
+                    Item.getEntityCardID(),
+                    Item.getCardName(),Item.getCardImage(),
+                    Item.getHasRealCard()
+                    ));
         }
         return CardInfoList;
     }
@@ -125,7 +130,13 @@ public class CardService {
         List<CardInfo> CardInfoList=new ArrayList<CardInfo>();
         for(DB_Cards Item:CardList)
         {
-            CardInfo _CardInfo=new CardInfo(Item.getRepresentativeID(),Item.getEntityCardID(),Item.getCardName(),Item.getCardImage());
+            CardInfo _CardInfo=new CardInfo(
+                    Item.getRepresentativeID(),
+                    Item.getEntityCardID(),
+                    Item.getCardName(),
+                    Item.getCardImage(),
+                    Item.getHasRealCard()
+            );
             if(!CardInfoList.contains(_CardInfo))
             {
                 CardInfoList.add(_CardInfo);

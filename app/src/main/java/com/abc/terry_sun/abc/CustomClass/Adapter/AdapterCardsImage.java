@@ -3,6 +3,7 @@ package com.abc.terry_sun.abc.CustomClass.Adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,7 @@ public class AdapterCardsImage extends BaseAdapter {
             // get layout from mobile.xml
             gridView = inflater.inflate(R.layout.activity_cards_item, null);
 
+            GalleryItem _GalleryItem=GalleryItemList.get(position);
             // set value into textview
             TextView textView = (TextView) gridView
                     .findViewById(R.id.grid_item_label);
@@ -52,9 +54,18 @@ public class AdapterCardsImage extends BaseAdapter {
             ImageView imageView = (ImageView) gridView
                     .findViewById(R.id.grid_item_image);
 
-            Log.i("Info", "ImagePath:" + StorageService.GetImagePath(GalleryItemList.get(position).getImageName()));
-            Bitmap Img = BitmapFactory.decodeFile(StorageService.GetImagePath(GalleryItemList.get(position).getImageName()));
+            Log.i("Info", "ImagePath:" + StorageService.GetImagePath(_GalleryItem.getImageName()));
+            Bitmap Img = BitmapFactory.decodeFile(StorageService.GetImagePath(_GalleryItem.getImageName()));
             imageView.setImageBitmap(Img);
+
+            if(_GalleryItem.getIsNeedHightlight())
+            {
+                imageView.setBackgroundColor(Color.YELLOW);
+            }
+            else
+            {
+                imageView.setBackgroundColor(Color.BLACK);
+            }
 
         } else {
             gridView = (View) convertView;

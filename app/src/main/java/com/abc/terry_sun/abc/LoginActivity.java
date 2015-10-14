@@ -116,7 +116,6 @@ public class LoginActivity extends AppCompatActivity {
                         new GraphRequest.GraphJSONObjectCallback() {
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
-                                Log.e(TAG, "GraphJSONObjectCallback.onCompleted");
                                 GetFacebookUserData(object);
                                 AsyncTaskHttpRequest _AsyncTaskHttpRequest=new AsyncTaskHttpRequest(_context, new AsyncTaskProcessingInterface() {
                                     @Override

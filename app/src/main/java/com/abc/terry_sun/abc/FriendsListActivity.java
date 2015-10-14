@@ -45,7 +45,6 @@ public class FriendsListActivity extends Activity {
 	Context context;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Log.e("Event", "onCreate");
 		setContentView(R.layout.activity_friends_list);
 		super.onCreate(savedInstanceState);
 		ButterKnife.inject(this);

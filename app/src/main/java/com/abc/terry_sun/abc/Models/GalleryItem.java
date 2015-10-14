@@ -12,4 +12,9 @@ public class GalleryItem {
     String ItemID;
     String Title;
     String ImageName;
+    Boolean IsNeedHightlight;
+    public GalleryItem(String ItemID,String Title,String ImageName)
+    {
+        this(ItemID,Title,ImageName,false);
+    }
 }

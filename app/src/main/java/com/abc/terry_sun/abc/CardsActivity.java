@@ -150,7 +150,13 @@ public class CardsActivity extends BasicActivity {
         CardGalleryItemList = new ArrayList<GalleryItem>();
         for(CardInfo Item:CardList)
         {
-            CardGalleryItemList.add(new GalleryItem(Item.getEntityCardID(),Item.getCardName(),Item.getCardImage()));
+            CardGalleryItemList.add(new GalleryItem(
+                    Item.getEntityCardID(),
+                    Item.getCardName(),
+                    Item.getCardImage(),
+                    Item.getHasRealCard()
+                    )
+            );
         }
         gridView.setAdapter(new AdapterCardsImage(this.getParent(), CardGalleryItemList));
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

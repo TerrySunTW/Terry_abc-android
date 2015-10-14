@@ -49,6 +49,7 @@ public class DB_Cards extends SugarRecord<DB_Cards> {
     String DirectPoint;
     String IndirectPoint;
     Date CreatedTimeFormated;
+    Boolean HasRealCard;
     public void UpdateInfo(DB_Cards NewInfo)
     {
         this.setRelationLink(NewInfo.getRelationLink());
@@ -81,6 +82,8 @@ public class DB_Cards extends SugarRecord<DB_Cards> {
 
         this.setDirectPoint(NewInfo.getDirectPoint());
         this.setIndirectPoint(NewInfo.getIndirectPoint());
+
+        this.setHasRealCard(NewInfo.getHasRealCard());
 
     }
 }
