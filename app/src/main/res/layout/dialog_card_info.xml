@@ -11,10 +11,19 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/TextView_ItemName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="xxxxxxxxx"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="@color/com_facebook_blue" />
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <ImageView
                     android:id="@+id/ImageView_ItemImage"
                     android:layout_width="300px"
@@ -30,25 +39,22 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:text="Name:" />
-                        <TextView
-                            android:id="@+id/TextView_ItemName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:text="xxxxxxxxx"/>
+                            android:text="xxxxxxx" />
                     </TableRow>
                     <TableRow>
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <Button
+                            android:id="@+id/Button_MainCard"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:text="Info1:" />
-                        <TextView
-                            android:layout_width="wrap_content"
+                            android:text="show card"
+                            android:layout_gravity="center_horizontal" />
+                        <Button
+                            android:id="@+id/Button_Favorite"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:text="xxxxxxx" />
+                            android:text="Favorite"
+                            android:layout_gravity="center_horizontal" />
+
                     </TableRow>
                 </TableLayout>
             </LinearLayout>
@@ -58,18 +64,7 @@
                 android:layout_height="wrap_content"
                 android:text="Media"
                 android:layout_gravity="center_horizontal" />
-            <Button
-                android:id="@+id/Button_Favorite"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Favorite"
-                android:layout_gravity="center_horizontal" />
-            <Button
-                android:id="@+id/Button_MainCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Set as show card"
-                android:layout_gravity="center_horizontal" />
+
             <Button
                 android:id="@+id/Button_Bonus"
                 android:layout_width="match_parent"

@@ -383,7 +383,7 @@ public class CardService {
         final Button Button_Favorite = (Button)CardDetailDialog.findViewById(R.id.Button_Favorite);
         if(SelectedCardInfo.getIsFavorite())
         {
-            Button_Favorite.setText("Remove from favorites");
+            Button_Favorite.setText("(X) Favorites");
         }
 
         Button_Favorite.setOnClickListener(new View.OnClickListener() {
@@ -393,7 +393,7 @@ public class CardService {
                 CardService.getInstance().ToggleIsCardFavorite(SelectedCardInfo);
                 if(SelectedCardInfo.getIsFavorite())
                 {
-                    Button_Favorite.setText("Remove from favorites");
+                    Button_Favorite.setText("(X) Favorites");
                 }
                 else
                 {
