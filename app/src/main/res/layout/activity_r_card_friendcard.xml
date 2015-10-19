@@ -2,17 +2,42 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
+    android:weightSum="2"
     android:orientation="vertical">
+
 
     <Button
         android:id="@+id/ButtonHasRealCard"
+
+        android:text="有實體卡"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="有實體卡"/>
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        />
+
     <Button
         android:id="@+id/ButtonNoRealCard"
+
+        android:text="無實體卡"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="無實體卡"/>
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        />
 
 </LinearLayout>
