@@ -20,7 +20,6 @@ import android.app.Activity;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,12 +30,7 @@ import android.widget.TextView;
 import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskHttpRequest;
 import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskPostProcessingInterface;
 import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskProcessingInterface;
-import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskSendNFCCardToServer;
-import com.abc.terry_sun.abc.CustomClass.Interface.OnTagDiscoveredEvent;
 import com.abc.terry_sun.abc.Provider.VariableProvider;
-import com.abc.terry_sun.abc.Service.CardService;
-import com.abc.terry_sun.abc.Service.ProcessControlService;
-import com.abc.terry_sun.abc.Service.ServerCommunicationService;
 
 
 /**
@@ -109,7 +103,7 @@ public class CardReaderFragment extends Fragment implements LoyaltyCardReader.Ac
         }
     }
 
-    private void disableReaderMode() {
+    public void disableReaderMode() {
         Log.i(TAG, "Disabling reader mode");
         Activity activity = getActivity();
         NfcAdapter nfc = NfcAdapter.getDefaultAdapter(activity);

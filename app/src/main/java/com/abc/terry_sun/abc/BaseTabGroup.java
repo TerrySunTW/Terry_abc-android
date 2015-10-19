@@ -70,7 +70,7 @@ public class BaseTabGroup extends ActivityGroup {
 
     public static void GoPreviousView() {
         int length = ActivityView.size();
-        if (length > 0) {
+        if (length > 2) {
             View _view = ActivityView.get(length - 2);
             RemoveActive(length - 1);//刪掉最後一次看到的畫面
             RemoveActive(length - 2);//刪掉原本的自已

@@ -18,6 +18,6 @@ public class ABCApplication extends SugarApp {
         @Override
         public void onCreate() {
                 super.onCreate();
-                //ACRA.init(this);
+                ACRA.init(this);
         }
 }

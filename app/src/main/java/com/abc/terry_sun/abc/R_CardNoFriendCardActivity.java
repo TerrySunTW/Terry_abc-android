@@ -19,7 +19,7 @@ public class R_CardNoFriendCardActivity extends BasicActivity {
     String TAG="R_CardNoFriendCardActivity";
     static int NewCardID=0;
     FragmentTransaction transaction;
-    CardReaderFragment fragment;
+    static CardReaderFragment fragment;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,9 +56,18 @@ public class R_CardNoFriendCardActivity extends BasicActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        fragment.disableReaderMode();
+
     }
     @Override
     protected void onResume() {
         super.onResume();
+    }
+    public static void  disableReaderMode()
+    {
+        if(fragment!=null)
+        {
+            fragment.disableReaderMode();
+        }
     }
 }

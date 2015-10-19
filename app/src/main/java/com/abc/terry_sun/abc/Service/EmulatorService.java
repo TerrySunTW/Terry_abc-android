@@ -14,6 +14,7 @@ import com.abc.terry_sun.abc.Entities.DB_Cards;
 import com.abc.terry_sun.abc.MainActivity;
 import com.abc.terry_sun.abc.NFC.NfcStorage;
 import com.abc.terry_sun.abc.R;
+import com.abc.terry_sun.abc.R_CardNoFriendCardActivity;
 
 /**
  * Created by terry_sun on 2015/8/25.
@@ -51,5 +52,6 @@ public class EmulatorService {
 
         EmulatorDialog.show();
         NfcStorage.SetAccount(context, SelectedCardInfo.getUserCardID());
+        R_CardNoFriendCardActivity.disableReaderMode();
     }
 }
