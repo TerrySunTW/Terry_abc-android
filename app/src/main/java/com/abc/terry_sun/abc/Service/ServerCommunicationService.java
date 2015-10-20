@@ -1,7 +1,6 @@
 package com.abc.terry_sun.abc.Service;
 
 import android.content.ContentValues;
-import android.os.Environment;
 import android.util.Log;
 
 import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskHttpRequest;
@@ -11,7 +10,6 @@ import com.abc.terry_sun.abc.Entities.DB_Events;
 import com.abc.terry_sun.abc.Entities.DB_Friend;
 import com.abc.terry_sun.abc.MainActivity;
 import com.abc.terry_sun.abc.Models.BaseReturnModel;
-import com.abc.terry_sun.abc.Models.CardInfo;
 import com.abc.terry_sun.abc.Provider.HttpURL_Provider;
 import com.abc.terry_sun.abc.Provider.VariableProvider;
 import com.abc.terry_sun.abc.Provider.VersionProvider;
@@ -19,14 +17,7 @@ import com.abc.terry_sun.abc.Utilits.InternetUtil;
 import com.abc.terry_sun.abc.Utilits.OkHttpUtil;
 import com.google.gson.Gson;
 
-
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -177,10 +168,10 @@ public class ServerCommunicationService {
         {
 
         }
-        Log.i("info","JsonArray.UserCardsInJson:"+ UserCardsInJson);
+        //Log.i("info","JsonArray.UserCardsInJson:"+ UserCardsInJson);
         DB_Cards[] onlineDBCardsArray = gson.fromJson(UserCardsInJson, DB_Cards[].class);
         StorageService.GetAppStorageFolderInitial();
-        Log.i("info", "OnlineCardsArray:"+ onlineDBCardsArray.length);
+        //Log.i("info", "OnlineCardsArray:"+ onlineDBCardsArray.length);
         String Result="";
         List<DB_Cards> LocalCardList=CardService.getInstance().GetAllCards();
 
