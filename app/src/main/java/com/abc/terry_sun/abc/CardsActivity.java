@@ -67,7 +67,9 @@ public class CardsActivity extends BasicActivity {
         ButterKnife.inject(this);
 
         Log.i("INFO", "size.x=" + String.valueOf(ScreenService.GetScreenWidth(this)));
-        gridView.setColumnWidth((ScreenService.GetScreenWidth(this).x - 30) / 3);
+        int ColumnWidth=(ScreenService.GetScreenWidth(this).x - 30) / 3;
+        gridView.setColumnWidth(ColumnWidth);
+        gridView.setNumColumns(3);
 
     }
     @Override
