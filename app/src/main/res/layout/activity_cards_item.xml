@@ -10,8 +10,9 @@
         <ImageView
             android:id="@+id/grid_item_image"
             android:layout_width="200px"
-            android:layout_height="300px"
+            android:layout_height="270px"
             android:layout_gravity="center_horizontal"
+            android:scaleType="centerInside"
             android:padding="5dp">
         </ImageView>
         <TextView
