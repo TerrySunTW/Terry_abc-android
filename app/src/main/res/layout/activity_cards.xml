@@ -27,7 +27,7 @@
                 android:layout_weight="1"
                 android:scrollHorizontally="true"
                 android:maxHeight="40dip"
-                android:text="Category>>DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"/>
+                android:text="Category>>"/>
             <Button
                 android:id="@+id/ButtonGroup"
                 android:layout_width="fill_parent"
