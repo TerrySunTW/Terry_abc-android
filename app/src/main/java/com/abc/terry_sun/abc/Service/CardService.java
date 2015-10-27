@@ -109,6 +109,32 @@ public class CardService {
         }
         return NewRepresentativeInfoList;
     }
+    public List<CardInfo> GetCardsByConditions(String CategoryID,String GroupID,String RepresentativeID)
+    {
+        List<DB_Cards> CardList;
+        if(CategoryID.length()>0) {
+            CardList = DB_Cards.find(DB_Cards.class, "(?='' or Category_ID=?) and (?='' or Group_ID=?) and (?='' or REPRESENTATIVE_ID=?)",
+                    CategoryID,CategoryID, GroupID,GroupID, RepresentativeID,RepresentativeID);
+        }
+        else
+        {
+            CardList = DB_Cards.listAll(DB_Cards.class);
+        }
+        List<CardInfo> CardInfoList=new ArrayList<CardInfo>();
+        for(DB_Cards Item:CardList)
+        {
+            CardInfo _CardInfo=new CardInfo(
+                    Item.getRepresentativeID(),
+                    Item.getEntityCardID(),
+                    Item.getCardName(),Item.getCardImage(),
+                    Item.getHasRealCard()
+            );
+            if(!CardInfoList.contains(_CardInfo)) {
+                CardInfoList.add(_CardInfo);
+            }
+        }
+        return CardInfoList;
+    }
     public List<CardInfo> GetCardsByRepresentativeID(String GroupID,String RepresentativeID)
     {
         List<DB_Cards> CardList= DB_Cards.find(DB_Cards.class, "Group_ID=? and REPRESENTATIVE_ID=?", GroupID, RepresentativeID);

@@ -19,7 +19,6 @@
             android:layout_height="wrap_content"
             android:baselineAligned="false"
             android:paddingTop="5dp">
-
             <Button
                 android:id="@+id/ButtonCategory"
                 android:layout_width="fill_parent"
@@ -27,7 +26,7 @@
                 android:layout_weight="1"
                 android:scrollHorizontally="true"
                 android:maxHeight="40dip"
-                android:text="Category>>"/>
+                android:text="All"/>
             <Button
                 android:id="@+id/ButtonGroup"
                 android:layout_width="fill_parent"

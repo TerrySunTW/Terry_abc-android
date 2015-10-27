@@ -48,14 +48,13 @@ public class CardsActivity extends BasicActivity {
     List<GalleryItem> GalleryItemList;
 
     //MenuItem
-    List<GalleryItem> CategoryGalleryItemList;
-    List<GalleryItem> GroupGalleryItemList;
-    List<GalleryItem> RepresentativeGalleryItemList;
-    List<GalleryItem> CardGalleryItemList;
+    List<GalleryItem> GroupGalleryItemList=new ArrayList<GalleryItem>();
+    List<GalleryItem> RepresentativeGalleryItemList=new ArrayList<GalleryItem>();;
+    List<GalleryItem> CardGalleryItemList=new ArrayList<GalleryItem>();
 
-    String SelectedCategoryID;
-    String SelectedGroupID;
-    String SelectedRepresentativeID;
+    String SelectedCategoryID="";
+    String SelectedGroupID="";
+    String SelectedRepresentativeID="";
     String SelectedEntityCardID;
 
     Context context;
@@ -76,95 +75,36 @@ public class CardsActivity extends BasicActivity {
     protected void onResume() {
         super.onResume();
         InitialParameter();
-        GategoryDataSetting();
+        //GategoryDataSetting();
+        ShowCard();
     }
     void InitialParameter()
     {
         CategoryList = CardService.getInstance().GetAllCategory();
-        CategoryGalleryItemList = new ArrayList<GalleryItem>();
-        for(CategoryInfo Item:CategoryList)
-        {
-            CategoryGalleryItemList.add(new GalleryItem(Item.getCategoryID(),Item.getCategoryName(),Item.getCategoryImage()));
-        }
     }
-
-    private void GategoryDataSetting() {
-        gridView.setAdapter(new AdapterCardsImage(this.getParent(), CategoryGalleryItemList));
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                ButtonCategory.setText(CategoryGalleryItemList.get(position).getTitle());
-                SelectedCategoryID = CategoryGalleryItemList.get(position).getItemID();
-                Log.i("Info", "SelectedCategoryID" + SelectedCategoryID);
-                GroupDataSetting();
-            }
-        });
-    }
-
-    private void GroupDataSetting() {
-        GroupList=CardService.getInstance().GetGroupByCategoryID(SelectedCategoryID);
-        GroupGalleryItemList = new ArrayList<GalleryItem>();
-        for(GroupInfo Item:GroupList)
-        {
-            GroupGalleryItemList.add(new GalleryItem(Item.getGroupID(),Item.getGroupName(),Item.getGroupImage()));
-        }
-        gridView.setAdapter(new AdapterCardsImage(this.getParent(), GroupGalleryItemList));
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                ButtonGroup.setText(GroupGalleryItemList.get(position).getTitle());
-                SelectedGroupID = GroupGalleryItemList.get(position).getItemID();
-                Log.i("Info", "SelectedGroupID" + SelectedGroupID);
-                RepresentativeListDataSetting();
-            }
-        });
-    }
-    private void RepresentativeListDataSetting() {
-        RepresentativeList=CardService.getInstance().GetRepresentativeByGroupID(SelectedGroupID);
-        RepresentativeGalleryItemList = new ArrayList<GalleryItem>();
-        for(RepresentativeInfo Item:RepresentativeList)
-        {
-            RepresentativeGalleryItemList.add(new GalleryItem(Item.getRepresentativeID(),Item.getRepresentativeName(),Item.getRepresentativeImage()));
-        }
-        gridView.setAdapter(new AdapterCardsImage(this.getParent(), RepresentativeGalleryItemList));
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                ButtonRepresentative.setText(RepresentativeGalleryItemList.get(position).getTitle());
-                SelectedRepresentativeID = RepresentativeGalleryItemList.get(position).getItemID();
-                Log.i("Info", "SelectedRepresentativeID" + SelectedRepresentativeID);
-                CardListDataSetting(SelectedGroupID, SelectedRepresentativeID);
-            }
-        });
-    }
-
-    private void FavoriteCardListDataSetting() {
-        CardList=CardService.getInstance().GetFavoriteCardsInfo();
-        SetupCardList();
-    }
-
-    private void CardListDataSetting(String GroupID,String RepresentativeID) {
-        CardList=CardService.getInstance().GetCardsByRepresentativeID(GroupID,RepresentativeID);
-        SetupCardList();
-    }
-    private void SetupCardList()
+    void ShowCard()
     {
-        CardGalleryItemList = new ArrayList<GalleryItem>();
-        for(CardInfo Item:CardList)
+        ShowCard(null);
+    }
+    void ShowCard(List<CardInfo> CardInfoList) {
+        if(CardInfoList==null) {
+            CardInfoList = CardService.getInstance().GetCardsByConditions(SelectedCategoryID, SelectedGroupID, SelectedRepresentativeID);
+        }
+        CardGalleryItemList.clear();
+        for(CardInfo Item:CardInfoList)
         {
             CardGalleryItemList.add(new GalleryItem(
                     Item.getEntityCardID(),
                     Item.getCardName(),
                     Item.getCardImage(),
                     Item.getHasRealCard()
-                    )
-            );
+                    ));
         }
         gridView.setAdapter(new AdapterCardsImage(this.getParent(), CardGalleryItemList));
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                SelectedEntityCardID =CardGalleryItemList.get(position).getItemID();
+                SelectedEntityCardID = CardGalleryItemList.get(position).getItemID();
                 CardService.getInstance().ShowCardDetailDialog(SelectedEntityCardID, context);
                 Log.i("Info", "SelectedEntityCardID" + SelectedEntityCardID);
             }
@@ -173,6 +113,37 @@ public class CardsActivity extends BasicActivity {
 
 
 
+    private void FavoriteCardListDataSetting() {
+        CardList=CardService.getInstance().GetFavoriteCardsInfo();
+        ShowCard(CardList);
+    }
+
+    void GetGroupGalleryItemList()
+    {
+        List<GroupInfo> GroupInfo=CardService.getInstance().GetGroupByCategoryID(SelectedCategoryID);
+        GroupGalleryItemList.clear();
+        for(GroupInfo Item:GroupInfo)
+        {
+            GroupGalleryItemList.add(new GalleryItem(
+                    Item.getGroupID(),
+                    Item.getGroupName(),
+                    Item.getGroupImage()
+            ));
+        }
+    }
+    void GetRepresentativeList()
+    {
+        List<RepresentativeInfo> RepresentativeInfo=CardService.getInstance().GetRepresentativeByGroupID(SelectedGroupID);
+        RepresentativeGalleryItemList.clear();
+        for(RepresentativeInfo Item:RepresentativeInfo)
+        {
+            RepresentativeGalleryItemList.add(new GalleryItem(
+                    Item.getRepresentativeID(),
+                    Item.getRepresentativeName(),
+                    Item.getRepresentativeImage()
+            ));
+        }
+    }
     @OnClick(R.id.ButtonCategory)
     protected void onButtonClicked_ButtonCategory() {
         PopupMenu popupMenu = new PopupMenu(this, ButtonCategory);
@@ -182,10 +153,11 @@ public class CardsActivity extends BasicActivity {
                 if (item.getItemId() == 1) {
                     //Select all && Reset Menu
                     ResetMenuStatusForChangeCategory();
-                    GategoryDataSetting();
+                    ShowCard();
                 }
                 else if (item.getItemId() == 2) {
                     //select Favorite
+                    ButtonCategory.setText("Favorite");
                     FavoriteCardListDataSetting();
                 }
                 else {
@@ -193,7 +165,8 @@ public class CardsActivity extends BasicActivity {
                         if (CategoryInfoItem.getCategoryName().equals(item.getTitle().toString())) {
                             ButtonCategory.setText(item.getTitle().toString());
                             SelectedCategoryID = CategoryInfoItem.getCategoryID();
-                            GroupDataSetting();
+                            GetGroupGalleryItemList();
+                            ShowCard();
                         }
                     }
                 }
@@ -211,7 +184,7 @@ public class CardsActivity extends BasicActivity {
 
     @OnClick(R.id.ButtonGroup)
     protected void onButtonClicked_ButtonGroup() {
-        if(GroupGalleryItemList !=null)
+        if(GroupGalleryItemList !=null && GroupGalleryItemList.size()>0)
         {
 
             PopupMenu popupMenu = new PopupMenu(this, ButtonGroup);
@@ -223,7 +196,8 @@ public class CardsActivity extends BasicActivity {
                         if (GroupGalleryItem.getTitle().equals(item.getTitle().toString())) {
                             ButtonGroup.setText(item.getTitle().toString());
                             SelectedGroupID = GroupGalleryItem.getItemID();
-                            RepresentativeListDataSetting();
+                            GetRepresentativeList();
+                            ShowCard();
                         }
                     }
                     return false;
@@ -238,7 +212,7 @@ public class CardsActivity extends BasicActivity {
     }
     @OnClick(R.id.ButtonRepresentative)
     protected void onButtonClicked_ButtonRepresentative() {
-        if(RepresentativeGalleryItemList !=null)
+        if(RepresentativeGalleryItemList !=null && RepresentativeGalleryItemList.size()>0)
         {
             PopupMenu popupMenu = new PopupMenu(this, ButtonRepresentative);
             popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -248,7 +222,7 @@ public class CardsActivity extends BasicActivity {
                         if (RepresentativeGalleryItem.getTitle().equals(item.getTitle().toString())) {
                             ButtonRepresentative.setText(item.getTitle().toString());
                             SelectedRepresentativeID = RepresentativeGalleryItem.getItemID();
-                            CardListDataSetting(SelectedGroupID,SelectedRepresentativeID);
+                            ShowCard();
                         }
                     }
                     return false;
@@ -263,14 +237,18 @@ public class CardsActivity extends BasicActivity {
     }
 
     private void ResetMenuStatusForChangeCategory() {
-        GroupGalleryItemList=null;
-        RepresentativeGalleryItemList=null;
-        ButtonCategory.setText("Category>>");
+        SelectedCategoryID="";
+        SelectedGroupID="";
+        SelectedRepresentativeID="";
+        GroupGalleryItemList.clear();
+        RepresentativeGalleryItemList.clear();
+        ButtonCategory.setText("All");
         ButtonGroup.setText("Group>>");
         ButtonRepresentative.setText("Member>>");
     }
     private void ResetMenuStatusForChangeGroup() {
-        RepresentativeGalleryItemList=null;
+        SelectedRepresentativeID="";
+        RepresentativeGalleryItemList.clear();
         ButtonRepresentative.setText("Member>>");
     }
 }
