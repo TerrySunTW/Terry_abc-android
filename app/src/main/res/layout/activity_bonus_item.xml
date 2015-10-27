@@ -2,11 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingBottom="5dp">
     <ImageButton
         android:layout_width="100sp"
         android:layout_height="100sp"
         android:scaleType="centerInside"
+        android:background="@null"
         android:id="@+id/CardButton" />
     <LinearLayout
         android:layout_width="match_parent"

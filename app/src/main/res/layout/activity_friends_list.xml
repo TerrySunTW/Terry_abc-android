@@ -17,8 +17,11 @@
             <TableRow>
                 <ImageButton
                     android:layout_width="80dip"
-                    android:layout_height="80dip"
-                    android:id="@+id/FriendButton" />
+                    android:layout_height="80dp"
+                    android:scaleType="fitCenter"
+                    android:background="@null"
+                    android:id="@+id/FriendButton"
+                    />
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"

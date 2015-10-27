@@ -6,6 +6,8 @@
     <ImageButton
         android:layout_width="70sp"
         android:layout_height="70sp"
+        android:scaleType="centerInside"
+        android:background="@null"
         android:id="@+id/FriendButton" />
     <LinearLayout
         android:layout_width="match_parent"
