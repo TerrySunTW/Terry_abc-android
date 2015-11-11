@@ -1,9 +1,9 @@
 package com.abc.terry_sun.abc.CustomClass.Application;
 
 import com.abc.terry_sun.abc.R;
+import com.beardedhen.androidbootstrap.TypefaceProvider;
 import com.orm.SugarApp;
 
-import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 
@@ -18,6 +18,7 @@ public class ABCApplication extends SugarApp {
         @Override
         public void onCreate() {
                 super.onCreate();
-                ACRA.init(this);
+                TypefaceProvider.registerDefaultIconSets();
+                //ACRA.init(this);
         }
 }

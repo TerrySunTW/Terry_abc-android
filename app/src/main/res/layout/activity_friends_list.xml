@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
                     android:scaleType="fitCenter"
                     android:background="@null"
                     android:id="@+id/FriendButton"
-                    />
+                    android:padding="5dp" />
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
@@ -72,11 +72,15 @@
                             android:text="777777"/>
                     </LinearLayout>
                 </LinearLayout>
-                <Button
+                <com.beardedhen.androidbootstrap.BootstrapButton
                     android:id="@+id/ButtonAddFriend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="＋" />
+                    app:roundedCorners="true"
+                    app:bootstrapBrand="primary"
+                    android:text="＋"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp" />
             </TableRow>
         </TableLayout>
 

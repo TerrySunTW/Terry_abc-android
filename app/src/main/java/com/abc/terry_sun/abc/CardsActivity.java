@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.PopupMenu;
 
@@ -18,6 +17,7 @@ import com.abc.terry_sun.abc.Models.GroupInfo;
 import com.abc.terry_sun.abc.Models.RepresentativeInfo;
 import com.abc.terry_sun.abc.Service.CardService;
 import com.abc.terry_sun.abc.Service.ScreenService;
+import com.beardedhen.androidbootstrap.BootstrapButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +34,11 @@ public class CardsActivity extends BasicActivity {
     @InjectView(R.id.gridView1)
     GridView gridView;
     @InjectView(R.id.ButtonCategory)
-    Button ButtonCategory;
+    BootstrapButton ButtonCategory;
     @InjectView(R.id.ButtonGroup)
-    Button ButtonGroup;
+    BootstrapButton ButtonGroup;
     @InjectView(R.id.ButtonRepresentative)
-    Button ButtonRepresentative;
+    BootstrapButton ButtonRepresentative;
 
     List<CategoryInfo> CategoryList;
     List<GroupInfo> GroupList;

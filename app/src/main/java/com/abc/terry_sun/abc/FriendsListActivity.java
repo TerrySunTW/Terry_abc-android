@@ -3,22 +3,17 @@ package com.abc.terry_sun.abc;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.abc.terry_sun.abc.CustomClass.Adapter.Adapter_FriendsList;
 import com.abc.terry_sun.abc.Entities.DB_Friend;
-import com.abc.terry_sun.abc.Models.ListItem_Actions;
 import com.abc.terry_sun.abc.Service.FriendService;
 import com.abc.terry_sun.abc.Service.ImageService;
 import com.abc.terry_sun.abc.Service.StorageService;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.beardedhen.androidbootstrap.BootstrapButton;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -39,7 +34,7 @@ public class FriendsListActivity extends Activity {
 	ImageButton FriendButton;
 
 	@InjectView(R.id.ButtonAddFriend)
-	Button ButtonAddFriend;
+	BootstrapButton ButtonAddFriend;
 
 	static Adapter_FriendsList _Adapter_FriendsList;
 	Context context;

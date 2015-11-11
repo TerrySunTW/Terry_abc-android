@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:weightSum="1">
 
@@ -18,31 +19,47 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:baselineAligned="false"
-            android:paddingTop="5dp">
-            <Button
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            >
+            <com.beardedhen.androidbootstrap.BootstrapButton
                 android:id="@+id/ButtonCategory"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:scrollHorizontally="true"
                 android:maxHeight="40dip"
-                android:text="All"/>
-            <Button
+                android:text="All"
+                app:bootstrapBrand="primary"
+                app:roundedCorners="true"
+                android:lines="1"
+                android:layout_marginLeft="5dp" />
+            <com.beardedhen.androidbootstrap.BootstrapButton
                 android:id="@+id/ButtonGroup"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:scrollHorizontally="true"
                 android:maxHeight="40dip"
-                android:text="Group>>"/>
-            <Button
+                android:text="Group>>"
+                app:bootstrapBrand="primary"
+                app:roundedCorners="true"
+                android:lines="1"
+                android:layout_marginLeft="2.5dp"
+                android:layout_marginRight="2.5dp" />
+            <com.beardedhen.androidbootstrap.BootstrapButton
                 android:id="@+id/ButtonRepresentative"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:scrollHorizontally="true"
                 android:maxHeight="40dip"
-                android:text="Member>>"/>
+                android:text="Member>>"
+                app:bootstrapBrand="primary"
+                app:roundedCorners="true"
+                android:lines="1"
+                android:layout_marginRight="5dp"
+                />
         </LinearLayout>
     </LinearLayout>
     <GridView

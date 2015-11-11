@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 
@@ -15,7 +14,6 @@ import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskHttpRequest;
 import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskPostProcessingInterface;
 import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskProcessingInterface;
 import com.abc.terry_sun.abc.Entities.DB_Cards;
-import com.abc.terry_sun.abc.Entities.DB_Events;
 import com.abc.terry_sun.abc.Models.CardInfo;
 import com.abc.terry_sun.abc.Models.CategoryInfo;
 import com.abc.terry_sun.abc.Models.GalleryItem;
@@ -24,6 +22,7 @@ import com.abc.terry_sun.abc.Models.ListItem_Actions;
 import com.abc.terry_sun.abc.Models.RepresentativeInfo;
 import com.abc.terry_sun.abc.Service.CardService;
 import com.abc.terry_sun.abc.Service.ServerCommunicationService;
+import com.beardedhen.androidbootstrap.BootstrapButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,11 +39,11 @@ public class BonusListActivity extends Activity {
 	ListView listview_activity_list;
 	String[][] TableArray;
 	@InjectView(R.id.ButtonCategory)
-	Button ButtonCategory;
+	BootstrapButton ButtonCategory;
 	@InjectView(R.id.ButtonGroup)
-	Button ButtonGroup;
+	BootstrapButton ButtonGroup;
 	@InjectView(R.id.ButtonRepresentative)
-	Button ButtonRepresentative;
+	BootstrapButton ButtonRepresentative;
 
 	List<CategoryInfo> CategoryList;
 	List<GroupInfo> GroupList;
