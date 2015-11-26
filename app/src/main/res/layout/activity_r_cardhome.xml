@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="2"
     android:orientation="vertical">
 
-    <Button
+    <com.beardedhen.androidbootstrap.BootstrapButton
         android:id="@+id/ButtonNewCard"
 
         android:text="My new card"
@@ -20,9 +21,16 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        />
-
-    <Button
+        app:roundedCorners="true"
+        app:bootstrapBrand="primary"
+        android:layout_margin="10dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+    <com.beardedhen.androidbootstrap.BootstrapButton
         android:id="@+id/ButtonFriendCard"
 
         android:text="Friend card"
@@ -37,6 +45,8 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        />
+        app:roundedCorners="true"
+        app:bootstrapBrand="primary"
+        android:layout_margin="10dp" />
 
 </LinearLayout>
