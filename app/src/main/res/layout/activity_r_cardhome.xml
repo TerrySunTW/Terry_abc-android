@@ -6,7 +6,7 @@
     android:weightSum="2"
     android:orientation="vertical">
 
-    <com.beardedhen.androidbootstrap.BootstrapButton
+    <Button
         android:id="@+id/ButtonNewCard"
 
         android:text="My new card"
@@ -16,21 +16,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/buttonshape"
+        android:background="@drawable/button_blue"
         android:shadowColor="#A8A8A8"
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        app:roundedCorners="true"
-        app:bootstrapBrand="primary"
-        android:layout_margin="10dp" />
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp" />
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="10dp"
         android:background="@android:color/darker_gray"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" />
-    <com.beardedhen.androidbootstrap.BootstrapButton
+    <Button
         android:id="@+id/ButtonFriendCard"
 
         android:text="Friend card"
@@ -40,13 +41,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/buttonshape"
+        android:background="@drawable/button_blue"
         android:shadowColor="#A8A8A8"
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        app:roundedCorners="true"
-        app:bootstrapBrand="primary"
-        android:layout_margin="10dp" />
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp" />
 
 </LinearLayout>
