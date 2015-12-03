@@ -186,6 +186,12 @@ public class BonusListActivity extends Activity {
 				return false;
 			}
 		});
+		popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
+			@Override
+			public void onDismiss(PopupMenu popupMenu) {
+				ButtonCategory.setShowOutline(false);
+			}
+		});
 		popupMenu.getMenu().add(0,1,0,"All");
 		popupMenu.getMenu().add(0, 2, 0, "Favorite");
 		for(int i=0; i<CategoryList.size(); i++)
@@ -193,6 +199,7 @@ public class BonusListActivity extends Activity {
 			popupMenu.getMenu().add(CategoryList.get(i).getCategoryName());
 		}
 		popupMenu.show();
+		ButtonCategory.setShowOutline(true);
 	}
 
 	@OnClick(R.id.ButtonGroup)
@@ -217,11 +224,18 @@ public class BonusListActivity extends Activity {
 					return false;
 				}
 			});
+			popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
+				@Override
+				public void onDismiss(PopupMenu popupMenu) {
+					ButtonGroup.setShowOutline(false);
+				}
+			});
 			for(int i=0; i<GroupGalleryItemList.size(); i++)
 			{
 				popupMenu.getMenu().add(GroupGalleryItemList.get(i).getTitle());
 			}
 			popupMenu.show();
+			ButtonGroup.setShowOutline(true);
 		}
 	}
 	@OnClick(R.id.ButtonRepresentative)
@@ -244,11 +258,18 @@ public class BonusListActivity extends Activity {
 					return false;
 				}
 			});
+			popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
+				@Override
+				public void onDismiss(PopupMenu popupMenu) {
+					ButtonRepresentative.setShowOutline(false);
+				}
+			});
 			for(int i=0; i<RepresentativeGalleryItemList.size(); i++)
 			{
 				popupMenu.getMenu().add(RepresentativeGalleryItemList.get(i).getTitle());
 			}
 			popupMenu.show();
+			ButtonRepresentative.setShowOutline(true);
 		}
 	}
 

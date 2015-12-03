@@ -146,6 +146,7 @@ public class CardsActivity extends BasicActivity {
     }
     @OnClick(R.id.ButtonCategory)
     protected void onButtonClicked_ButtonCategory() {
+
         PopupMenu popupMenu = new PopupMenu(this, ButtonCategory);
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
@@ -173,6 +174,12 @@ public class CardsActivity extends BasicActivity {
                 return false;
             }
         });
+        popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
+            @Override
+            public void onDismiss(PopupMenu popupMenu) {
+                ButtonCategory.setShowOutline(false);
+            }
+        });
         popupMenu.getMenu().add(0,1,0,"All");
         popupMenu.getMenu().add(0, 2, 0, "Favorite");
         for(int i=0; i<CategoryList.size(); i++)
@@ -180,10 +187,12 @@ public class CardsActivity extends BasicActivity {
             popupMenu.getMenu().add(CategoryList.get(i).getCategoryName());
         }
         popupMenu.show();
+        ButtonCategory.setShowOutline(true);
     }
 
     @OnClick(R.id.ButtonGroup)
     protected void onButtonClicked_ButtonGroup() {
+
         if(GroupGalleryItemList !=null && GroupGalleryItemList.size()>0)
         {
 
@@ -203,15 +212,23 @@ public class CardsActivity extends BasicActivity {
                     return false;
                 }
             });
+            popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
+                @Override
+                public void onDismiss(PopupMenu popupMenu) {
+                    ButtonGroup.setShowOutline(false);
+                }
+            });
             for(int i=0; i<GroupGalleryItemList.size(); i++)
             {
                 popupMenu.getMenu().add(GroupGalleryItemList.get(i).getTitle());
             }
             popupMenu.show();
+            ButtonGroup.setShowOutline(true);
         }
     }
     @OnClick(R.id.ButtonRepresentative)
     protected void onButtonClicked_ButtonRepresentative() {
+
         if(RepresentativeGalleryItemList !=null && RepresentativeGalleryItemList.size()>0)
         {
             PopupMenu popupMenu = new PopupMenu(this, ButtonRepresentative);
@@ -228,11 +245,18 @@ public class CardsActivity extends BasicActivity {
                     return false;
                 }
             });
+            popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
+                @Override
+                public void onDismiss(PopupMenu popupMenu) {
+                    ButtonRepresentative.setShowOutline(false);
+                }
+            });
             for(int i=0; i<RepresentativeGalleryItemList.size(); i++)
             {
                 popupMenu.getMenu().add(RepresentativeGalleryItemList.get(i).getTitle());
             }
             popupMenu.show();
+            ButtonRepresentative.setShowOutline(true);
         }
     }
 
