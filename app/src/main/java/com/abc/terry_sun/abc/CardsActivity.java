@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.PopupMenu;
 
@@ -17,7 +18,6 @@ import com.abc.terry_sun.abc.Models.GroupInfo;
 import com.abc.terry_sun.abc.Models.RepresentativeInfo;
 import com.abc.terry_sun.abc.Service.CardService;
 import com.abc.terry_sun.abc.Service.ScreenService;
-import com.beardedhen.androidbootstrap.BootstrapButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +34,11 @@ public class CardsActivity extends BasicActivity {
     @InjectView(R.id.gridView1)
     GridView gridView;
     @InjectView(R.id.ButtonCategory)
-    BootstrapButton ButtonCategory;
+    Button ButtonCategory;
     @InjectView(R.id.ButtonGroup)
-    BootstrapButton ButtonGroup;
+    Button ButtonGroup;
     @InjectView(R.id.ButtonRepresentative)
-    BootstrapButton ButtonRepresentative;
+    Button ButtonRepresentative;
 
     @InjectView(R.id.view_position1)
     View view_position1;
@@ -46,6 +46,13 @@ public class CardsActivity extends BasicActivity {
     View view_position2;
     @InjectView(R.id.view_position3)
     View view_position3;
+
+    @InjectView(R.id.ViewIndication1)
+    View ViewIndication1;
+    @InjectView(R.id.ViewIndication2)
+    View ViewIndication2;
+    @InjectView(R.id.ViewIndication3)
+    View ViewIndication3;
 
 
 
@@ -164,13 +171,11 @@ public class CardsActivity extends BasicActivity {
                     //Select all && Reset Menu
                     ResetMenuStatusForChangeCategory();
                     ShowCard();
-                }
-                else if (item.getItemId() == 2) {
+                } else if (item.getItemId() == 2) {
                     //select Favorite
                     ButtonCategory.setText("Favorite");
                     FavoriteCardListDataSetting();
-                }
-                else {
+                } else {
                     for (CategoryInfo CategoryInfoItem : CategoryList) {
                         if (CategoryInfoItem.getCategoryName().equals(item.getTitle().toString())) {
                             ButtonCategory.setText(item.getTitle().toString());
@@ -186,7 +191,8 @@ public class CardsActivity extends BasicActivity {
         popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
             @Override
             public void onDismiss(PopupMenu popupMenu) {
-                ButtonCategory.setShowOutline(false);
+                //ButtonCategory.setShowOutline(false);
+                ViewIndication1.setVisibility(View.INVISIBLE);
             }
         });
         popupMenu.getMenu().add(0,1,0,"All");
@@ -196,7 +202,8 @@ public class CardsActivity extends BasicActivity {
             popupMenu.getMenu().add(CategoryList.get(i).getCategoryName());
         }
         popupMenu.show();
-        ButtonCategory.setShowOutline(true);
+        //ButtonCategory.setShowOutline(true);
+        ViewIndication1.setVisibility(View.VISIBLE);
     }
 
     @OnClick(R.id.ButtonGroup)
@@ -224,7 +231,7 @@ public class CardsActivity extends BasicActivity {
             popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
                 @Override
                 public void onDismiss(PopupMenu popupMenu) {
-                    ButtonGroup.setShowOutline(false);
+                    ViewIndication2.setVisibility(View.INVISIBLE);
                 }
             });
             for(int i=0; i<GroupGalleryItemList.size(); i++)
@@ -232,7 +239,8 @@ public class CardsActivity extends BasicActivity {
                 popupMenu.getMenu().add(GroupGalleryItemList.get(i).getTitle());
             }
             popupMenu.show();
-            ButtonGroup.setShowOutline(true);
+            //ButtonGroup.setShowOutline(true);
+            ViewIndication2.setVisibility(View.VISIBLE);
         }
     }
     @OnClick(R.id.ButtonRepresentative)
@@ -257,7 +265,8 @@ public class CardsActivity extends BasicActivity {
             popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
                 @Override
                 public void onDismiss(PopupMenu popupMenu) {
-                    ButtonRepresentative.setShowOutline(false);
+                    //ButtonRepresentative.setShowOutline(false);
+                    ViewIndication3.setVisibility(View.INVISIBLE);
                 }
             });
             for(int i=0; i<RepresentativeGalleryItemList.size(); i++)
@@ -265,7 +274,8 @@ public class CardsActivity extends BasicActivity {
                 popupMenu.getMenu().add(RepresentativeGalleryItemList.get(i).getTitle());
             }
             popupMenu.show();
-            ButtonRepresentative.setShowOutline(true);
+            //ButtonRepresentative.setShowOutline(true);
+            ViewIndication3.setVisibility(View.VISIBLE);
         }
     }
 
