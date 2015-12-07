@@ -40,6 +40,15 @@ public class CardsActivity extends BasicActivity {
     @InjectView(R.id.ButtonRepresentative)
     BootstrapButton ButtonRepresentative;
 
+    @InjectView(R.id.view_position1)
+    View view_position1;
+    @InjectView(R.id.view_position2)
+    View view_position2;
+    @InjectView(R.id.view_position3)
+    View view_position3;
+
+
+
     List<CategoryInfo> CategoryList;
     List<GroupInfo> GroupList;
     List<RepresentativeInfo> RepresentativeList;
@@ -147,7 +156,7 @@ public class CardsActivity extends BasicActivity {
     @OnClick(R.id.ButtonCategory)
     protected void onButtonClicked_ButtonCategory() {
 
-        PopupMenu popupMenu = new PopupMenu(this, ButtonCategory);
+        PopupMenu popupMenu = new PopupMenu(this, view_position1);
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -196,7 +205,7 @@ public class CardsActivity extends BasicActivity {
         if(GroupGalleryItemList !=null && GroupGalleryItemList.size()>0)
         {
 
-            PopupMenu popupMenu = new PopupMenu(this, ButtonGroup);
+            PopupMenu popupMenu = new PopupMenu(this, view_position2);
             popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
@@ -231,7 +240,7 @@ public class CardsActivity extends BasicActivity {
 
         if(RepresentativeGalleryItemList !=null && RepresentativeGalleryItemList.size()>0)
         {
-            PopupMenu popupMenu = new PopupMenu(this, ButtonRepresentative);
+            PopupMenu popupMenu = new PopupMenu(this, view_position3);
             popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {

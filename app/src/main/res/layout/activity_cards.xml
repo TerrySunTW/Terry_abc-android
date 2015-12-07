@@ -8,14 +8,13 @@
 
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:background="#323331"
-
-        android:id="@+id/LinearLayout_Title">
+        android:background="#323331">
         <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:baselineAligned="false"
@@ -60,6 +59,27 @@
                 android:lines="1"
                 android:layout_marginRight="5dp"
                 />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="2dp">
+            <View
+                android:id="@+id/view_position1"
+                android:layout_weight="1"
+                android:layout_width="fill_parent"
+                android:layout_height="0sp"></View>
+            <View
+                android:id="@+id/view_position2"
+                android:layout_weight="1"
+                android:layout_width="fill_parent"
+                android:layout_height="0sp"></View>
+            <View
+                android:id="@+id/view_position3"
+                android:layout_weight="1"
+                android:layout_width="fill_parent"
+                android:layout_height="0sp"></View>
         </LinearLayout>
     </LinearLayout>
     <GridView
