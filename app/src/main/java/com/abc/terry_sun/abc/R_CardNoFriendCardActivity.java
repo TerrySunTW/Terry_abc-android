@@ -70,4 +70,7 @@ public class R_CardNoFriendCardActivity extends BasicActivity {
             fragment.disableReaderMode();
         }
     }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+    }
 }

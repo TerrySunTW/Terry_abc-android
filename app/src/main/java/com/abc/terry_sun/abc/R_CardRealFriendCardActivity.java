@@ -1,32 +1,20 @@
 package com.abc.terry_sun.abc;
 
-import android.app.Fragment;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 
 import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskPostProcessingInterface;
-import com.abc.terry_sun.abc.Entities.DB_Cards;
-import com.abc.terry_sun.abc.Models.GalleryItem;
 import com.abc.terry_sun.abc.Provider.VariableProvider;
 import com.abc.terry_sun.abc.Service.CardService;
 import com.abc.terry_sun.abc.Service.ProcessControlService;
 import com.abc.terry_sun.abc.Service.ServerCommunicationService;
-import com.facebook.appevents.AppEventsLogger;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 import eu.livotov.zxscan.ScannerView;
 
 /**
@@ -149,5 +137,8 @@ public class R_CardRealFriendCardActivity extends BasicActivity {
                 ProcessControlService.CloseProgressDialog();
             }
         };
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
     }
 }

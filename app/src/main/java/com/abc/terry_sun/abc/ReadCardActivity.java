@@ -1,12 +1,7 @@
 package com.abc.terry_sun.abc;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-
-import com.facebook.appevents.AppEventsLogger;
 
 /**
  * Created by terry_sun on 2015/7/20.
@@ -30,5 +25,8 @@ public class ReadCardActivity extends BasicActivity {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
     }
 }
