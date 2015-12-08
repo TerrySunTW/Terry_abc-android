@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 
@@ -22,7 +24,6 @@ import com.abc.terry_sun.abc.Models.ListItem_Actions;
 import com.abc.terry_sun.abc.Models.RepresentativeInfo;
 import com.abc.terry_sun.abc.Service.CardService;
 import com.abc.terry_sun.abc.Service.ServerCommunicationService;
-import com.beardedhen.androidbootstrap.BootstrapButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,11 +40,25 @@ public class BonusListActivity extends Activity {
 	ListView listview_activity_list;
 	String[][] TableArray;
 	@InjectView(R.id.ButtonCategory)
-	BootstrapButton ButtonCategory;
+	Button ButtonCategory;
 	@InjectView(R.id.ButtonGroup)
-	BootstrapButton ButtonGroup;
+	Button ButtonGroup;
 	@InjectView(R.id.ButtonRepresentative)
-	BootstrapButton ButtonRepresentative;
+	Button ButtonRepresentative;
+
+	@InjectView(R.id.view_position1)
+	View view_position1;
+	@InjectView(R.id.view_position2)
+	View view_position2;
+	@InjectView(R.id.view_position3)
+	View view_position3;
+
+	@InjectView(R.id.ViewIndication1)
+	View ViewIndication1;
+	@InjectView(R.id.ViewIndication2)
+	View ViewIndication2;
+	@InjectView(R.id.ViewIndication3)
+	View ViewIndication3;
 
 	List<CategoryInfo> CategoryList;
 	List<GroupInfo> GroupList;
@@ -156,22 +171,20 @@ public class BonusListActivity extends Activity {
 
 	@OnClick(R.id.ButtonCategory)
 	protected void onButtonClicked_ButtonCategory() {
-		PopupMenu popupMenu = new PopupMenu(this, ButtonCategory);
+		PopupMenu popupMenu = new PopupMenu(this, view_position1);
 		popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
 				if (item.getItemId() == 1) {
 					//Select all && Reset Menu
 					ResetMenuStatusForChangeCategory();
-					IsFavorate=false;
+					IsFavorate = false;
 					Update_List();
-				}
-				else if (item.getItemId() == 2) {
+				} else if (item.getItemId() == 2) {
 					//select Favorite
-					IsFavorate=true;
+					IsFavorate = true;
 					Update_List();
-				}
-				else {
+				} else {
 					for (CategoryInfo CategoryInfoItem : CategoryList) {
 						if (CategoryInfoItem.getCategoryName().equals(item.getTitle().toString())) {
 							ButtonCategory.setText(item.getTitle().toString());
@@ -189,7 +202,8 @@ public class BonusListActivity extends Activity {
 		popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
 			@Override
 			public void onDismiss(PopupMenu popupMenu) {
-				ButtonCategory.setShowOutline(false);
+				//ButtonCategory.setShowOutline(false);
+				ViewIndication1.setVisibility(View.INVISIBLE);
 			}
 		});
 		popupMenu.getMenu().add(0,1,0,"All");
@@ -199,7 +213,8 @@ public class BonusListActivity extends Activity {
 			popupMenu.getMenu().add(CategoryList.get(i).getCategoryName());
 		}
 		popupMenu.show();
-		ButtonCategory.setShowOutline(true);
+		//ButtonCategory.setShowOutline(true);
+		ViewIndication1.setVisibility(View.VISIBLE);
 	}
 
 	@OnClick(R.id.ButtonGroup)
@@ -207,7 +222,7 @@ public class BonusListActivity extends Activity {
 		if(GroupGalleryItemList !=null)
 		{
 
-			PopupMenu popupMenu = new PopupMenu(this, ButtonGroup);
+			PopupMenu popupMenu = new PopupMenu(this, view_position2);
 			popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 				@Override
 				public boolean onMenuItemClick(MenuItem item) {
@@ -216,7 +231,7 @@ public class BonusListActivity extends Activity {
 						if (GroupGalleryItem.getTitle().equals(item.getTitle().toString())) {
 							ButtonGroup.setText(item.getTitle().toString());
 							SelectedGroupID = GroupGalleryItem.getItemID();
-							IsFavorate=false;
+							IsFavorate = false;
 							Update_List();
 							RepresentativeListDataSetting();
 						}
@@ -227,7 +242,8 @@ public class BonusListActivity extends Activity {
 			popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
 				@Override
 				public void onDismiss(PopupMenu popupMenu) {
-					ButtonGroup.setShowOutline(false);
+					//ButtonGroup.setShowOutline(false);
+					ViewIndication2.setVisibility(View.INVISIBLE);
 				}
 			});
 			for(int i=0; i<GroupGalleryItemList.size(); i++)
@@ -235,14 +251,15 @@ public class BonusListActivity extends Activity {
 				popupMenu.getMenu().add(GroupGalleryItemList.get(i).getTitle());
 			}
 			popupMenu.show();
-			ButtonGroup.setShowOutline(true);
+			//ButtonGroup.setShowOutline(true);
+			ViewIndication2.setVisibility(View.VISIBLE);
 		}
 	}
 	@OnClick(R.id.ButtonRepresentative)
 	protected void onButtonClicked_ButtonRepresentative() {
 		if(RepresentativeGalleryItemList !=null)
 		{
-			PopupMenu popupMenu = new PopupMenu(this, ButtonRepresentative);
+			PopupMenu popupMenu = new PopupMenu(this, view_position3);
 			popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 				@Override
 				public boolean onMenuItemClick(MenuItem item) {
@@ -250,7 +267,7 @@ public class BonusListActivity extends Activity {
 						if (RepresentativeGalleryItem.getTitle().equals(item.getTitle().toString())) {
 							ButtonRepresentative.setText(item.getTitle().toString());
 							SelectedRepresentativeID = RepresentativeGalleryItem.getItemID();
-							IsFavorate=false;
+							IsFavorate = false;
 							Update_List();
 							CardListDataSetting(SelectedRepresentativeID);
 						}
@@ -261,7 +278,8 @@ public class BonusListActivity extends Activity {
 			popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
 				@Override
 				public void onDismiss(PopupMenu popupMenu) {
-					ButtonRepresentative.setShowOutline(false);
+					//ButtonRepresentative.setShowOutline(false);
+					ViewIndication3.setVisibility(View.INVISIBLE);
 				}
 			});
 			for(int i=0; i<RepresentativeGalleryItemList.size(); i++)
@@ -269,7 +287,8 @@ public class BonusListActivity extends Activity {
 				popupMenu.getMenu().add(RepresentativeGalleryItemList.get(i).getTitle());
 			}
 			popupMenu.show();
-			ButtonRepresentative.setShowOutline(true);
+			//ButtonRepresentative.setShowOutline(true);
+			ViewIndication3.setVisibility(View.VISIBLE);
 		}
 	}
 
