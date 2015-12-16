@@ -38,7 +38,7 @@
                 <View
                     android:id="@+id/ViewIndication1"
                     android:visibility="invisible"
-                    android:background="#ffffff"
+                    android:background="#03A9F4"
                     android:layout_width="fill_parent"
                     android:layout_height="5sp"></View>
             </LinearLayout>
@@ -69,7 +69,7 @@
                 <View
                     android:id="@+id/ViewIndication2"
                     android:visibility="invisible"
-                    android:background="#ffffff"
+                    android:background="#03A9F4"
                     android:layout_width="fill_parent"
                     android:layout_height="5sp"></View>
             </LinearLayout>
@@ -98,7 +98,7 @@
                 <View
                     android:id="@+id/ViewIndication3"
                     android:visibility="invisible"
-                    android:background="#ffffff"
+                    android:background="#03A9F4"
                     android:layout_width="fill_parent"
                     android:layout_height="5sp"></View>
             </LinearLayout>
