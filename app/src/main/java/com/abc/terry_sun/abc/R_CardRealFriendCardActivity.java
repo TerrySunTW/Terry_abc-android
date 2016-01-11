@@ -15,7 +15,7 @@ import com.abc.terry_sun.abc.Service.ServerCommunicationService;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import eu.livotov.zxscan.ScannerView;
+import eu.livotov.labs.android.camview.ScannerLiveView;
 
 /**
  * Created by terry_sun on 2015/7/20.
@@ -27,7 +27,7 @@ public class R_CardRealFriendCardActivity extends BasicActivity {
     int GotCardID=0;
     static String LastReadQR_EntityID="";
     @InjectView(R.id.scanner)
-    ScannerView scanner;
+    ScannerLiveView scanner;
     @InjectView(R.id.ImageView_Scanner)
     ImageView ImageView_Scanner;
     @InjectView(R.id.ImageView_NFC)
@@ -77,30 +77,34 @@ public class R_CardRealFriendCardActivity extends BasicActivity {
         }
 
         //QR_Code
-        scanner.setScannerViewEventListener(new ScannerView.ScannerViewEventListener() {
+        scanner.setScannerViewEventListener(new ScannerLiveView.ScannerViewEventListener() {
             @Override
-            public void onScannerReady() {
+            public void onScannerStarted(ScannerLiveView scanner) {
 
             }
 
             @Override
-            public void onScannerFailure(int i) {
+            public void onScannerStopped(ScannerLiveView scanner) {
 
             }
 
-            public boolean onCodeScanned(final String EntityCardID) {
+            @Override
+            public void onScannerError(Throwable err) {
+
+            }
+
+            public void onCodeScanned(final String EntityCardID) {
                 //scanner.stopScanner();
                 Log.i(TAG, "QRdata=" + EntityCardID);
                 scanner.stopScanner();
                 //same card with previous, do nothing
                 if (EntityCardID.equals(LastReadQR_EntityID)) {
-                    return true;
+                    return;
                 }
 
                 Log.i(TAG, "InProcessing");
                 LastReadQR_EntityID = EntityCardID;
                 ImageView_Scanner.setImageDrawable(getResources().getDrawable(R.drawable.circle_green));
-                return true;
             }
         });
         scanner.startScanner();
