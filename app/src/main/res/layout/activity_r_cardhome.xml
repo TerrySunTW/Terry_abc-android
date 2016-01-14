@@ -6,6 +6,37 @@
     android:weightSum="2"
     android:orientation="vertical">
 
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#323331"
+        android:paddingBottom="5dp"
+        android:layout_gravity="center"
+        android:gravity="center|center_vertical|center_horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
+            android:text="R-Card" />
+        <com.beardedhen.androidbootstrap.BootstrapButton
+            android:id="@+id/ButtonSetting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:roundedCorners="true"
+            app:bootstrapBrand="primary"
+            android:text="Setting"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true" />
+    </RelativeLayout>
+
     <Button
         android:id="@+id/ButtonNewCard"
 
@@ -21,7 +52,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp" />

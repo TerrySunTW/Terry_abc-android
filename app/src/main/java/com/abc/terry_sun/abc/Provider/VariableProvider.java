@@ -21,6 +21,7 @@ public final class VariableProvider {
     private String FacebookPhotoURL;
     private String LastLatitude;
     private String LastLongitude;
+    private Boolean NFC_Enable=false;
 
     public String GetLocation() {
         if (LastLatitude != null && LastLongitude != null) {

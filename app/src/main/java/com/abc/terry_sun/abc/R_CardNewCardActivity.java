@@ -25,35 +25,89 @@ public class R_CardNewCardActivity extends BasicActivity {
     static String LastReadEntityID="";
     @InjectView(R.id.scanner)
     ScannerLiveView scanner;
+    boolean IsRunning=false;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_r_card_new_card);
         ButterKnife.inject(this);
         HandlerSetting();
+        QR_Setting();
+    }
 
+    @Override
+    protected void onPause() {
+        Log.i(TAG, "onPause");
+        IsRunning=false;
+        //if(scanner.isAttachedToWindow()) {
+            scanner.stopScanner();
+        //}
+        super.onPause();
+
+    }
+
+    @Override
+    protected void onResume() {
+        Log.i(TAG,"onResume");
+        IsRunning=true;
+        LastReadEntityID=null;
+        super.onResume();
+        scanner.startScanner();
+    }
+    private void HandlerSetting() {
+        messageHandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                switch(msg.what){
+                    case 1:
+                        String NewEntityID=CardService.getInstance().GetCardsByCardID(String.valueOf(GotCardID)).getEntityCardID();
+                        CardService.getInstance().ShowCardDetailDialog(NewEntityID, MainActivity.GetMainActivityContext());
+                        ProcessThread.interrupt();
+                        ProcessThread=null;
+                        break;
+                    case 99:
+                        ProcessControlService.AlertMessage(MainActivity.MainActivityContext,"卡片無效!!");
+                        ProcessThread.interrupt();
+                        ProcessThread=null;
+                        LastReadEntityID=null;
+                        break;
+                }
+                super.handleMessage(msg);
+                ProcessControlService.CloseProgressDialog();
+            }
+        };
+    }
+    private void QR_Setting()
+    {
         scanner.setScannerViewEventListener(new ScannerLiveView.ScannerViewEventListener() {
             @Override
             public void onScannerStarted(ScannerLiveView scanner) {
-
+                Log.i(TAG,"onScannerStarted");
+                if(!IsRunning)
+                {
+                    Log.i(TAG,"onScannerStarted-stop");
+                    scanner.stopScanner();
+                }
             }
 
             @Override
             public void onScannerStopped(ScannerLiveView scanner) {
-
+                Log.i(TAG,"onScannerStopped");
             }
 
             @Override
             public void onScannerError(Throwable err) {
-
+                Log.i(TAG, "onScannerError");
+                Log.e(TAG, err.getMessage());
             }
 
-            public void  onCodeScanned(final String EntityCardID) {
+            public void onCodeScanned(final String EntityCardID) {
                 //scanner.stopScanner();
                 Log.i(TAG, "QRdata=" + EntityCardID);
                 scanner.stopScanner();
                 //same card with previous
                 if (EntityCardID.equals(LastReadEntityID)) {
+                    scanner.startScanner();
                     return;
                 }
 
@@ -62,6 +116,7 @@ public class R_CardNewCardActivity extends BasicActivity {
                 if (ScannedCard != null) {
                     CardService.getInstance().CloseCardDetailDialog();
                     CardService.getInstance().ShowCardDetailDialog(ScannedCard.getEntityCardID(), MainActivity.GetMainActivityContext());
+                    scanner.startScanner();
                     return;
                 }
 
@@ -89,42 +144,5 @@ public class R_CardNewCardActivity extends BasicActivity {
                 }
             }
         });
-        scanner.startScanner();
-        //CardService.getInstance().ShowCardDetailDialog("41", MainActivity.GetMainActivityContext());
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        scanner.stopScanner();
-    }
-    @Override
-    protected void onResume() {
-        LastReadEntityID=null;
-        super.onResume();
-        scanner.startScanner();
-    }
-    private void HandlerSetting() {
-        messageHandler = new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                switch(msg.what){
-                    case 1:
-                        String NewEntityID=CardService.getInstance().GetCardsByCardID(String.valueOf(GotCardID)).getEntityCardID();
-                        CardService.getInstance().ShowCardDetailDialog(NewEntityID, MainActivity.GetMainActivityContext());
-                        ProcessThread.interrupt();
-                        ProcessThread=null;
-                        break;
-                    case 99:
-                        ProcessControlService.AlertMessage(MainActivity.MainActivityContext,"卡片無效!!");
-                        ProcessThread.interrupt();
-                        ProcessThread=null;
-                        LastReadEntityID=null;
-                        break;
-                }
-                super.handleMessage(msg);
-                ProcessControlService.CloseProgressDialog();
-            }
-        };
     }
 }

@@ -45,12 +45,17 @@ public class R_CardHomeActivity extends BasicActivity {
     protected void onButtonClicked_ButtonNewCard() {
         Log.i(TAG,"onButtonClicked_ButtonNewCard");
         Intent _Intent = new Intent(this,R_CardNewCardActivity.class);//跳頁
-        TabGroup_R_Card.ChangeActivity( _Intent, true);
+        TabGroup_R_Card.ChangeActivity(_Intent, true);
     }
     @OnClick(R.id.ButtonFriendCard)
     protected void onButtonClicked_ButtonFriendCard() {
         Log.i(TAG,"onButtonClicked_ButtonFriendCard");
         Intent _Intent = new Intent(this,R_CardFriendCardActivity.class);//跳頁
+        TabGroup_R_Card.ChangeActivity( _Intent, true);
+    }
+    @OnClick(R.id.ButtonSetting)
+    public void GoSettingActivity() {
+        Intent _Intent = new Intent(this,SettingActivity.class);//跳頁
         TabGroup_R_Card.ChangeActivity( _Intent, true);
     }
 }

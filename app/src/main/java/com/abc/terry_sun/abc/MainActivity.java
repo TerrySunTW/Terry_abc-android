@@ -83,9 +83,7 @@ public class MainActivity extends TabActivity {
 			@Override
 			public void onClick(View v) {
 				System.gc();
-				if (CardsUnitIndex == tabHost.getCurrentTab()) {
-					TabGroup_Cards.CleanActiveAndGoFirst();
-				}
+				TabGroup_Cards.CleanActiveAndGoFirst();
 				tabHost.setCurrentTab(CardsUnitIndex);
 			}
 		});
@@ -95,9 +93,7 @@ public class MainActivity extends TabActivity {
 			@Override
 			public void onClick(View v) {
 				System.gc();
-				if (SystemUnitIndex == tabHost.getCurrentTab()) {
-					TabGroup_R_Card.CleanActiveAndGoFirst();
-				}
+				TabGroup_R_Card.CleanActiveAndGoFirst();
 				tabHost.setCurrentTab(SystemUnitIndex);
 			}
 		});

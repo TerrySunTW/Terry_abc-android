@@ -10,9 +10,11 @@ import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.abc.terry_sun.abc.Provider.VariableProvider;
 import com.facebook.AccessToken;
@@ -51,6 +53,9 @@ public class SettingActivity extends Activity {
     @InjectView(R.id.username)
     protected TextView TextViewUsername;
 
+    @InjectView(R.id.ToggleButton_NFC_Enable)
+    protected ToggleButton ToggleButton_NFC_Enable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +73,13 @@ public class SettingActivity extends Activity {
             public void onClick(View v) {
                 //callback registration
                 LoginManager.getInstance().logOut();
+            }
+        });
+
+        ToggleButton_NFC_Enable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                VariableProvider.getInstance().setNFC_Enable(ToggleButton_NFC_Enable.isChecked());
             }
         });
     }

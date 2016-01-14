@@ -72,15 +72,20 @@
                             android:text="777777"/>
                     </LinearLayout>
                 </LinearLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                 <com.beardedhen.androidbootstrap.BootstrapButton
                     android:id="@+id/ButtonAddFriend"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:roundedCorners="true"
                     app:bootstrapBrand="primary"
                     android:text="＋"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp" />
+                </LinearLayout>
             </TableRow>
         </TableLayout>
 
