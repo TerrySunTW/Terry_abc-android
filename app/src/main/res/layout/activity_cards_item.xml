@@ -13,7 +13,7 @@
             android:layout_height="270px"
             android:layout_gravity="center_horizontal"
             android:scaleType="centerInside"
-            android:padding="5dp">
+            android:padding="2dp">
         </ImageView>
         <TextView
             android:id="@+id/grid_item_label"
