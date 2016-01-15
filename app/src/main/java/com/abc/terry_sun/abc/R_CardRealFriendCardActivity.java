@@ -180,6 +180,6 @@ public class R_CardRealFriendCardActivity extends BasicActivity {
                     }
                 });
         transaction.replace(R.id.fragmentlayout_readcard, fragment);
-        transaction.commit();
+        transaction.commitAllowingStateLoss();
     }
 }

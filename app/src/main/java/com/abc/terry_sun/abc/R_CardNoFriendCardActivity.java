@@ -50,7 +50,7 @@ public class R_CardNoFriendCardActivity extends BasicActivity {
                 }
             });
             transaction.replace(R.id.fragmentlayout_readcard, fragment);
-            transaction.commit();
+            transaction.commitAllowingStateLoss();
         }
     }
     @Override

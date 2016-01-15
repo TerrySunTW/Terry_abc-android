@@ -15,7 +15,7 @@ public class ReadCardActivity extends BasicActivity {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             CardReaderFragment fragment = new CardReaderFragment();
             transaction.replace(R.id.fragmentlayout_readcard, fragment);
-            transaction.commit();
+            transaction.commitAllowingStateLoss();
         }
     }
     @Override
