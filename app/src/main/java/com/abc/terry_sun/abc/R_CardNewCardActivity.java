@@ -39,9 +39,7 @@ public class R_CardNewCardActivity extends BasicActivity {
     protected void onPause() {
         Log.i(TAG, "onPause");
         IsRunning=false;
-        //if(scanner.isAttachedToWindow()) {
-            scanner.stopScanner();
-        //}
+        scanner.stopScanner();
         super.onPause();
 
     }
