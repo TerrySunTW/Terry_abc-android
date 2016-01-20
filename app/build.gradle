@@ -29,6 +29,7 @@ android {
 repositories {
     mavenCentral()
     maven { url 'http://maven.livotovlabs.pro/content/groups/public' }
+    maven { url "https://jitpack.io" }
 }
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -52,6 +53,7 @@ dependencies {
     compile ('eu.livotov.labs.android:CAMView:2.0.0@aar') {transitive=true}
     //ACRA-------------
     compile files('libs/acra-4.6.2.jar')
+    compile 'com.github.kenglxn:QRGen:2.1.0'
     //compile 'com.github.chrisbanes.photoview:library:1.2.+' //photo gallery
     //http://satyan.github.io/sugar/index.html
     //compile 'com.bluelinelabs:logansquare:1.0.6'

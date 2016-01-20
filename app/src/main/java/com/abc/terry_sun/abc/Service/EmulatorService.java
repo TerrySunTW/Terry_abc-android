@@ -2,11 +2,13 @@ package com.abc.terry_sun.abc.Service;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,6 +17,11 @@ import com.abc.terry_sun.abc.MainActivity;
 import com.abc.terry_sun.abc.NFC.NfcStorage;
 import com.abc.terry_sun.abc.R;
 import com.abc.terry_sun.abc.R_CardNoFriendCardActivity;
+
+import net.glxn.qrgen.android.QRCode;
+
+import java.util.Calendar;
+
 
 /**
  * Created by terry_sun on 2015/8/25.
@@ -48,7 +55,14 @@ public class EmulatorService {
             }
         });
         TextView TextView_Info=(TextView)EmulatorDialog.findViewById(R.id.TextView_Info);
-        TextView_Info.setText("Your phone is now Emu as "+SelectedCardInfo.getCardName());
+        TextView_Info.setText("Your phone is now Emu as " + SelectedCardInfo.getCardName());
+
+
+        ImageView ImageView_QR=(ImageView)EmulatorDialog.findViewById(R.id.ImageView_QR);
+        Calendar c = Calendar.getInstance();
+        int seconds = c.get(Calendar.SECOND);
+        Bitmap myBitmap = QRCode.from(String.valueOf(seconds)+","+SelectedCardInfo.getUserCardID()).bitmap();
+        ImageView_QR.setImageBitmap(myBitmap);
 
         EmulatorDialog.show();
         NfcStorage.SetAccount(context, SelectedCardInfo.getUserCardID());
