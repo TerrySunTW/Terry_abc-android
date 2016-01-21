@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
-    <eu.livotov.labs.android.camview.ScannerLiveView
+    <com.dlazaro66.qrcodereaderview.QRCodeReaderView
         android:id="@+id/scanner"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

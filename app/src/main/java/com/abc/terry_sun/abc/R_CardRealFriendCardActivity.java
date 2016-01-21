@@ -1,5 +1,6 @@
 package com.abc.terry_sun.abc;
 
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,10 +15,10 @@ import com.abc.terry_sun.abc.Provider.VariableProvider;
 import com.abc.terry_sun.abc.Service.CardService;
 import com.abc.terry_sun.abc.Service.ProcessControlService;
 import com.abc.terry_sun.abc.Service.ServerCommunicationService;
+import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import eu.livotov.labs.android.camview.ScannerLiveView;
 
 /**
  * Created by terry_sun on 2015/7/20.
@@ -29,9 +30,13 @@ public class R_CardRealFriendCardActivity extends BasicActivity {
     int GotCardID=0;
     static String LastReadQR_EntityID="";
     @InjectView(R.id.scanner)
-    ScannerLiveView scanner;
+    QRCodeReaderView scanner;
     @InjectView(R.id.ImageView_Scanner)
     ImageView ImageView_Scanner;
+
+    @InjectView(R.id.ImageView_Scanner2)
+    ImageView ImageView_Scanner2;
+
 
     @InjectView(R.id.ImageView_NFC)
     ImageView ImageView_NFC;
@@ -72,7 +77,7 @@ public class R_CardRealFriendCardActivity extends BasicActivity {
     protected void onPause() {
         Log.i(TAG, "onPause");
         IsRunning=false;
-        scanner.stopScanner();
+        scanner.getCameraManager().stopPreview();
         super.onPause();
 
     }
@@ -81,7 +86,7 @@ public class R_CardRealFriendCardActivity extends BasicActivity {
         Log.i(TAG,"onResume");
         IsRunning=true;
         super.onResume();
-        scanner.startScanner();
+        scanner.getCameraManager().startPreview();
     }
     private void HandlerSetting() {
         messageHandler = new Handler(){
@@ -110,41 +115,35 @@ public class R_CardRealFriendCardActivity extends BasicActivity {
     }
     private void QR_Setting()
     {
-        scanner.setScannerViewEventListener(new ScannerLiveView.ScannerViewEventListener() {
+        scanner.setOnQRCodeReadListener(new QRCodeReaderView.OnQRCodeReadListener() {
             @Override
-            public void onScannerStarted(ScannerLiveView scanner) {
-                Log.i(TAG,"onScannerStarted");
-                if(!IsRunning)
-                {
-                    Log.i(TAG,"onScannerStarted-stop");
-                    scanner.stopScanner();
-                }
-            }
-
-            @Override
-            public void onScannerStopped(ScannerLiveView scanner) {
-                Log.i(TAG,"onScannerStopped");
-            }
-
-            @Override
-            public void onScannerError(Throwable err) {
-
-            }
-
-            public void onCodeScanned(final String EntityCardID) {
-                //scanner.stopScanner();
-                Log.i(TAG, "QRdata=" + EntityCardID);
-                scanner.stopScanner();
-                //same card with previous, do nothing
-                if (EntityCardID.equals(LastReadQR_EntityID)) {
+            public void onQRCodeRead(String QR_string, PointF[] points) {
+                Log.i(TAG, "QR_string=" + QR_string);
+                if (QR_string.equals(LastReadQR_EntityID)) {
                     return;
                 }
-
                 Log.i(TAG, "InProcessing");
-                LastReadQR_EntityID = EntityCardID;
-                ImageView_Scanner.setImageDrawable(getResources().getDrawable(R.drawable.circle_green));
+                LastReadQR_EntityID = QR_string;
+
+                if (QR_string.split(",").length == 1) {
+                    //Action1
+                    ImageView_Scanner.setImageDrawable(getResources().getDrawable(R.drawable.circle_green));
+                } else {
+                    ImageView_Scanner2.setImageDrawable(getResources().getDrawable(R.drawable.circle_green));
+                }
+            }
+
+            @Override
+            public void cameraNotFound() {
+
+            }
+
+            @Override
+            public void QRCodeNotFoundOnCamImage() {
+
             }
         });
+
     }
     private void NFC_Setting()
     {
