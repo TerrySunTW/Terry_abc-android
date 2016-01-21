@@ -105,5 +105,6 @@ public class SettingActivity extends Activity {
 
         // Logs 'install' and 'app activate' App Events.
         AppEventsLogger.activateApp(this);
+        ToggleButton_NFC_Enable.setChecked(VariableProvider.getInstance().getNFC_Enable());
     }
 }
