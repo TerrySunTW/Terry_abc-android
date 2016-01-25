@@ -489,4 +489,9 @@ public class CardService {
         DB_Cards card=CardService.getInstance().GetCardsByCardID(CardID);
         return card.getEntityCardID();
     }
+    public String GetUserCardIDByCardID(String CardID)
+    {
+        DB_Cards card=CardService.getInstance().GetCardsByCardID(CardID);
+        return card.getUserCardID();
+    }
 }

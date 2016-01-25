@@ -18,7 +18,7 @@
                 android:layout_height="match_parent" />
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100px"
+                android:layout_height="wrap_content"
                 android:paddingLeft="15px"
                 android:paddingTop="15px"
                 android:orientation="horizontal">
@@ -29,33 +29,29 @@
                     android:id="@+id/ImageView_Scanner"
                     />
                 <TextView
-                    android:text="Please scan the QR code of the card"
+                    android:text="Please scan the Emu QR code.\n DP:Phone IP:Card"
                     android:paddingLeft="15px"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    />
+                    android:lines="2" />
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/LinearLayout_QR"
+
                 android:layout_width="match_parent"
-                android:layout_height="200px"
+                android:layout_height="wrap_content"
                 android:paddingLeft="15px"
-                android:paddingTop="90px"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="70px"
-                    android:layout_height="70px"
-                    android:src="@drawable/circle_red"
-                    android:id="@+id/ImageView_Scanner2"
-                    />
+                android:paddingTop="120px"
+                android:orientation="vertical"
+                android:weightSum="1">
                 <TextView
-                    android:text="Please scan the QR code of the phone"
+                    android:id="@+id/TextView_Log"
+                    android:text="12312312\n21231232132\n123123123\n123213\n21231232132\n123123123\n123213\n21231232132\n123123123\n123213\n21231232132\n123123123\n123213\n21231232132\n123123123\n123213\n21231232132\n123123123\n123213"
                     android:paddingLeft="15px"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    />
+                    android:layout_weight="2.86" />
             </LinearLayout>
 
         </RelativeLayout>

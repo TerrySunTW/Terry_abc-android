@@ -72,6 +72,7 @@ public class ServerCommunicationService {
         _AsyncTaskHttpRequest.execute();
     }
 
+    //CARD QR
     public int AddNewCard(final String EntityCardID)
     {
         int result=0;//0:fail >0:CardID:
@@ -91,14 +92,15 @@ public class ServerCommunicationService {
         }
         return result;
     }
-    public int AddFriendEntityCard(final String EntityCardID)
+    //for NFC&QR
+    public int AddFriendEntityCard(final String EntityCardID,final String UserCardID)
     {
         int result=0;//0:fail >0:CardID:
         try {
             ContentValues UrlParams = new ContentValues();
             UrlParams.put("UserFacebookID", VariableProvider.getInstance().getFacebookID());
             UrlParams.put("EntityCardID", EntityCardID);
-            UrlParams.put("UserCardID", VariableProvider.getInstance().getLastNFCKey());
+            UrlParams.put("UserCardID", UserCardID);
 
             result=OkHttpUtil.getIntFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.AddFriendEntityCard, UrlParams));
             if (result>0)
@@ -112,6 +114,8 @@ public class ServerCommunicationService {
         }
         return result;
     }
+
+    //only NFC
     public int AddFriendNFCCard(final String NFCCardID)
     {
         int result=0;//0:fail >0:CardID:
@@ -120,6 +124,25 @@ public class ServerCommunicationService {
             UrlParams.put("UserFacebookID", VariableProvider.getInstance().getFacebookID());
             UrlParams.put("NFC_UserCardID", NFCCardID);
             result=OkHttpUtil.getIntFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.AddFriendNFCCard, UrlParams));
+            if (result>0)
+            {
+                ServerCommunicationService.getInstance().GetUserCardInfo();
+            }
+        }
+        catch (Exception ex)
+        {
+            Log.e(TAG,ex.getMessage());
+        }
+        return result;
+    }
+    public int AddFriendQRCard(final String QRCardID)
+    {
+        int result=0;//0:fail >0:CardID:
+        try {
+            ContentValues UrlParams = new ContentValues();
+            UrlParams.put("UserFacebookID", VariableProvider.getInstance().getFacebookID());
+            UrlParams.put("QR_UserCardID", QRCardID);
+            result=OkHttpUtil.getIntFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.AddFriendQRCard, UrlParams));
             if (result>0)
             {
                 ServerCommunicationService.getInstance().GetUserCardInfo();

@@ -50,7 +50,8 @@ public class R_CardHomeActivity extends BasicActivity {
     @OnClick(R.id.ButtonFriendCard)
     protected void onButtonClicked_ButtonFriendCard() {
         Log.i(TAG,"onButtonClicked_ButtonFriendCard");
-        Intent _Intent = new Intent(this,R_CardFriendCardActivity.class);//跳頁
+        //Intent _Intent = new Intent(this,R_CardFriendCardActivity.class);//跳頁
+        Intent _Intent = new Intent(this,R_CardRealFriendCardActivity.class);//直接讀卡
         TabGroup_R_Card.ChangeActivity( _Intent, true);
     }
     @OnClick(R.id.ButtonSetting)

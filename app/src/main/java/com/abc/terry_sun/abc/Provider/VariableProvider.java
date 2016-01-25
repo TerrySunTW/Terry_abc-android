@@ -33,7 +33,12 @@ public final class VariableProvider {
     public int ExchangeResult = 0;
     //UserCardID
     public String LastNFCKey;
-
+    public String getLastNFCKey()
+    {
+        String TempLastNFCKey=LastNFCKey;
+        LastNFCKey="";
+        return TempLastNFCKey;
+    }
 
     public boolean CheckLastNFCKeyIsNotNull()
     {
