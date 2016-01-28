@@ -53,8 +53,6 @@ public class SettingActivity extends Activity {
     @InjectView(R.id.username)
     protected TextView TextViewUsername;
 
-    @InjectView(R.id.ToggleButton_NFC_Enable)
-    protected ToggleButton ToggleButton_NFC_Enable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,20 +64,12 @@ public class SettingActivity extends Activity {
         
         TextViewUsername.setText(VariableProvider.getInstance().getFacebookUserName());
 
-
         loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //callback registration
                 LoginManager.getInstance().logOut();
-            }
-        });
-
-        ToggleButton_NFC_Enable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                VariableProvider.getInstance().setNFC_Enable(ToggleButton_NFC_Enable.isChecked());
             }
         });
     }
@@ -105,6 +95,5 @@ public class SettingActivity extends Activity {
 
         // Logs 'install' and 'app activate' App Events.
         AppEventsLogger.activateApp(this);
-        ToggleButton_NFC_Enable.setChecked(VariableProvider.getInstance().getNFC_Enable());
     }
 }

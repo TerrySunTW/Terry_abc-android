@@ -9,8 +9,6 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
     <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
-    <uses-feature android:name="android.hardware.nfc" android:required="false" />
-    <uses-feature android:name="android.hardware.nfc.hce" android:required="false" />
 
 
     <application
@@ -44,14 +42,10 @@
         <activity android:name=".CardsActivity" android:launchMode= "singleInstance"/>
         <activity android:name=".TabGroup_Cards" android:launchMode= "singleInstance"/>
         <activity android:name=".CardDetailEmulateActivity" android:launchMode= "singleInstance"/>
-        <activity android:name=".ReadCardActivity" android:launchMode= "singleInstance"/>
         <activity android:name=".TabGroup_R_Card" android:launchMode= "singleInstance"/>
         <activity android:name=".R_CardHomeActivity" android:launchMode= "singleInstance" />
         <activity android:name=".R_CardNewCardActivity" android:launchMode= "singleInstance" />
-        <activity android:name=".R_CardFriendCardActivity" android:launchMode= "singleInstance" />
-        <activity android:name=".R_CardNoFriendCardActivity" android:launchMode= "singleInstance" />
         <activity android:name=".R_CardRealFriendCardActivity" android:launchMode= "singleInstance" />
-
 
 
         <activity android:name="com.facebook.FacebookActivity"
@@ -67,19 +61,6 @@
             android:name=".MyService"
             android:enabled="true"
             android:exported="true" >
-        </service>
-        <service android:name=".NfcService"
-            android:exported="true"
-            android:permission="android.permission.BIND_NFC_SERVICE">
-            <!-- Intent filter indicating that we support card emulation. -->
-            <intent-filter>
-                <action android:name="android.nfc.cardemulation.action.HOST_APDU_SERVICE"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-            <!-- Required XML configuration file, listing the AIDs that we are emulating cards
-                 for. This defines what protocols our card emulation service supports. -->
-            <meta-data android:name="android.nfc.cardemulation.host_apdu_service"
-                android:resource="@xml/aid_list"/>
         </service>
     </application>
 

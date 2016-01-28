@@ -42,12 +42,6 @@ public class R_CardRealFriendCardActivity extends BasicActivity {
     @InjectView(R.id.TextView_Log)
     TextView TextView_Log;
 
-
-    @InjectView(R.id.ImageView_NFC)
-    ImageView ImageView_NFC;
-
-    @InjectView(R.id.LinearLayout_NFC)
-    LinearLayout LinearLayout_NFC;
     boolean IsRunning=false;
     static String LastLogMessage;
     static String LastUserCardID;
@@ -77,15 +71,7 @@ public class R_CardRealFriendCardActivity extends BasicActivity {
         Log.i(TAG,"onResume");
         IsRunning=true;
         super.onResume();
-        //NFC
-        if(VariableProvider.getInstance().getNFC_Enable()) {
-            LinearLayout_NFC.setVisibility(View.VISIBLE);
-            NFC_Setting();
-        }
-        else
-        {
-            LinearLayout_NFC.setVisibility(View.GONE);
-        }
+
         scanner.getCameraManager().startPreview();
     }
     private void HandlerSetting() {
@@ -212,38 +198,5 @@ public class R_CardRealFriendCardActivity extends BasicActivity {
             }
         });
 
-    }
-    private void NFC_Setting()
-    {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        CardReaderFragment fragment = new CardReaderFragment();
-        fragment.SetAsyncTaskPostProcessing(
-                new AsyncTaskPostProcessingInterface() {
-                    @Override
-                    public void DoProcessing() {
-                        ImageView_NFC.setImageDrawable(getResources().getDrawable(R.drawable.circle_green));
-                        if (ProcessThread == null && VariableProvider.getInstance().CheckLastNFCKeyIsNotNull()) {
-                            ProcessControlService.ShowProgressDialog(MainActivity.GetMainActivityContext(), "取得資料處理中...", "");
-                            ProcessThread = new Thread(new Runnable() {
-                                public void run() {
-                                    Message msg = new Message();
-
-                                    //add new card
-                                    GotCardID = ServerCommunicationService.getInstance().AddFriendEntityCard(LastReadQR_Source,VariableProvider.getInstance().getLastNFCKey());
-                                    if (GotCardID>0) {
-                                        ServerCommunicationService.getInstance().UpdateServerInfo();
-                                        msg.what = 1;
-                                    } else {
-                                        msg.what = 99;
-                                    }
-                                    messageHandler.sendMessage(msg);
-                                }
-                            });
-                            ProcessThread.start();
-                        }
-                    }
-                });
-        transaction.replace(R.id.fragmentlayout_readcard, fragment);
-        transaction.commitAllowingStateLoss();
     }
 }

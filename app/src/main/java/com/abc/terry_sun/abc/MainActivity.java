@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.abc.terry_sun.abc.CustomClass.Application.ABCApplication;
 import com.abc.terry_sun.abc.Entities.DB_Cards;
-import com.abc.terry_sun.abc.NFC.NfcStorage;
 import com.abc.terry_sun.abc.Service.CardService;
 import com.abc.terry_sun.abc.Service.ImageService;
 
@@ -51,7 +50,6 @@ public class MainActivity extends TabActivity {
 	public static void ChangeMainCardImage(final Bitmap MainCardImage,final String EntityCardID)
 	{
 		//default NFC Card ID
-		NfcStorage.SetAccount(ABCApplication.getSugarContext(), EntityCardID);
 		MainCardImageButton.setImageBitmap(MainCardImage);
 		MainCardImageButton.setTag(EntityCardID);
 		MainCardImageButton.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +110,5 @@ public class MainActivity extends TabActivity {
 		
 		spec.setIndicator(tabIndicator);
 		spec.setContent(intent);
-		tabHost.addTab(spec);
-	}
+		tabHost.addTab(spec);	}
 }

@@ -14,9 +14,7 @@ import android.widget.TextView;
 
 import com.abc.terry_sun.abc.Entities.DB_Cards;
 import com.abc.terry_sun.abc.MainActivity;
-import com.abc.terry_sun.abc.NFC.NfcStorage;
 import com.abc.terry_sun.abc.R;
-import com.abc.terry_sun.abc.R_CardNoFriendCardActivity;
 
 import net.glxn.qrgen.android.QRCode;
 
@@ -65,7 +63,5 @@ public class EmulatorService {
         ImageView_QR.setImageBitmap(myBitmap);
 
         EmulatorDialog.show();
-        NfcStorage.SetAccount(context, SelectedCardInfo.getUserCardID());
-        R_CardNoFriendCardActivity.disableReaderMode();
     }
 }
