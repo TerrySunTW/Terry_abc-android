@@ -10,8 +10,8 @@
         android:layout_weight="1"/>
     <ImageView
         android:id="@+id/ImageView_QR"
-        android:layout_width="200sp"
-        android:layout_height="200sp"
+        android:layout_width="75sp"
+        android:layout_height="75sp"
         android:layout_gravity="center_horizontal" />
     <TextView
         android:id="@+id/TextView_Info"
