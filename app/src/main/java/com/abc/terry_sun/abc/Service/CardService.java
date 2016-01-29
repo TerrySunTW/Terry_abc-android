@@ -366,6 +366,10 @@ public class CardService {
     static Dialog CardDetailDialog;
     public void ShowCardDetailDialog(final String EntityCardID,final Context context)
     {
+        ShowCardDetailDialog(EntityCardID,null,context);
+    }
+    public void ShowCardDetailDialog(final String EntityCardID,final String Message,final Context context)
+    {
         if(CardDetailDialog!=null)
         {
             CardDetailDialog.dismiss();
@@ -383,6 +387,20 @@ public class CardService {
         window.setLayout(ScreenService.GetScreenWidth(context).x - 100, ScreenService.GetScreenWidth(context).y - 300);
 
 
+        TextView TextView_Message=(TextView)CardDetailDialog.findViewById(R.id.TextView_Message);
+        if(Message !=null)
+        {
+            TextView_Message.setVisibility(View.VISIBLE);
+            TextView_Message.setText(Message);
+        }
+        else
+        {
+            TextView_Message.setVisibility(View.GONE);
+            //extView_Message.setText("");
+        }
+
+
+
         ImageView _ImageView=(ImageView)CardDetailDialog.findViewById(R.id.ImageView_ItemImage);
         Bitmap Img = BitmapFactory.decodeFile(StorageService.GetImagePath(SelectedCardInfo.getCardImage()));
         _ImageView.setImageBitmap(Img);
@@ -397,6 +415,7 @@ public class CardService {
 
         TextView TextView_ItemName=(TextView)CardDetailDialog.findViewById(R.id.TextView_ItemName);
         TextView_ItemName.setText(SelectedCardInfo.getCardName());
+
 
         Button Button_RelationURL = (Button)CardDetailDialog.findViewById(R.id.Button_Media);
         Button_RelationURL.setOnClickListener(new View.OnClickListener() {

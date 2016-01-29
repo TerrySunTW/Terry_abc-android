@@ -12,6 +12,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
+                android:id="@+id/TextView_Message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="xxxxxxxxx\naaaaa\naaaa\nccc"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="@color/tabDark" />
+            <TextView
                 android:id="@+id/TextView_ItemName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
