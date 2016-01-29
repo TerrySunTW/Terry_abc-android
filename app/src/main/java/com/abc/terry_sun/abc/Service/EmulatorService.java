@@ -57,9 +57,8 @@ public class EmulatorService {
 
 
         ImageView ImageView_QR=(ImageView)EmulatorDialog.findViewById(R.id.ImageView_QR);
-        Calendar c = Calendar.getInstance();
-        int seconds = c.get(Calendar.SECOND);
-        Bitmap myBitmap = QRCode.from(String.valueOf(seconds)+","+SelectedCardInfo.getUserCardID()).bitmap();
+        Long TimeStamp = System.currentTimeMillis()/1000;
+        Bitmap myBitmap = QRCode.from(String.valueOf(TimeStamp)+","+SelectedCardInfo.getUserCardID()).bitmap();
         ImageView_QR.setImageBitmap(myBitmap);
 
         EmulatorDialog.show();
