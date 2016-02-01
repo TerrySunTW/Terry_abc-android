@@ -70,14 +70,14 @@ public class MainActivity extends TabActivity {
 	}
 	private void TabWidgetSetting()
 	{
-		CleanTabSetting(1);
-		CleanTabSetting(3);
-		CleanTabSetting(4);
+		TabWidget tabWidget=this.getTabWidget();
+		CleanTabSetting(tabWidget,1);
+		CleanTabSetting(tabWidget,3);
+		CleanTabSetting(tabWidget,4);
 	}
 
-	private void CleanTabSetting(final int Index)
+	private void CleanTabSetting(TabWidget tabWidget,final int Index)
 	{
-		TabWidget tabWidget=this.getTabWidget();
 		tabWidget.getChildTabViewAt(Index).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
