@@ -44,15 +44,12 @@ import butterknife.InjectView;
 /**
  * Created by Terry on 2015/4/19.
  */
-public class SettingActivity extends Activity {
+public class SettingActivity extends BasicActivity {
     LoginButton loginButton;
     CallbackManager callbackManager;
-    private AccessToken accessToken;
-    AccessTokenTracker accessTokenTracker;
 
     @InjectView(R.id.username)
     protected TextView TextViewUsername;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

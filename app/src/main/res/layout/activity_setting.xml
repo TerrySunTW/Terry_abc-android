@@ -39,5 +39,5 @@
         android:background="#323331"
         android:layout_width="match_parent"
         android:layout_height="1sp"></View>
-    
+
 </LinearLayout>

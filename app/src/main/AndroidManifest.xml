@@ -41,8 +41,9 @@
         <activity android:name=".SettingActivity" android:launchMode= "singleInstance"/>
         <activity android:name=".CardsActivity" android:launchMode= "singleInstance"/>
         <activity android:name=".TabGroup_Cards" android:launchMode= "singleInstance"/>
-        <activity android:name=".CardDetailEmulateActivity" android:launchMode= "singleInstance"/>
+        <activity android:name=".TabGroup_Link" android:launchMode= "singleInstance"/>
         <activity android:name=".TabGroup_R_Card" android:launchMode= "singleInstance"/>
+        <activity android:name=".CardDetailEmulateActivity" android:launchMode= "singleInstance"/>
         <activity android:name=".R_CardHomeActivity" android:launchMode= "singleInstance" />
         <activity android:name=".R_CardNewCardActivity" android:launchMode= "singleInstance" />
         <activity android:name=".R_CardRealFriendCardActivity" android:launchMode= "singleInstance" />

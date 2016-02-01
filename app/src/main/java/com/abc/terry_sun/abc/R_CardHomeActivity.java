@@ -54,9 +54,5 @@ public class R_CardHomeActivity extends BasicActivity {
         Intent _Intent = new Intent(this,R_CardRealFriendCardActivity.class);//直接讀卡
         TabGroup_R_Card.ChangeActivity( _Intent, true);
     }
-    @OnClick(R.id.ButtonSetting)
-    public void GoSettingActivity() {
-        Intent _Intent = new Intent(this,SettingActivity.class);//跳頁
-        TabGroup_R_Card.ChangeActivity( _Intent, true);
-    }
+
 }

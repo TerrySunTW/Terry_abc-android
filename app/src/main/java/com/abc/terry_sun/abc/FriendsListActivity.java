@@ -2,7 +2,9 @@ package com.abc.terry_sun.abc;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -17,6 +19,7 @@ import com.beardedhen.androidbootstrap.BootstrapButton;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 
 public class FriendsListActivity extends Activity {
@@ -36,8 +39,8 @@ public class FriendsListActivity extends Activity {
 	@InjectView(R.id.ButtonAddFriend)
 	BootstrapButton ButtonAddFriend;
 
+	final String TAG="FriendsListActivity";
 	static Adapter_FriendsList _Adapter_FriendsList;
-	Context context;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.activity_friends_list);
@@ -80,5 +83,11 @@ public class FriendsListActivity extends Activity {
 	{
 		_Adapter_FriendsList.UpdateData();
 		_Adapter_FriendsList.notifyDataSetChanged();
+	}
+	@OnClick(R.id.ButtonSetting)
+	public void GoSettingActivity() {
+		Log.e(TAG, "GoSettingActivity");
+		Intent _Intent = new Intent(this,SettingActivity.class);//跳頁
+		TabGroup_Link.ChangeActivity(_Intent, true);
 	}
 }

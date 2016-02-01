@@ -4,28 +4,64 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
+    <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="80dip"
+        android:layout_height="wrap_content"
         android:background="#323331"
-        android:id="@+id/LinearLayout_Title">
-        <TableLayout
-            android:layout_width="match_parent"
+        android:paddingBottom="5dp"
+        android:layout_gravity="center"
+        android:gravity="center|center_vertical|center_horizontal">
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:stretchColumns="*">
-            <TableRow>
+            android:layout_margin="10dp"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
+            android:text="Link" />
+        <com.beardedhen.androidbootstrap.BootstrapButton
+            android:id="@+id/ButtonSetting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:roundedCorners="true"
+            app:bootstrapBrand="primary"
+            android:text="Setting"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#323331"
+        android:paddingBottom="5dp">
                 <ImageButton
-                    android:layout_width="80dip"
-                    android:layout_height="80dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
                     android:scaleType="fitCenter"
                     android:background="@null"
                     android:id="@+id/FriendButton"
+                    android:src="@drawable/smiling"
                     android:padding="5dp" />
                 <LinearLayout
                     android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_alignParentLeft="false"
+                    android:layout_alignParentRight="false"
+                    android:layout_alignParentBottom="false"
+                    android:layout_alignParentTop="false"
+                    android:layout_alignWithParentIfMissing="false"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentStart="false"
+                    android:layout_toRightOf="@+id/FriendButton">
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
@@ -72,24 +108,18 @@
                             android:text="777777"/>
                     </LinearLayout>
                 </LinearLayout>
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+
                 <com.beardedhen.androidbootstrap.BootstrapButton
                     android:id="@+id/ButtonAddFriend"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:roundedCorners="true"
                     app:bootstrapBrand="primary"
-                    android:text="＋"
+                    android:text="+Friend ID"
                     android:layout_marginRight="5dp"
-                    android:layout_marginTop="5dp" />
-                </LinearLayout>
-            </TableRow>
-        </TableLayout>
-
-    </LinearLayout>
+                    android:layout_marginTop="5dp"
+                    android:layout_alignParentRight="true" />
+    </RelativeLayout>
     <ListView android:id="@+id/listview_activity_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

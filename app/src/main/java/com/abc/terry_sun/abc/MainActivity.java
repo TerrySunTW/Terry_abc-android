@@ -64,38 +64,30 @@ public class MainActivity extends TabActivity {
 		addTab("Cards", R.drawable.tab_cards, TabGroup_Cards.class);
 		addTab("Bonus", R.drawable.tab_bonus, BonusListActivity.class);
 		addTab("Fake", R.drawable.tab_cards, CardDetailEmulateActivity.class);
-        addTab("Link", R.drawable.tab_link, FriendsListActivity.class);
+        addTab("Link", R.drawable.tab_link, TabGroup_Link.class);
 		addTab("R-Card", R.drawable.tab_r_card, TabGroup_R_Card.class);
 		TabWidgetSetting();
 	}
 	private void TabWidgetSetting()
 	{
+		CleanTabSetting(1);
+		CleanTabSetting(3);
+		CleanTabSetting(4);
+	}
+
+	private void CleanTabSetting(final int Index)
+	{
 		TabWidget tabWidget=this.getTabWidget();
-
-
-
-
-
-		final int CardsUnitIndex=1;
-		tabWidget.getChildTabViewAt(CardsUnitIndex).setOnClickListener(new View.OnClickListener() {
+		tabWidget.getChildTabViewAt(Index).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				System.gc();
 				TabGroup_Cards.CleanActiveAndGoFirst();
-				tabHost.setCurrentTab(CardsUnitIndex);
-			}
-		});
-
-		final int SystemUnitIndex=4;
-		tabWidget.getChildTabViewAt(SystemUnitIndex).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				System.gc();
-				TabGroup_R_Card.CleanActiveAndGoFirst();
-				tabHost.setCurrentTab(SystemUnitIndex);
+				tabHost.setCurrentTab(Index);
 			}
 		});
 	}
+
 	private void addTab(String labelId, int drawableId, Class<?> c)
 	{
 		tabHost = getTabHost();
