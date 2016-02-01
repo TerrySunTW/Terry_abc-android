@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.abc.terry_sun.abc.Entities.DB_Cards;
 import com.abc.terry_sun.abc.MainActivity;
 import com.abc.terry_sun.abc.R;
+import com.beardedhen.androidbootstrap.BootstrapButton;
 
 import net.glxn.qrgen.android.QRCode;
 
@@ -45,7 +46,7 @@ public class EmulatorService {
         LinearLayout LinearLayout_Background =(LinearLayout)EmulatorDialog.findViewById(R.id.LinearLayout_Background);
         LinearLayout_Background.setBackground(new BitmapDrawable(CardService.getInstance().GetCardImageByCardID(SelectedCardInfo.getCardID())));
 
-        Button Button_Exit=(Button)EmulatorDialog.findViewById(R.id.Button_Exit);
+        BootstrapButton Button_Exit=(BootstrapButton)EmulatorDialog.findViewById(R.id.Button_Exit);
         Button_Exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
