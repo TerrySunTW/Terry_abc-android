@@ -55,7 +55,7 @@ public class MainActivity extends TabActivity {
 		MainCardImageButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				CardService.getInstance().ShowCardDetailDialog(EntityCardID,null, MainActivityContext,true);
+				CardService.getInstance().ShowCardDetailDialog(EntityCardID,"Main Card Message...", MainActivityContext,true);
 			}
 		});
 	}
