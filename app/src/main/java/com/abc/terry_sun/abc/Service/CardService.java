@@ -488,6 +488,7 @@ public class CardService {
                 EmulatorService.getInstance().ShowEmulatorDialog(view.getTag().toString());
             }
         });
+        CardDetailDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         CardDetailDialog.show();
     }
     public void CloseCardDetailDialog()
