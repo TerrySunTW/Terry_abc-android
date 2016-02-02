@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -26,11 +27,15 @@ import java.util.Calendar;
  * Created by terry_sun on 2015/8/25.
  */
 public class EmulatorService {
+    static String TAG="EmulatorService";
     static Dialog EmulatorDialog;
     private static final EmulatorService _EmulatorService = new EmulatorService();
     public static EmulatorService getInstance() {
         return _EmulatorService;
     }
+    static int QR_Default_Height=0;
+    static int QR_Default_Width=0;
+    static boolean IsBiggerQR=false;
     public void ShowEmulatorDialog(final String EntityCardID)
     {
         Context context= MainActivity.GetMainActivityContext();
@@ -57,7 +62,27 @@ public class EmulatorService {
         TextView_Info.setText("Your phone is now Emu as " + SelectedCardInfo.getCardName());
 
 
-        ImageView ImageView_QR=(ImageView)EmulatorDialog.findViewById(R.id.ImageView_QR);
+        final ImageView ImageView_QR=(ImageView)EmulatorDialog.findViewById(R.id.ImageView_QR);
+
+        QR_Default_Height=ImageView_QR.getLayoutParams().height;
+        QR_Default_Width=ImageView_QR.getLayoutParams().width;
+        ImageView_QR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG,"ImageViewonClick!!");
+                if (IsBiggerQR) {
+                    ImageView_QR.getLayoutParams().height = QR_Default_Height;
+                    ImageView_QR.getLayoutParams().width = QR_Default_Width;
+                    IsBiggerQR=false;
+                } else {
+                    ImageView_QR.getLayoutParams().height = QR_Default_Height * 3;
+                    ImageView_QR.getLayoutParams().width = QR_Default_Width * 3;
+                    IsBiggerQR=true;
+                }
+                ImageView_QR.requestLayout();
+            }
+        });
+
         Long TimeStamp = System.currentTimeMillis()/1000;
         Bitmap myBitmap = QRCode.from(String.valueOf(TimeStamp)+","+SelectedCardInfo.getUserCardID()).bitmap();
         ImageView_QR.setImageBitmap(myBitmap);
