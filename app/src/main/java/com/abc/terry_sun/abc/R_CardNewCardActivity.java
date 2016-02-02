@@ -60,7 +60,7 @@ public class R_CardNewCardActivity extends BasicActivity {
                 switch(msg.what){
                     case 1:
                         String NewEntityID=CardService.getInstance().GetCardsByCardID(String.valueOf(GotCardID)).getEntityCardID();
-                        CardService.getInstance().ShowCardDetailDialog(NewEntityID, MainActivity.GetMainActivityContext());
+                        CardService.getInstance().ShowCardDetailDialog(NewEntityID,null, MainActivity.GetMainActivityContext());
                         ProcessThread.interrupt();
                         ProcessThread=null;
                         break;
@@ -94,7 +94,7 @@ public class R_CardNewCardActivity extends BasicActivity {
                 DB_Cards ScannedCard = CardService.getInstance().GetUserOwnCardsByEntityCardID(EntityCardID);
                 if (ScannedCard != null) {
                     CardService.getInstance().CloseCardDetailDialog();
-                    CardService.getInstance().ShowCardDetailDialog(ScannedCard.getEntityCardID(), MainActivity.GetMainActivityContext());
+                    CardService.getInstance().ShowCardDetailDialog(ScannedCard.getEntityCardID(),null, MainActivity.GetMainActivityContext());
                     scanner.getCameraManager().startPreview();
                     return;
                 }

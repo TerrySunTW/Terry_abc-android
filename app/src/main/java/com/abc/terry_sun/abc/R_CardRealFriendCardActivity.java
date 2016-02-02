@@ -98,6 +98,7 @@ public class R_CardRealFriendCardActivity extends BasicActivity {
                                                         int which) {
                                         CardService.getInstance().ShowCardDetailDialog(
                                                 CardService.getInstance().GetEntityCardIDByCardID(String.valueOf(GotCardID)),
+                                                null,
                                                 MainActivity.MainActivityContext);
                                         TextView_Log.setText(TextView_Log.getText() + "\n" + LastLogMessage);
                                     }
@@ -106,7 +107,7 @@ public class R_CardRealFriendCardActivity extends BasicActivity {
                         break;
                     case 1:
                         //success //entity card
-                        CardService.getInstance().ShowCardDetailDialog(LastReadQR_Source, MainActivity.MainActivityContext);
+                        CardService.getInstance().ShowCardDetailDialog(LastReadQR_Source, null ,MainActivity.MainActivityContext);
                         TextView_Log.setText(TextView_Log.getText()+"\n"+LastLogMessage);
                         break;
                     case 99:

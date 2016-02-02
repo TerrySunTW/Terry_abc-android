@@ -364,11 +364,11 @@ public class CardService {
         DB_Friend.deleteAll(DB_Friend.class);
     }
     static Dialog CardDetailDialog;
-    public void ShowCardDetailDialog(final String EntityCardID,final Context context)
-    {
-        ShowCardDetailDialog(EntityCardID,null,context);
-    }
     public void ShowCardDetailDialog(final String EntityCardID,final String Message,final Context context)
+    {
+        ShowCardDetailDialog(EntityCardID, Message, context,false);
+    }
+    public void ShowCardDetailDialog(final String EntityCardID,final String Message,final Context context,boolean IsMainCard)
     {
         if(CardDetailDialog!=null)
         {
@@ -488,7 +488,9 @@ public class CardService {
                 EmulatorService.getInstance().ShowEmulatorDialog(view.getTag().toString());
             }
         });
-        CardDetailDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        if(IsMainCard) {
+            CardDetailDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        }
         CardDetailDialog.show();
     }
     public void CloseCardDetailDialog()

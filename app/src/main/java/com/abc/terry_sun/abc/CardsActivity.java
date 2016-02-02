@@ -121,7 +121,7 @@ public class CardsActivity extends BasicActivity {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
                 SelectedEntityCardID = CardGalleryItemList.get(position).getItemID();
-                CardService.getInstance().ShowCardDetailDialog(SelectedEntityCardID, context);
+                CardService.getInstance().ShowCardDetailDialog(SelectedEntityCardID,null, context);
                 Log.i("Info", "SelectedEntityCardID" + SelectedEntityCardID);
             }
         });

@@ -109,7 +109,7 @@ public class Adapter_BonusList extends BaseAdapter {
         CardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CardService.getInstance().ShowCardDetailDialog(view.getTag().toString(), MainActivity.GetMainActivityContext());
+                CardService.getInstance().ShowCardDetailDialog(view.getTag().toString(),null, MainActivity.GetMainActivityContext());
             }
         });
 
