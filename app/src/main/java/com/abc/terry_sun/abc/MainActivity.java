@@ -71,9 +71,9 @@ public class MainActivity extends TabActivity {
 	private void TabWidgetSetting()
 	{
 		TabWidget tabWidget=this.getTabWidget();
-		CleanTabSetting(tabWidget,1);
-		CleanTabSetting(tabWidget,3);
-		CleanTabSetting(tabWidget,4);
+		CleanTabSetting(tabWidget, 1);
+		CleanTabSetting(tabWidget, 3);
+		CleanTabSetting(tabWidget, 4);
 	}
 
 	private void CleanTabSetting(TabWidget tabWidget,final int Index)
@@ -83,6 +83,8 @@ public class MainActivity extends TabActivity {
 			public void onClick(View v) {
 				System.gc();
 				TabGroup_Cards.CleanActiveAndGoFirst();
+				TabGroup_Link.CleanActiveAndGoFirst();
+				TabGroup_R_Card.CleanActiveAndGoFirst();
 				tabHost.setCurrentTab(Index);
 			}
 		});
