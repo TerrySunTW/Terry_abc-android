@@ -12,6 +12,17 @@
         android:paddingBottom="5dp"
         android:layout_gravity="center"
         android:gravity="center|center_vertical|center_horizontal">
+        <com.beardedhen.androidbootstrap.BootstrapButton
+            android:id="@+id/ButtonAddFriend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:roundedCorners="true"
+            app:bootstrapBrand="primary"
+            android:text="+Friend ID"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentRight="false"
+            android:layout_alignParentLeft="true" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -118,16 +129,7 @@
         android:layout_gravity="center"
         android:gravity="center|center_vertical|center_horizontal|bottom|top"
         android:paddingTop="5dp">
-        <com.beardedhen.androidbootstrap.BootstrapButton
-            android:id="@+id/ButtonAddFriend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:roundedCorners="true"
-            app:bootstrapBrand="primary"
-            android:text="+Friend ID"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_alignParentRight="true" />
+
     </LinearLayout>
     <ListView android:id="@+id/listview_activity_list"
         android:layout_width="match_parent"
