@@ -5,13 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.abc.terry_sun.abc.Entities.DB_Cards;
@@ -23,6 +26,8 @@ import com.abc.terry_sun.abc.Models.CategoryInfo;
 import com.abc.terry_sun.abc.Models.GroupInfo;
 import com.abc.terry_sun.abc.Models.RepresentativeInfo;
 import com.abc.terry_sun.abc.R;
+
+import net.glxn.qrgen.android.QRCode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +41,9 @@ public class CardService {
     public static CardService getInstance() {
         return _CardService;
     }
+    static int QR_Default_Height=0;
+    static int QR_Default_Width=0;
+    static boolean IsBiggerQR=false;
     public List<CategoryInfo> GetAllCategory()
     {
         List<CategoryInfo> CategoryInfoList=new ArrayList<CategoryInfo>();
@@ -370,57 +378,111 @@ public class CardService {
     }
     public void ShowCardDetailDialog(final String EntityCardID,final String Message,final Context context,boolean IsMainCard)
     {
-        if(CardDetailDialog!=null)
-        {
-            CardDetailDialog.dismiss();
-        }
         CardDetailDialog=new Dialog(context);
         final DB_Cards SelectedCardInfo=CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
-        if(SelectedCardInfo==null)
-        {
-            Log.e("SelectedCardInfo","SelectedCardInfo is null");
-            return;
-        }
-        CardDetailDialog.setContentView(R.layout.dialog_card_info);
+
+        CardDetailDialog.setContentView(R.layout.dialog_emulator);
         Window window = CardDetailDialog.getWindow();
         window.setBackgroundDrawable(new ColorDrawable(0));
         window.setLayout(ScreenService.GetScreenWidth(context).x - 100, ScreenService.GetScreenWidth(context).y - 300);
 
 
-        TextView TextView_Message=(TextView)CardDetailDialog.findViewById(R.id.TextView_Message);
-        if(Message !=null)
-        {
-            TextView_Message.setVisibility(View.VISIBLE);
-            TextView_Message.setText(Message);
-        }
-        else
-        {
-            TextView_Message.setVisibility(View.GONE);
-            //extView_Message.setText("");
-        }
+        LinearLayout LinearLayout_Background =(LinearLayout)CardDetailDialog.findViewById(R.id.LinearLayout_Background);
+        LinearLayout_Background.setBackground(new BitmapDrawable(CardService.getInstance().GetCardImageByCardID(SelectedCardInfo.getCardID())));
 
-
-
-        ImageView _ImageView=(ImageView)CardDetailDialog.findViewById(R.id.ImageView_ItemImage);
-        Bitmap Img = BitmapFactory.decodeFile(StorageService.GetImagePath(SelectedCardInfo.getCardImage()));
-        _ImageView.setImageBitmap(Img);
-        _ImageView.setTag(SelectedCardInfo.getEntityCardID());
-        _ImageView.setOnClickListener(new View.OnClickListener() {
+        ImageView Button_Exit=(ImageView)CardDetailDialog.findViewById(R.id.Button_Exit);
+        Button_Exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 CardDetailDialog.dismiss();
-                EmulatorService.getInstance().ShowEmulatorDialog(view.getTag().toString());
             }
         });
 
-        TextView TextView_ItemName=(TextView)CardDetailDialog.findViewById(R.id.TextView_ItemName);
-        TextView_ItemName.setText(SelectedCardInfo.getCardName());
+        final ImageView ImageView_QR=(ImageView)CardDetailDialog.findViewById(R.id.ImageView_QR);
 
-
-        Button Button_RelationURL = (Button)CardDetailDialog.findViewById(R.id.Button_Media);
-        Button_RelationURL.setOnClickListener(new View.OnClickListener() {
+        QR_Default_Height=ImageView_QR.getLayoutParams().height;
+        QR_Default_Width=ImageView_QR.getLayoutParams().width;
+        ImageView_QR.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                if (IsBiggerQR) {
+                    ImageView_QR.getLayoutParams().height = QR_Default_Height;
+                    ImageView_QR.getLayoutParams().width = QR_Default_Width;
+                    IsBiggerQR = false;
+                } else {
+                    ImageView_QR.getLayoutParams().height = QR_Default_Height * 3;
+                    ImageView_QR.getLayoutParams().width = QR_Default_Width * 3;
+                    IsBiggerQR = true;
+                }
+                ImageView_QR.requestLayout();
+            }
+        });
+
+        Long TimeStamp = System.currentTimeMillis()/1000;
+        Bitmap myBitmap = QRCode.from(String.valueOf(TimeStamp) + "," + SelectedCardInfo.getUserCardID()).bitmap();
+        ImageView_QR.setImageBitmap(myBitmap);
+
+
+        final ImageView ImageView_ShowCard=(ImageView)CardDetailDialog.findViewById(R.id.ImageView_ShowCard);
+        if(SelectedCardInfo.getIsMainCard())
+        {
+            ImageView_ShowCard.setImageDrawable(context.getResources().getDrawable(R.drawable.circle_green_main));
+        }
+        else
+        {
+            ImageView_ShowCard.setImageDrawable(context.getResources().getDrawable(R.drawable.circle_red_main));
+        }
+        ImageView_ShowCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageView_ShowCard.setImageDrawable(context.getResources().getDrawable(R.drawable.circle_green_main));
+                CardService.getInstance().SetMainCards(SelectedCardInfo);
+                MainActivity.ChangeMainCardImage(ImageService.GetBitmapFromImageName(SelectedCardInfo.getCardImage()), EntityCardID);
+            }
+        });
+        final ImageView ImageView_FavoriteCard=(ImageView)CardDetailDialog.findViewById(R.id.ImageView_FavoriteCard);
+        if(SelectedCardInfo.getIsFavorite())
+        {
+            ImageView_FavoriteCard.setImageDrawable(context.getResources().getDrawable(R.drawable.circle_green_favorite));
+        }
+        else
+        {
+            ImageView_FavoriteCard.setImageDrawable(context.getResources().getDrawable(R.drawable.circle_red_favorite));
+        }
+        ImageView_FavoriteCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CardService.getInstance().ToggleIsCardFavorite(SelectedCardInfo);
+                if(SelectedCardInfo.getIsFavorite())
+                {
+                    ImageView_FavoriteCard.setImageDrawable(context.getResources().getDrawable(R.drawable.circle_green_favorite));
+                }
+                else
+                {
+                    ImageView_FavoriteCard.setImageDrawable(context.getResources().getDrawable(R.drawable.circle_red_favorite));
+                }
+
+            }
+        });
+
+
+        final Button Button_Media=(Button)CardDetailDialog.findViewById(R.id.Button_Media);
+        final View ViewMedia=(View)CardDetailDialog.findViewById(R.id.ViewMedia);
+
+        Button_Media.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    ViewMedia.setVisibility(View.VISIBLE);
+                }  else if(event.getAction() == MotionEvent.ACTION_UP) {
+                    ViewMedia.setVisibility(View.INVISIBLE);
+                }
+                return false;
+            }
+        });
+        Button_Media.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 CardService.getInstance().SetMainCards(SelectedCardInfo);
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(SelectedCardInfo.getRelationLink()));
@@ -428,64 +490,25 @@ public class CardService {
             }
         });
 
-        final Button Button_MainCard = (Button)CardDetailDialog.findViewById(R.id.Button_MainCard);
-        Button_MainCard.setOnClickListener(new View.OnClickListener() {
+        final Button Button_Bonus=(Button)CardDetailDialog.findViewById(R.id.Button_Bonus);
+        final View ViewBonus=(View)CardDetailDialog.findViewById(R.id.ViewBonus);
+
+        Button_Bonus.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
-                CardService.getInstance().SetMainCards(SelectedCardInfo);
-                MainActivity.ChangeMainCardImage(ImageService.GetBitmapFromImageName(SelectedCardInfo.getCardImage()), EntityCardID);
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    ViewBonus.setVisibility(View.VISIBLE);
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    ViewBonus.setVisibility(View.INVISIBLE);
+                }
+                return false;
             }
         });
-        final Button Button_Favorite = (Button)CardDetailDialog.findViewById(R.id.Button_Favorite);
-        if(SelectedCardInfo.getIsFavorite())
-        {
-            Button_Favorite.setText("(X) Favorites");
-        }
-
-        Button_Favorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                CardService.getInstance().ToggleIsCardFavorite(SelectedCardInfo);
-                if(SelectedCardInfo.getIsFavorite())
-                {
-                    Button_Favorite.setText("(X) Favorites");
-                }
-                else
-                {
-                    Button_Favorite.setText("Favorites");
-                }
-            }
-        });
-
-        Button Button_Bonus = (Button)CardDetailDialog.findViewById(R.id.Button_Bonus);
-        Button_Bonus.setTag(SelectedCardInfo.getEntityCardID());
         Button_Bonus.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 CardDetailDialog.dismiss();
-                BonusService.getInstance().ShowAllBonusDialog(view.getTag().toString());
-            }
-        });
-
-
-
-
-        Button Button_Return = (Button)CardDetailDialog.findViewById(R.id.Button_Return);
-        Button_Return.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CardDetailDialog.dismiss();
-            }
-        });
-
-        Button Button_Emulation = (Button)CardDetailDialog.findViewById(R.id.Button_Emulation);
-        Button_Emulation.setTag(SelectedCardInfo.getEntityCardID());
-        Button_Emulation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CardDetailDialog.dismiss();
-                EmulatorService.getInstance().ShowEmulatorDialog(view.getTag().toString());
+                BonusService.getInstance().ShowAllBonusDialog(SelectedCardInfo.getEntityCardID());
             }
         });
         if(IsMainCard) {
