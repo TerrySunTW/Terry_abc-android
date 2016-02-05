@@ -13,23 +13,9 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10sp"
+            android:layout_marginTop="20sp"
             android:gravity="right">
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <ImageView
-                android:id="@+id/ImageView_ShowCard"
-                android:layout_width="40sp"
-                android:layout_height="40sp"
-                android:src="@drawable/circle_red_main" />
-                <ImageView
-                    android:id="@+id/ImageView_FavoriteCard"
-                    android:layout_width="40sp"
-                    android:layout_height="40sp"
-                    android:src="@drawable/circle_green_favorite" />
-            </LinearLayout>
+
             <RelativeLayout
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
@@ -151,9 +137,11 @@
                     android:layout_width="75sp"
                     android:layout_height="75sp"
                     android:baselineAlignBottom="false"
-                    android:layout_alignParentBottom="true" />
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="5dp" />
                 <LinearLayout
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -161,28 +149,63 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentStart="false">
-                    <Button
+                    <com.beardedhen.androidbootstrap.BootstrapButton
                         android:id="@+id/Button_Media"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Media"
+                        app:roundedCorners="true"
+                        app:bootstrapBrand="primary"
+                        app:bootstrapText="{fa_external_link_square}Media"
                         android:layout_gravity="center_horizontal|right"
-                        android:background="@drawable/bullet_button"
                         android:gravity="center_vertical|right"
-                        android:paddingRight="10dp" />
-                    <Button
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp" />
+                    <com.beardedhen.androidbootstrap.BootstrapButton
                         android:id="@+id/Button_Bonus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Bonus"
-                        android:layout_gravity="center_horizontal"
-                        android:background="@drawable/bullet_button"
+                        app:roundedCorners="true"
+                        app:bootstrapBrand="primary"
+                        app:bootstrapText="{fa_gift}Bonus"
+                        android:layout_gravity="center_horizontal|right"
                         android:gravity="center_vertical|right"
-                        android:paddingRight="10dp"
-                        android:paddingLeft="50dp" />
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp" />
+
                 </LinearLayout>
 
             </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right">
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/Button_ShowCard"
+                style="@style/wrapping_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|right"
+                android:gravity="center_vertical|right"
+                app:bootstrapText="{fa_download} ShowCard"
+                android:text="ShowCard"
+                app:bootstrapBrand="primary"
+                app:roundedCorners="true"
+                />
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/Button_FavoriteCard"
+                style="@style/wrapping_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|right"
+                android:gravity="center_vertical|right"
+                app:bootstrapText="Favorite"
+                android:text="ShowCard"
+                app:bootstrapBrand="primary"
+                app:roundedCorners="true"
+                />
         </LinearLayout>
         <ImageView
             android:id="@+id/Button_Exit"

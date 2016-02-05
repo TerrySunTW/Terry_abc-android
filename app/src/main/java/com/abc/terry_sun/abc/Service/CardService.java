@@ -29,6 +29,8 @@ import com.abc.terry_sun.abc.Models.CategoryInfo;
 import com.abc.terry_sun.abc.Models.GroupInfo;
 import com.abc.terry_sun.abc.Models.RepresentativeInfo;
 import com.abc.terry_sun.abc.R;
+import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.beardedhen.androidbootstrap.BootstrapText;
 
 import net.glxn.qrgen.android.QRCode;
 
@@ -440,6 +442,64 @@ public class CardService {
         ImageView_QR.setImageBitmap(myBitmap);
 
 
+        final BootstrapButton Button_ShowCard=(BootstrapButton)CardDetailDialog.findViewById(R.id.Button_ShowCard);
+        if(selectedCardInfo.getIsMainCard())
+        {
+            Button_ShowCard.setVisibility(View.GONE);
+        }
+        else
+        {
+            Button_ShowCard.setVisibility(View.VISIBLE);
+        }
+        Button_ShowCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CardService.getInstance().SetMainCards(selectedCardInfo);
+                MainActivity.ChangeMainCardImage(ImageService.GetBitmapFromImageName(selectedCardInfo.getCardImage()), selectedCardInfo.getEntityCardID());
+                Button_ShowCard.setVisibility(View.GONE);
+                Toast.makeText(context, "This card is Show card now.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        final BootstrapButton Button_FavoriteCard=(BootstrapButton)CardDetailDialog.findViewById(R.id.Button_FavoriteCard);
+        if(selectedCardInfo.getIsFavorite())
+        {
+            Button_FavoriteCard.setBootstrapText(new BootstrapText.Builder(context)
+                    .addFontAwesomeIcon("fa_heart")
+                    .addText("Favorite")
+                    .build());
+        }
+        else
+        {
+            Button_FavoriteCard.setBootstrapText(new BootstrapText.Builder(context)
+                    .addFontAwesomeIcon("fa_heart_o")
+                    .addText("Favorite")
+                    .build());
+        }
+        Button_FavoriteCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CardService.getInstance().ToggleIsCardFavorite(selectedCardInfo);
+                if(selectedCardInfo.getIsFavorite())
+                {
+                    Button_FavoriteCard.setBootstrapText(new BootstrapText.Builder(context)
+                            .addFontAwesomeIcon("fa_heart")
+                            .addText("Favorite")
+                            .build());
+                    Toast.makeText(context, "Added to favorites.", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Button_FavoriteCard.setBootstrapText(new BootstrapText.Builder(context)
+                            .addFontAwesomeIcon("fa_heart_o")
+                            .addText("Favorite")
+                            .build());
+                    Toast.makeText(context, "Removed from favorites.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        /**
         final ImageView ImageView_ShowCard=(ImageView)CardDetailDialog.findViewById(R.id.ImageView_ShowCard);
         if(selectedCardInfo.getIsMainCard())
         {
@@ -484,9 +544,9 @@ public class CardService {
 
             }
         });
+**/
 
-
-        final Button Button_Media=(Button)CardDetailDialog.findViewById(R.id.Button_Media);
+        final BootstrapButton Button_Media=(BootstrapButton)CardDetailDialog.findViewById(R.id.Button_Media);
         Button_Media.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -509,7 +569,7 @@ public class CardService {
         ImageButton CardButton = (ImageButton) CardDetailDialog.findViewById(R.id.CardButton);
         CardButton.setImageBitmap(BitmapFactory.decodeFile(StorageService.GetImagePath(selectedCardInfo.getCardImage())));
 
-        final Button Button_Bonus=(Button)CardDetailDialog.findViewById(R.id.Button_Bonus);
+        final BootstrapButton Button_Bonus=(BootstrapButton)CardDetailDialog.findViewById(R.id.Button_Bonus);
         final FrameLayout FrameLayout_CardBonus=(FrameLayout)CardDetailDialog.findViewById(R.id.FrameLayout_CardBonus);
         Button_Bonus.setOnClickListener(new View.OnClickListener() {
             @Override
