@@ -13,9 +13,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.abc.terry_sun.abc.Entities.DB_Cards;
 import com.abc.terry_sun.abc.Entities.DB_Events;
@@ -384,11 +387,25 @@ public class CardService {
         CardDetailDialog.setContentView(R.layout.dialog_emulator);
         Window window = CardDetailDialog.getWindow();
         window.setBackgroundDrawable(new ColorDrawable(0));
-        window.setLayout(ScreenService.GetScreenWidth(context).x - 100, ScreenService.GetScreenWidth(context).y - 300);
+        window.setLayout(ScreenService.GetScreenWidth(context).x, ScreenService.GetScreenWidth(context).y - 150);
 
+        CardDetailUISetting(context, SelectedCardInfo);
+        CardDetailBonusUISetting(SelectedCardInfo);
 
+        if(Message!=null)
+        {
+            ShowMessage(Message);
+        }
+
+        if(IsMainCard) {
+            CardDetailDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        }
+        CardDetailDialog.show();
+    }
+
+    private void CardDetailUISetting(final Context context, final DB_Cards selectedCardInfo) {
         LinearLayout LinearLayout_Background =(LinearLayout)CardDetailDialog.findViewById(R.id.LinearLayout_Background);
-        LinearLayout_Background.setBackground(new BitmapDrawable(CardService.getInstance().GetCardImageByCardID(SelectedCardInfo.getCardID())));
+        LinearLayout_Background.setBackground(new BitmapDrawable(CardService.getInstance().GetCardImageByCardID(selectedCardInfo.getCardID())));
 
         ImageView Button_Exit=(ImageView)CardDetailDialog.findViewById(R.id.Button_Exit);
         Button_Exit.setOnClickListener(new View.OnClickListener() {
@@ -419,12 +436,12 @@ public class CardService {
         });
 
         Long TimeStamp = System.currentTimeMillis()/1000;
-        Bitmap myBitmap = QRCode.from(String.valueOf(TimeStamp) + "," + SelectedCardInfo.getUserCardID()).bitmap();
+        Bitmap myBitmap = QRCode.from(String.valueOf(TimeStamp) + "," + selectedCardInfo.getUserCardID()).bitmap();
         ImageView_QR.setImageBitmap(myBitmap);
 
 
         final ImageView ImageView_ShowCard=(ImageView)CardDetailDialog.findViewById(R.id.ImageView_ShowCard);
-        if(SelectedCardInfo.getIsMainCard())
+        if(selectedCardInfo.getIsMainCard())
         {
             ImageView_ShowCard.setImageDrawable(context.getResources().getDrawable(R.drawable.circle_green_main));
         }
@@ -436,12 +453,13 @@ public class CardService {
             @Override
             public void onClick(View v) {
                 ImageView_ShowCard.setImageDrawable(context.getResources().getDrawable(R.drawable.circle_green_main));
-                CardService.getInstance().SetMainCards(SelectedCardInfo);
-                MainActivity.ChangeMainCardImage(ImageService.GetBitmapFromImageName(SelectedCardInfo.getCardImage()), EntityCardID);
+                CardService.getInstance().SetMainCards(selectedCardInfo);
+                MainActivity.ChangeMainCardImage(ImageService.GetBitmapFromImageName(selectedCardInfo.getCardImage()), selectedCardInfo.getEntityCardID());
+                Toast.makeText(context, "This card is Show card now.", Toast.LENGTH_SHORT).show();
             }
         });
         final ImageView ImageView_FavoriteCard=(ImageView)CardDetailDialog.findViewById(R.id.ImageView_FavoriteCard);
-        if(SelectedCardInfo.getIsFavorite())
+        if(selectedCardInfo.getIsFavorite())
         {
             ImageView_FavoriteCard.setImageDrawable(context.getResources().getDrawable(R.drawable.circle_green_favorite));
         }
@@ -452,14 +470,16 @@ public class CardService {
         ImageView_FavoriteCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CardService.getInstance().ToggleIsCardFavorite(SelectedCardInfo);
-                if(SelectedCardInfo.getIsFavorite())
+                CardService.getInstance().ToggleIsCardFavorite(selectedCardInfo);
+                if(selectedCardInfo.getIsFavorite())
                 {
                     ImageView_FavoriteCard.setImageDrawable(context.getResources().getDrawable(R.drawable.circle_green_favorite));
+                    Toast.makeText(context, "Added to favorites.", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
                     ImageView_FavoriteCard.setImageDrawable(context.getResources().getDrawable(R.drawable.circle_red_favorite));
+                    Toast.makeText(context, "Removed from favorites.", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -467,55 +487,83 @@ public class CardService {
 
 
         final Button Button_Media=(Button)CardDetailDialog.findViewById(R.id.Button_Media);
-        final View ViewMedia=(View)CardDetailDialog.findViewById(R.id.ViewMedia);
-
-        Button_Media.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    ViewMedia.setVisibility(View.VISIBLE);
-                }  else if(event.getAction() == MotionEvent.ACTION_UP) {
-                    ViewMedia.setVisibility(View.INVISIBLE);
-                }
-                return false;
-            }
-        });
         Button_Media.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CardService.getInstance().SetMainCards(SelectedCardInfo);
+                CardService.getInstance().SetMainCards(selectedCardInfo);
                 Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(SelectedCardInfo.getRelationLink()));
+                i.setData(Uri.parse(selectedCardInfo.getRelationLink()));
                 context.startActivity(i);
             }
         });
 
-        final Button Button_Bonus=(Button)CardDetailDialog.findViewById(R.id.Button_Bonus);
-        final View ViewBonus=(View)CardDetailDialog.findViewById(R.id.ViewBonus);
 
-        Button_Bonus.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    ViewBonus.setVisibility(View.VISIBLE);
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    ViewBonus.setVisibility(View.INVISIBLE);
-                }
-                return false;
-            }
-        });
+    }
+
+    private void CardDetailBonusUISetting(final DB_Cards selectedCardInfo) {
+
+        DB_Events EntityCardEvent= CardService.getInstance().GetEntityEventsByCardID(selectedCardInfo.getCardID());
+        DB_Events VirtualCardEvent= CardService.getInstance().GetVirtualEventsByCardID(selectedCardInfo.getCardID());
+
+
+        ImageButton CardButton = (ImageButton) CardDetailDialog.findViewById(R.id.CardButton);
+        CardButton.setImageBitmap(BitmapFactory.decodeFile(StorageService.GetImagePath(selectedCardInfo.getCardImage())));
+
+        final Button Button_Bonus=(Button)CardDetailDialog.findViewById(R.id.Button_Bonus);
+        final FrameLayout FrameLayout_CardBonus=(FrameLayout)CardDetailDialog.findViewById(R.id.FrameLayout_CardBonus);
         Button_Bonus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CardDetailDialog.dismiss();
-                BonusService.getInstance().ShowAllBonusDialog(SelectedCardInfo.getEntityCardID());
+                FrameLayout_CardBonus.setVisibility(View.VISIBLE);
             }
         });
-        if(IsMainCard) {
-            CardDetailDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
+        final ImageView ImageViewCloseBonus=(ImageView)CardDetailDialog.findViewById(R.id.ImageViewCloseBonus);
+        ImageViewCloseBonus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FrameLayout_CardBonus.setVisibility(View.GONE);
+            }
+        });
+
+        TextView Bonus1_Title = (TextView) CardDetailDialog.findViewById(R.id.action1_title);
+        TextView Bonus1_Content = (TextView) CardDetailDialog.findViewById(R.id.action1_content);
+
+        Bonus1_Title.setText(EntityCardEvent.getEventTitle()+
+                "-DP:("+selectedCardInfo.getDirectPoint()+"/"+
+                EntityCardEvent.getDirectPointTarget()+")");
+        Bonus1_Content.setText(EntityCardEvent.getEventDescription());
+
+
+        TextView Bonus2_Title = (TextView) CardDetailDialog.findViewById(R.id.action2_title);
+        TextView Bonus2_Content = (TextView) CardDetailDialog.findViewById(R.id.action2_content);
+
+
+        Bonus2_Title.setText(VirtualCardEvent.getEventTitle() +
+                "-IP:(" + selectedCardInfo.getIndirectPoint() + "/" +
+                VirtualCardEvent.getIndirectPointTarget() + ")");
+        Bonus2_Content.setText(VirtualCardEvent.getEventDescription());
+        if(VirtualCardEvent==null) {
+            Bonus2_Title.setVisibility(View.GONE);
+            Bonus2_Content.setVisibility(View.GONE);
         }
-        CardDetailDialog.show();
     }
+    private void ShowMessage(String Message) {
+        final FrameLayout FrameLayout_Message=(FrameLayout)CardDetailDialog.findViewById(R.id.FrameLayout_Message);
+        FrameLayout_Message.setVisibility(View.VISIBLE);
+
+        final ImageView ImageViewCloseMessage=(ImageView)CardDetailDialog.findViewById(R.id.ImageViewCloseMessage);
+        ImageViewCloseMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FrameLayout_Message.setVisibility(View.GONE);
+            }
+        });
+
+        final TextView TextViewMessage=(TextView)CardDetailDialog.findViewById(R.id.TextViewMessage);
+        TextViewMessage.setText(Message);
+    }
+
     public void CloseCardDetailDialog()
     {
         if(CardDetailDialog!=null)

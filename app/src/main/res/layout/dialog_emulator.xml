@@ -35,6 +35,117 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dip"
                 android:layout_weight="1.09">
+                <FrameLayout
+                    android:id="@+id/FrameLayout_CardBonus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone">
+
+                    <LinearLayout
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_centerVertical="true"
+                        android:background="@android:drawable/dark_header"
+                        android:layout_marginTop="10dp">
+
+                        <ImageButton
+                            android:layout_width="100sp"
+                            android:layout_height="100sp"
+                            android:scaleType="centerInside"
+                            android:id="@+id/CardButton"
+                            android:src="@drawable/smiling"
+                            android:layout_gravity="center_vertical"
+                            android:background="@null"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center_vertical">
+
+                            <LinearLayout
+                                android:id="@+id/LinearLayout1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+                                <TextView android:id="@+id/action1_title"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="111111"/>
+
+                                <TextView android:id="@+id/action1_content"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="222222222"/>
+
+                            </LinearLayout>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@android:color/darker_gray"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp" />
+                            <LinearLayout
+                                android:id="@+id/LinearLayout2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+                                <TextView android:id="@+id/action2_title"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="111111"/>
+
+                                <TextView android:id="@+id/action2_content"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="222222222"/>
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/ImageViewCloseBonus"
+                        android:layout_width="50sp"
+                        android:layout_height="50sp"
+                        android:clickable="true"
+                        android:src="@drawable/close"
+                        android:layout_gravity="left|top"></ImageView>
+                </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/FrameLayout_Message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_centerVertical="true"
+                        android:background="@android:drawable/dark_header"
+                        android:layout_marginTop="10dp">
+                            <TextView android:id="@+id/TextViewMessage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginBottom="20dp"
+                                android:text="Message...Message...Message...Message..."/>
+                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/ImageViewCloseMessage"
+                        android:layout_width="50sp"
+                        android:layout_height="50sp"
+                        android:clickable="true"
+                        android:src="@drawable/close"
+                        android:layout_gravity="left|top"></ImageView>
+                </FrameLayout>
+
                 <ImageView
                     android:id="@+id/ImageView_QR"
                     android:layout_width="75sp"
@@ -59,14 +170,6 @@
                         android:background="@drawable/bullet_button"
                         android:gravity="center_vertical|right"
                         android:paddingRight="10dp" />
-                    <View
-                        android:id="@+id/ViewMedia"
-                        android:visibility="invisible"
-                        android:background="#03A9F4"
-                        android:layout_width="fill_parent"
-                        android:layout_height="5sp"
-                        android:layout_marginLeft="25dp"
-                        android:layout_marginBottom="5dp"></View>
                     <Button
                         android:id="@+id/Button_Bonus"
                         android:layout_width="wrap_content"
@@ -77,12 +180,6 @@
                         android:gravity="center_vertical|right"
                         android:paddingRight="10dp"
                         android:paddingLeft="50dp" />
-                    <View
-                        android:id="@+id/ViewBonus"
-                        android:visibility="invisible"
-                        android:background="#03A9F4"
-                        android:layout_width="fill_parent"
-                        android:layout_height="5sp"></View>
                 </LinearLayout>
 
             </RelativeLayout>
