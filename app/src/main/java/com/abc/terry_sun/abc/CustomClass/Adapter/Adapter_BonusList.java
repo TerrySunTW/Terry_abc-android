@@ -1,9 +1,11 @@
 package com.abc.terry_sun.abc.CustomClass.Adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -138,18 +140,29 @@ public class Adapter_BonusList extends BaseAdapter {
 
 
         LinearLayout LinearLayout1 = (LinearLayout) convertView.findViewById(R.id.LinearLayout1);
+        LinearLayout1.setTag(EntityCardEvent.getLink());
         LinearLayout1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BonusService.getInstance().ShowSingleBonusDialog(EntityCardEvent.getEventID(),_ListItem_Actions.getEntityCardID());
+                //BonusService.getInstance().ShowSingleBonusDialog(EntityCardEvent.getEventID(),_ListItem_Actions.getEntityCardID());
+
+                String url = view.getTag().toString();
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                MainActivity.GetMainActivityContext().startActivity(i);
             }
         });
 
         LinearLayout LinearLayout2 = (LinearLayout) convertView.findViewById(R.id.LinearLayout2);
+        LinearLayout2.setTag(VirtualCardEvent.getLink());
         LinearLayout2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BonusService.getInstance().ShowSingleBonusDialog(VirtualCardEvent.getEventID(),_ListItem_Actions.getEntityCardID());
+                //BonusService.getInstance().ShowSingleBonusDialog(VirtualCardEvent.getEventID(),_ListItem_Actions.getEntityCardID());
+                String url = view.getTag().toString();
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                MainActivity.GetMainActivityContext().startActivity(i);
             }
         });
 

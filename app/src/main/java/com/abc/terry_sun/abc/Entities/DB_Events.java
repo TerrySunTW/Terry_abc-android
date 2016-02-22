@@ -21,4 +21,5 @@ public class DB_Events extends SugarRecord<DB_Events> {
     String DirectPointTarget;
     String IndirectPointTarget;
     Boolean HasExchanged;
+    String Link;
 }
