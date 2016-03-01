@@ -54,7 +54,7 @@
                 android:layout_height="40sp"
                 android:layout_weight="1"
                 android:background="#323331">
-                <Button
+                <TextView
                     android:background="#323331"
                     android:textColor="#ffffff"
                     android:layout_width="fill_parent"
@@ -65,7 +65,8 @@
                     android:text="Link"
                     android:lines="1"
                     android:layout_marginLeft="2.5dp"
-                    android:layout_marginRight="2.5dp"/>
+                    android:layout_marginRight="2.5dp"
+                    android:gravity="center_vertical|center_horizontal" />
                 <View
                     android:id="@+id/ViewIndication2"
                     android:visibility="invisible"
