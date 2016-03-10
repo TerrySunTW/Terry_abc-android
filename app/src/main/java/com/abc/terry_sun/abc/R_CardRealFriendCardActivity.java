@@ -7,14 +7,14 @@ import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskPostProcessingInterface;
 import com.abc.terry_sun.abc.Provider.VariableProvider;
 import com.abc.terry_sun.abc.Service.CardService;
 import com.abc.terry_sun.abc.Service.ProcessControlService;
@@ -27,53 +27,54 @@ import butterknife.InjectView;
 /**
  * Created by terry_sun on 2015/7/20.
  */
-public class R_CardRealFriendCardActivity extends BasicActivity {
+public class R_CardRealFriendCardActivity extends Fragment {
     String TAG="R_CardRealFriendCardActivity";
     Handler messageHandler;
     Thread ProcessThread;
     int GotCardID=0;
     int QR_RetryTimes=0;
     static String LastReadQR_Source ="";
-    @InjectView(R.id.scanner)
     QRCodeReaderView scanner;
-    @InjectView(R.id.ImageView_Scanner)
     ImageView ImageView_Scanner;
-
-    @InjectView(R.id.TextView_Log)
     TextView TextView_Log;
 
     boolean IsRunning=false;
     static String LastLogMessage;
     static String LastUserCardID;
-    static Context _Context;
+    Context context;
+    private View mRootView;
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        _Context= MainActivity.GetMainActivityContext();
-        setContentView(R.layout.activity_r_card_real_friendcard);
-        ButterKnife.inject(this);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (mRootView == null){
+            mRootView = inflater.inflate(R.layout.activity_r_card_real_friendcard,container,false);
+        }
+        context=getActivity();
+        scanner=(QRCodeReaderView)mRootView.findViewById(R.id.scanner);
+        ImageView_Scanner=(ImageView)mRootView.findViewById(R.id.ImageView_Scanner);
+        TextView_Log=(TextView)mRootView.findViewById(R.id.TextView_Log);
+
+
         HandlerSetting();
         TextView_Log.setText("");
         //QR_Code
         QR_Setting();
+        return mRootView;
     }
 
     @Override
-    protected void onPause() {
-        Log.i(TAG, "onPause");
-        IsRunning=false;
-        scanner.getCameraManager().stopPreview();
-        super.onPause();
-
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            //相当于Fragment的onResume
+            IsRunning=true;
+            scanner.getCameraManager().startPreview();
+        } else {
+            //相当于Fragment的onPause
+            IsRunning=false;
+            scanner.getCameraManager().stopPreview();
+        }
     }
-    @Override
-    protected void onResume() {
-        Log.i(TAG,"onResume");
-        IsRunning=true;
-        super.onResume();
 
-        scanner.getCameraManager().startPreview();
-    }
     private void HandlerSetting() {
         messageHandler = new Handler(){
             @Override
@@ -82,7 +83,7 @@ public class R_CardRealFriendCardActivity extends BasicActivity {
                 switch(msg.what){
                     case 0:
                         //read QR/NFC from EmU
-                        new AlertDialog.Builder(_Context)//
+                        new AlertDialog.Builder(context)//
                                 .setMessage("Wanna read real card?")//
                                 .setPositiveButton("Yes",
                                         new DialogInterface.OnClickListener() {
@@ -120,9 +121,7 @@ public class R_CardRealFriendCardActivity extends BasicActivity {
             }
         };
     }
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-    }
+
     private void QR_Setting()
     {
         scanner.setOnQRCodeReadListener(new QRCodeReaderView.OnQRCodeReadListener() {

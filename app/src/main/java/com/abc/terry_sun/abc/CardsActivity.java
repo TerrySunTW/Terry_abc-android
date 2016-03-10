@@ -3,8 +3,10 @@ package com.abc.terry_sun.abc;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
@@ -29,7 +31,7 @@ import butterknife.OnClick;
 /**
  * Created by terry_sun on 2015/6/2.
  */
-public class CardsActivity extends BasicActivity {
+public class CardsActivity extends BaseFragment {
 
     @InjectView(R.id.gridView1)
     GridView gridView;
@@ -74,26 +76,25 @@ public class CardsActivity extends BasicActivity {
     String SelectedEntityCardID;
 
     Context context;
+    private View mRootView;
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        context=this.getParent();
-        setContentView(R.layout.activity_cards);
-        ButterKnife.inject(this);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (mRootView == null){
+            mRootView = inflater.inflate(R.layout.activity_cards,container,false);
+        }
+        context=getActivity();
+        ButterKnife.inject(this, mRootView);
 
-        Log.i("INFO", "size.x=" + String.valueOf(ScreenService.GetScreenWidth(this)));
-        int ColumnWidth=(ScreenService.GetScreenWidth(this).x - 30) / 3;
+        Log.i("INFO", "size.x=" + String.valueOf(ScreenService.GetScreenWidth(context)));
+        int ColumnWidth=(ScreenService.GetScreenWidth(context).x - 30) / 3;
         gridView.setColumnWidth(ColumnWidth);
         gridView.setNumColumns(3);
-
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
         InitialParameter();
-        //GategoryDataSetting();
         ShowCard();
+        return mRootView;
     }
+
+
     void InitialParameter()
     {
         CategoryList = CardService.getInstance().GetAllCategory();
@@ -116,7 +117,7 @@ public class CardsActivity extends BasicActivity {
                     Item.getHasRealCard()
                     ));
         }
-        gridView.setAdapter(new AdapterCardsImage(this.getParent(), CardGalleryItemList));
+        gridView.setAdapter(new AdapterCardsImage(MainActivity.MainActivityContext, CardGalleryItemList));
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
@@ -163,7 +164,7 @@ public class CardsActivity extends BasicActivity {
     @OnClick(R.id.ButtonCategory)
     protected void onButtonClicked_ButtonCategory() {
 
-        PopupMenu popupMenu = new PopupMenu(this, view_position1);
+        PopupMenu popupMenu = new PopupMenu(context, view_position1);
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -212,7 +213,7 @@ public class CardsActivity extends BasicActivity {
         if(GroupGalleryItemList !=null && GroupGalleryItemList.size()>0)
         {
 
-            PopupMenu popupMenu = new PopupMenu(this, view_position2);
+            PopupMenu popupMenu = new PopupMenu(context, view_position2);
             popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
@@ -248,7 +249,7 @@ public class CardsActivity extends BasicActivity {
 
         if(RepresentativeGalleryItemList !=null && RepresentativeGalleryItemList.size()>0)
         {
-            PopupMenu popupMenu = new PopupMenu(this, view_position3);
+            PopupMenu popupMenu = new PopupMenu(context, view_position3);
             popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {

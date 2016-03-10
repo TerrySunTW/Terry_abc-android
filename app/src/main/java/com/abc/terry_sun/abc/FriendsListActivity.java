@@ -1,11 +1,12 @@
 package com.abc.terry_sun.abc;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -16,14 +17,13 @@ import com.abc.terry_sun.abc.Entities.DB_Friend;
 import com.abc.terry_sun.abc.Service.FriendService;
 import com.abc.terry_sun.abc.Service.ImageService;
 import com.abc.terry_sun.abc.Service.StorageService;
-import com.beardedhen.androidbootstrap.BootstrapButton;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
 
-public class FriendsListActivity extends Activity {
+public class FriendsListActivity extends Fragment {
 	/** Called when the activity is first created. */
 
 	@InjectView(R.id.listview_activity_list)
@@ -42,25 +42,24 @@ public class FriendsListActivity extends Activity {
 
 	final String TAG="FriendsListActivity";
 	static Adapter_FriendsList _Adapter_FriendsList;
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		setContentView(R.layout.activity_friends_list);
-		super.onCreate(savedInstanceState);
-		ButterKnife.inject(this);
 
-	}
+	static Context context;
+	private View mRootView;
 	@Override
-	protected void onPause() {
-		super.onPause();
-	}
-	@Override
-	protected void onResume() {
-		super.onResume();
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		if (mRootView == null){
+			mRootView = inflater.inflate(R.layout.activity_friends_list,container,false);
+		}
+		context=getActivity();
+		ButterKnife.inject(this, mRootView);
 		InitialParameter();
 		List_Setting();
+		return mRootView;
 	}
+
+
 	private void List_Setting() {
-		_Adapter_FriendsList=new Adapter_FriendsList(this);
+		_Adapter_FriendsList=new Adapter_FriendsList(getActivity());
 		listview_activity_list.setAdapter(_Adapter_FriendsList);
 		listview_activity_list.deferNotifyDataSetChanged();
 	}
@@ -88,7 +87,6 @@ public class FriendsListActivity extends Activity {
 	@OnClick(R.id.ButtonSetting)
 	public void GoSettingActivity() {
 		Log.e(TAG, "GoSettingActivity");
-		Intent _Intent = new Intent(this,SettingActivity.class);//跳頁
-		TabGroup_Link.ChangeActivity(_Intent, true);
+		((BaseFragment) getParentFragment()).replaceFragment(new SettingActivity(), true);
 	}
 }

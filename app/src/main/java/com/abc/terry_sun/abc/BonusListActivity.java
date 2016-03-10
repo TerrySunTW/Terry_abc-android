@@ -1,12 +1,12 @@
 package com.abc.terry_sun.abc;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupMenu;
@@ -33,7 +33,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 
-public class BonusListActivity extends Activity {
+public class BonusListActivity extends BaseFragment {
 	/** Called when the activity is first created. */
 	Handler messageHandler;
 	@InjectView(R.id.listview_activity_list)
@@ -79,26 +79,22 @@ public class BonusListActivity extends Activity {
 	String SelectedEntityCardID;
 	static Adapter_BonusList _Adapter_ActionList;
 	static boolean IsFavorate=false;
-	Context context;
+	static Context context;
+	private View mRootView;
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		Log.e("Event", "onCreate");
-		setContentView(R.layout.activity_bonus_list);
-		super.onCreate(savedInstanceState);
-		ButterKnife.inject(this);
-
-	}
-	@Override
-	protected void onPause() {
-		super.onPause();
-	}
-	@Override
-	protected void onResume() {
-		super.onResume();
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		if (mRootView == null){
+			mRootView = inflater.inflate(R.layout.activity_bonus_list,container,false);
+		}
+		context=getActivity();
+		ButterKnife.inject(this, mRootView);
 		UpdateServerData();
 		InitialParameter();
-
+		return mRootView;
 	}
+
+
+
 	private void UpdateServerData() {
 		new AsyncTaskHttpRequest(MainActivity.MainActivityContext, new AsyncTaskProcessingInterface() {
 			@Override
@@ -116,7 +112,7 @@ public class BonusListActivity extends Activity {
 		List<ListItem_Actions> data=new ArrayList<ListItem_Actions>();
 		List<DB_Cards> AllCards = CardService.getInstance().GetAllCards();
 
-		_Adapter_ActionList=new Adapter_BonusList(this, AllCards);
+		_Adapter_ActionList=new Adapter_BonusList(getActivity(), AllCards);
 		listview_activity_list.setAdapter(_Adapter_ActionList);
 	}
 	public static void Update_List() {
@@ -171,7 +167,7 @@ public class BonusListActivity extends Activity {
 
 	@OnClick(R.id.ButtonCategory)
 	protected void onButtonClicked_ButtonCategory() {
-		PopupMenu popupMenu = new PopupMenu(this, view_position1);
+		PopupMenu popupMenu = new PopupMenu(context, view_position1);
 		popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
@@ -222,7 +218,7 @@ public class BonusListActivity extends Activity {
 		if(GroupGalleryItemList !=null)
 		{
 
-			PopupMenu popupMenu = new PopupMenu(this, view_position2);
+			PopupMenu popupMenu = new PopupMenu(context, view_position2);
 			popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 				@Override
 				public boolean onMenuItemClick(MenuItem item) {
@@ -259,7 +255,7 @@ public class BonusListActivity extends Activity {
 	protected void onButtonClicked_ButtonRepresentative() {
 		if(RepresentativeGalleryItemList !=null)
 		{
-			PopupMenu popupMenu = new PopupMenu(this, view_position3);
+			PopupMenu popupMenu = new PopupMenu(context, view_position3);
 			popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 				@Override
 				public boolean onMenuItemClick(MenuItem item) {

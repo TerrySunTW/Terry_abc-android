@@ -1,58 +1,44 @@
 package com.abc.terry_sun.abc;
 
-import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.PopupMenu;
-
-import com.abc.terry_sun.abc.Models.GalleryItem;
-import com.facebook.appevents.AppEventsLogger;
+import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 
 /**
  * Created by terry_sun on 2015/7/20.
  */
-public class R_CardHomeActivity extends BasicActivity {
+public class R_CardHomeActivity extends BaseFragment {
     String TAG="R_CardHomeActivity";
 
 
+    Context context;
+    private View mRootView;
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_r_cardhome);
-        ButterKnife.inject(this);
-    }
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (mRootView == null){
+            mRootView = inflater.inflate(R.layout.activity_r_cardhome,container,false);
+        }
+        context=getActivity();
+        ButterKnife.inject(this, mRootView);
+        return mRootView;
     }
 
     @OnClick(R.id.ButtonNewCard)
     protected void onButtonClicked_ButtonNewCard() {
         Log.i(TAG,"onButtonClicked_ButtonNewCard");
-        Intent _Intent = new Intent(this,R_CardNewCardActivity.class);//跳頁
-        TabGroup_R_Card.ChangeActivity(_Intent, true);
+        ((BaseFragment) getParentFragment()).replaceFragment(new R_CardNewCardActivity(), true);
     }
     @OnClick(R.id.ButtonFriendCard)
     protected void onButtonClicked_ButtonFriendCard() {
         Log.i(TAG,"onButtonClicked_ButtonFriendCard");
-        //Intent _Intent = new Intent(this,R_CardFriendCardActivity.class);//跳頁
-        Intent _Intent = new Intent(this,R_CardRealFriendCardActivity.class);//直接讀卡
-        TabGroup_R_Card.ChangeActivity( _Intent, true);
+        ((BaseFragment) getParentFragment()).replaceFragment(new R_CardRealFriendCardActivity(), true);
     }
 
 }

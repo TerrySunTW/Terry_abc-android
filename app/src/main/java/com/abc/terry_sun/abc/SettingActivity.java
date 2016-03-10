@@ -1,41 +1,19 @@
 package com.abc.terry_sun.abc;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
+import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Base64;
-import android.util.Log;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.EditText;
+import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.abc.terry_sun.abc.Provider.VariableProvider;
-import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-
-import org.json.JSONObject;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -44,24 +22,27 @@ import butterknife.InjectView;
 /**
  * Created by Terry on 2015/4/19.
  */
-public class SettingActivity extends BasicActivity {
+public class SettingActivity extends Fragment {
     LoginButton loginButton;
     CallbackManager callbackManager;
 
     @InjectView(R.id.username)
     protected TextView TextViewUsername;
 
+    Context context;
+    private View mRootView;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(this.getApplicationContext());
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        context=getActivity();
+        FacebookSdk.sdkInitialize(context.getApplicationContext());
+        if (mRootView == null){
+            mRootView = inflater.inflate(R.layout.activity_setting,container,false);
+        }
+        ButterKnife.inject(this, mRootView);
         callbackManager = CallbackManager.Factory.create();
-        setContentView(R.layout.activity_setting);
-        ButterKnife.inject(this);
-        
         TextViewUsername.setText(VariableProvider.getInstance().getFacebookUserName());
 
-        loginButton = (LoginButton) findViewById(R.id.login_button);
+        loginButton = (LoginButton) mRootView.findViewById(R.id.login_button);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,28 +50,20 @@ public class SettingActivity extends BasicActivity {
                 LoginManager.getInstance().logOut();
             }
         });
+        return mRootView;
     }
-
 
 
     @Override
-    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            //相当于Fragment的onResume
+            AppEventsLogger.activateApp(context);
+        } else {
+            //相当于Fragment的onPause
+            AppEventsLogger.deactivateApp(context);
+        }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        // Logs 'app deactivate' App Event.
-        AppEventsLogger.deactivateApp(this);
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        // Logs 'install' and 'app activate' App Events.
-        AppEventsLogger.activateApp(this);
-    }
 }

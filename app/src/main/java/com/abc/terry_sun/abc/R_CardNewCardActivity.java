@@ -1,10 +1,15 @@
 package com.abc.terry_sun.abc;
 
+import android.content.Context;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.abc.terry_sun.abc.Entities.DB_Cards;
 import com.abc.terry_sun.abc.Service.CardService;
@@ -18,41 +23,43 @@ import butterknife.InjectView;
 /**
  * Created by terry_sun on 2015/7/20.
  */
-public class R_CardNewCardActivity extends BasicActivity {
+public class R_CardNewCardActivity extends Fragment {
     String TAG="R_CardNewCardActivity";
     Handler messageHandler;
     Thread ProcessThread;
     int GotCardID=0;
     static String LastReadEntityID="";
-    @InjectView(R.id.scanner)
     QRCodeReaderView scanner;
     boolean IsRunning=false;
+    Context context;
+    private View mRootView;
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_r_card_new_card);
-        ButterKnife.inject(this);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (mRootView == null) {
+            mRootView = inflater.inflate(R.layout.activity_r_card_new_card, container, false);
+        }
+        context = getActivity();
+        scanner = (QRCodeReaderView)mRootView.findViewById(R.id.scanner);
         HandlerSetting();
         QR_Setting();
+        return mRootView;
     }
-
     @Override
-    protected void onPause() {
-        Log.i(TAG, "onPause");
-        IsRunning=false;
-        scanner.getCameraManager().stopPreview();
-        super.onPause();
-
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            //相当于Fragment的onResume
+            IsRunning=true;
+            LastReadEntityID=null;
+            scanner.getCameraManager().startPreview();
+        } else {
+            //相当于Fragment的onPause
+            IsRunning=false;
+            scanner.getCameraManager().stopPreview();
+        }
     }
 
-    @Override
-    protected void onResume() {
-        Log.i(TAG,"onResume");
-        IsRunning=true;
-        LastReadEntityID=null;
-        super.onResume();
-        scanner.getCameraManager().startPreview();
-    }
+
     private void HandlerSetting() {
         messageHandler = new Handler(){
             @Override

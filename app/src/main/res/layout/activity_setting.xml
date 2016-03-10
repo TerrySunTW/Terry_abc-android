@@ -23,7 +23,7 @@
                 android:layout_height="40sp"
                 android:layout_weight="1"
                 android:background="#323331">
-                <Button
+                <TextView
                     android:background="#323331"
                     android:textColor="#ffffff"
                     android:layout_width="fill_parent"
@@ -34,7 +34,8 @@
                     android:text="Setting"
                     android:lines="1"
                     android:layout_marginLeft="2.5dp"
-                    android:layout_marginRight="2.5dp"/>
+                    android:layout_marginRight="2.5dp"
+                    android:gravity="center_vertical|center_horizontal" />
                 <View
                     android:id="@+id/ViewIndication2"
                     android:visibility="invisible"
@@ -70,7 +71,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center|center_vertical|center_horizontal"
-        android:background="#323331">
+        android:background="#ffffff">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -91,7 +92,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center|center_vertical|center_horizontal"
-        android:background="#323331">
+        android:background="#ffffff">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -111,7 +112,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center|center_vertical|center_horizontal"
-        android:background="#323331">
+        android:background="#ffffff">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

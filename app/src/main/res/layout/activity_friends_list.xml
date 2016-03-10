@@ -140,12 +140,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/textWhite"
                             android:text="Name:"
                             android:layout_gravity="right" />
                         <TextView
                             android:id="@+id/TextViewName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/textWhite"
                             android:text="aaaaa" />
                     </LinearLayout>
                     <LinearLayout
@@ -155,12 +157,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/textWhite"
                             android:text="Card:"
                             android:layout_gravity="right" />
                         <TextView
                             android:id="@+id/TextViewCard"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/textWhite"
                             android:text="111"/>
                     </LinearLayout>
                     <LinearLayout
@@ -170,12 +174,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/textWhite"
                             android:text="ID:"
                             android:layout_gravity="right" />
                         <TextView
                             android:id="@+id/TextViewID"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/textWhite"
                             android:text="777777"/>
                     </LinearLayout>
                 </LinearLayout>
