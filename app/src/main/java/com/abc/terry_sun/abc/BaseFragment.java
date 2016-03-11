@@ -41,11 +41,21 @@ public class BaseFragment extends Fragment {
         getChildFragmentManager().executePendingTransactions();
     }
 
-    public void GobackFragment() {
+    public boolean GobackFragment() {
         if(mStacks.size()>1)
         {
             mStacks.pop();//drop itself
             replaceFragment(mStacks.pop(),true);
+            return true;
+        }
+        return false;
+    }
+    public void GoFirstFragment() {
+        if(mStacks.size()>1)
+        {
+            Fragment first=mStacks.firstElement();
+            mStacks.clear();
+            replaceFragment(first, true);
         }
     }
 

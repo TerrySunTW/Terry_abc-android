@@ -123,11 +123,22 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	private void initEvent() {
-
 		mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
 			@Override
 			public void onTabChanged(String tabId) {
-				mViewPager.setCurrentItem(mTabHost.getCurrentTab());
+
+				int CurrentTab=mTabHost.getCurrentTab();
+				Log.i(TAG,"onTabChanged,CurrentTab=" + String.valueOf(CurrentTab));
+				mViewPager.setCurrentItem(CurrentTab);
+				if(CurrentTab==3)
+				{
+					((BaseFragment)mFragment[3]).GoFirstFragment();
+				}
+				else if(CurrentTab==4)
+				{
+					((BaseFragment)mFragment[4]).GoFirstFragment();
+				}
+
 			}
 		});
 
@@ -174,7 +185,14 @@ public class MainActivity extends AppCompatActivity {
 		Log.i(TAG, "onBackPressed");
 		if(mTabHost!=null)
 		{
-			((BaseFragment)mFragment[mTabHost.getCurrentTab()]).GobackFragment();
+			if(!((BaseFragment)mFragment[mTabHost.getCurrentTab()]).GobackFragment())
+			{
+				ProcessControlService.QuitProcess(this);
+			}
+		}
+		else
+		{
+			ProcessControlService.QuitProcess(this);
 		}
 
 	}
