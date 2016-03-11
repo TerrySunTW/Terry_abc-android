@@ -42,7 +42,7 @@ public class BaseFragment extends Fragment {
     }
 
     public boolean GobackFragment() {
-        if(mStacks.size()>1)
+        if(mStacks!=null && mStacks.size()>1)
         {
             mStacks.pop();//drop itself
             replaceFragment(mStacks.pop(),true);
@@ -51,7 +51,7 @@ public class BaseFragment extends Fragment {
         return false;
     }
     public void GoFirstFragment() {
-        if(mStacks.size()>1)
+        if(mStacks!=null && mStacks.size()>1)
         {
             Fragment first=mStacks.firstElement();
             mStacks.clear();

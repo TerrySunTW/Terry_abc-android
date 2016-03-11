@@ -123,6 +123,19 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	private void initEvent() {
+		mTabHost.getTabWidget().getChildAt(3).setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				((BaseFragment)mFragment[3]).GoFirstFragment();
+				mTabHost.setCurrentTab(3);
+			}
+		});
+		mTabHost.getTabWidget().getChildAt(4).setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				((BaseFragment) mFragment[4]).GoFirstFragment();
+				mTabHost.setCurrentTab(4);
+			}
+		});
+
 		mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
 			@Override
 			public void onTabChanged(String tabId) {
