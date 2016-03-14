@@ -114,7 +114,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_centerVertical="true"
-                        android:background="@android:drawable/dark_header"
+                        android:background="@drawable/boder"
                         android:layout_marginTop="10dp">
                             <TextView android:id="@+id/TextViewMessage"
                                 android:textColor="@color/textWhite"
@@ -122,6 +122,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
                                 android:layout_marginBottom="20dp"
+                                android:layout_marginLeft="3dp"
+                                android:layout_marginRight="3dp"
                                 android:text="Message...Message...Message...Message..."/>
                     </LinearLayout>
                     <ImageView
