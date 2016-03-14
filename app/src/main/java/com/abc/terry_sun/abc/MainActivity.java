@@ -57,9 +57,10 @@ public class MainActivity extends AppCompatActivity {
 
 	private FragmentTabHost mTabHost;
 	private ViewPager mViewPager;
+	private int OldPagePosition=0;
 	private List<Fragment> mFragmentList;
-	private Class mClass[] = {CardsActivity.class,BonusListActivity.class,R_CardHomeActivity.class,FriendsContainerFragment.class,R_CardContainerFragment.class};
-	private Fragment mFragment[] = {new CardsActivity(),new BonusListActivity(),new R_CardHomeActivity(),new FriendsContainerFragment(),new R_CardContainerFragment()};
+	private Class mClass[] = {CardsActivity.class,BonusListActivity.class,Fragment.class,FriendsContainerFragment.class,R_CardContainerFragment.class};
+	private Fragment mFragment[] = {new CardsActivity(),new BonusListActivity(),new Fragment(),new FriendsContainerFragment(),new R_CardContainerFragment()};
 	private String mTitles[] = {"Cards","Bonus","MainCard","Link","R-Card"};
 	private int mImages[] = {
 			R.drawable.tab_cards,
@@ -140,16 +141,13 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public void onTabChanged(String tabId) {
 
-				int CurrentTab=mTabHost.getCurrentTab();
-				Log.i(TAG,"onTabChanged,CurrentTab=" + String.valueOf(CurrentTab));
+				int CurrentTab = mTabHost.getCurrentTab();
+				Log.i(TAG, "onTabChanged,CurrentTab=" + String.valueOf(CurrentTab));
 				mViewPager.setCurrentItem(CurrentTab);
-				if(CurrentTab==3)
-				{
-					((BaseFragment)mFragment[3]).GoFirstFragment();
-				}
-				else if(CurrentTab==4)
-				{
-					((BaseFragment)mFragment[4]).GoFirstFragment();
+				if (CurrentTab == 3) {
+					((BaseFragment) mFragment[3]).GoFirstFragment();
+				} else if (CurrentTab == 4) {
+					((BaseFragment) mFragment[4]).GoFirstFragment();
 				}
 
 			}
@@ -163,7 +161,26 @@ public class MainActivity extends AppCompatActivity {
 
 			@Override
 			public void onPageSelected(int position) {
-				mTabHost.setCurrentTab(position);
+				Log.i(TAG,"onPageSelected position=" + String.valueOf(position));
+				Log.i(TAG,"onPageSelected OldPagePosition=" + String.valueOf(OldPagePosition));
+				int tempPosition=OldPagePosition;
+				OldPagePosition=position;
+				if(position==2)
+				{
+					if(tempPosition==1)
+					{
+						mTabHost.setCurrentTab(3);
+					}
+					else
+					{
+						mTabHost.setCurrentTab(1);
+					}
+
+				}
+				else
+				{
+					mTabHost.setCurrentTab(position);
+				}
 
 			}
 
