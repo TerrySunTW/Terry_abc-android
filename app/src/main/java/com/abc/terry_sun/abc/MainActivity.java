@@ -161,8 +161,6 @@ public class MainActivity extends AppCompatActivity {
 
 			@Override
 			public void onPageSelected(int position) {
-				Log.i(TAG,"onPageSelected position=" + String.valueOf(position));
-				Log.i(TAG,"onPageSelected OldPagePosition=" + String.valueOf(OldPagePosition));
 				int tempPosition=OldPagePosition;
 				OldPagePosition=position;
 				if(position==2)
