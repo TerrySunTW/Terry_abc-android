@@ -3,6 +3,8 @@ package com.abc.terry_sun.abc;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,6 +40,9 @@ public class BonusListActivity extends BaseFragment {
 	Handler messageHandler;
 	@InjectView(R.id.listview_activity_list)
 	ListView listview_activity_list;
+
+	@InjectView(R.id.swipe)
+	SwipeRefreshLayout swipeRefreshLayout;
 	String[][] TableArray;
 	@InjectView(R.id.ButtonCategory)
 	Button ButtonCategory;
@@ -81,6 +86,7 @@ public class BonusListActivity extends BaseFragment {
 	static boolean IsFavorate=false;
 	static Context context;
 	private View mRootView;
+	final static String TAG="BonusListActivity";
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if (mRootView == null){
@@ -88,7 +94,7 @@ public class BonusListActivity extends BaseFragment {
 		}
 		context=getActivity();
 		ButterKnife.inject(this, mRootView);
-		UpdateServerData();
+		List_Setting();
 		InitialParameter();
 		return mRootView;
 	}
@@ -104,11 +110,20 @@ public class BonusListActivity extends BaseFragment {
 		}, new AsyncTaskPostProcessingInterface() {
 			@Override
 			public void DoProcessing() {
+				swipeRefreshLayout.setRefreshing(false);
 				List_Setting();
 			}
 		}).execute();
 	}
 	private void List_Setting() {
+		swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				Log.i(TAG, "onRefresh");
+				swipeRefreshLayout.setRefreshing(true);
+				UpdateServerData();
+			}
+		});
 		List<ListItem_Actions> data=new ArrayList<ListItem_Actions>();
 		List<DB_Cards> AllCards = CardService.getInstance().GetAllCards();
 
@@ -118,7 +133,6 @@ public class BonusListActivity extends BaseFragment {
 	public static void Update_List() {
 		if(IsFavorate)
 		{
-			//_Adapter_ActionList.UpdateData(CardService.getInstance().GetFavorateEvents());
 			_Adapter_ActionList.UpdateData(CardService.getInstance().GetFavorateCards());
 		}
 		else
@@ -209,7 +223,6 @@ public class BonusListActivity extends BaseFragment {
 			popupMenu.getMenu().add(CategoryList.get(i).getCategoryName());
 		}
 		popupMenu.show();
-		//ButtonCategory.setShowOutline(true);
 		ViewIndication1.setVisibility(View.VISIBLE);
 	}
 
@@ -238,7 +251,6 @@ public class BonusListActivity extends BaseFragment {
 			popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
 				@Override
 				public void onDismiss(PopupMenu popupMenu) {
-					//ButtonGroup.setShowOutline(false);
 					ViewIndication2.setVisibility(View.INVISIBLE);
 				}
 			});
@@ -247,7 +259,6 @@ public class BonusListActivity extends BaseFragment {
 				popupMenu.getMenu().add(GroupGalleryItemList.get(i).getTitle());
 			}
 			popupMenu.show();
-			//ButtonGroup.setShowOutline(true);
 			ViewIndication2.setVisibility(View.VISIBLE);
 		}
 	}
@@ -274,7 +285,6 @@ public class BonusListActivity extends BaseFragment {
 			popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
 				@Override
 				public void onDismiss(PopupMenu popupMenu) {
-					//ButtonRepresentative.setShowOutline(false);
 					ViewIndication3.setVisibility(View.INVISIBLE);
 				}
 			});
@@ -283,7 +293,6 @@ public class BonusListActivity extends BaseFragment {
 				popupMenu.getMenu().add(RepresentativeGalleryItemList.get(i).getTitle());
 			}
 			popupMenu.show();
-			//ButtonRepresentative.setShowOutline(true);
 			ViewIndication3.setVisibility(View.VISIBLE);
 		}
 	}
