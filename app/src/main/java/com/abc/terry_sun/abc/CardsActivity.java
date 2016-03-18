@@ -72,6 +72,7 @@ public class CardsActivity extends BaseFragment {
     String SelectedEntityCardID;
 
     Context context;
+    static boolean IsFavorate=false;
     private View mRootView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -86,7 +87,7 @@ public class CardsActivity extends BaseFragment {
         gridView.setColumnWidth(ColumnWidth);
         gridView.setNumColumns(3);
         InitialParameter();
-        ShowCard();
+        ShowCard(null);
         return mRootView;
     }
 
@@ -95,13 +96,15 @@ public class CardsActivity extends BaseFragment {
     {
         CategoryList = CardService.getInstance().GetAllCategory();
     }
-    void ShowCard()
-    {
-        ShowCard(null);
-    }
     void ShowCard(List<CardInfo> CardInfoList) {
         if(CardInfoList==null) {
-            CardInfoList = CardService.getInstance().GetCardsByConditions(SelectedCategoryID, SelectedGroupID, SelectedRepresentativeID);
+            if(IsFavorate)
+            {
+                CardInfoList=CardService.getInstance().GetFavoriteCardsInfo();
+            }
+            else {
+                CardInfoList = CardService.getInstance().GetCardsByConditions(SelectedCategoryID, SelectedGroupID, SelectedRepresentativeID);
+            }
         }
         CardGalleryItemList.clear();
         for(CardInfo Item:CardInfoList)
@@ -166,19 +169,22 @@ public class CardsActivity extends BaseFragment {
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == 1) {
                     //Select all && Reset Menu
+                    IsFavorate=false;
                     ResetMenuStatusForChangeCategory();
-                    ShowCard();
+                    ShowCard(null);
                 } else if (item.getItemId() == 2) {
                     //select Favorite
+                    IsFavorate=true;
                     ButtonCategory.setText("Favorite");
                     FavoriteCardListDataSetting();
                 } else {
+                    IsFavorate=false;
                     for (CategoryInfo CategoryInfoItem : CategoryList) {
                         if (CategoryInfoItem.getCategoryName().equals(item.getTitle().toString())) {
                             ButtonCategory.setText(item.getTitle().toString());
                             SelectedCategoryID = CategoryInfoItem.getCategoryID();
                             GetGroupGalleryItemList();
-                            ShowCard();
+                            ShowCard(null);
                         }
                     }
                 }
@@ -219,7 +225,7 @@ public class CardsActivity extends BaseFragment {
                             ButtonGroup.setText(item.getTitle().toString());
                             SelectedGroupID = GroupGalleryItem.getItemID();
                             GetRepresentativeList();
-                            ShowCard();
+                            ShowCard(null);
                         }
                     }
                     return false;
@@ -253,7 +259,7 @@ public class CardsActivity extends BaseFragment {
                         if (RepresentativeGalleryItem.getTitle().equals(item.getTitle().toString())) {
                             ButtonRepresentative.setText(item.getTitle().toString());
                             SelectedRepresentativeID = RepresentativeGalleryItem.getItemID();
-                            ShowCard();
+                            ShowCard(null);
                         }
                     }
                     return false;
