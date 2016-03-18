@@ -34,10 +34,10 @@ public class Adapter_BonusList extends BaseAdapter {
     private List<ListItem_Actions> stringPairList=new ArrayList<ListItem_Actions>();
 
 
-    public Adapter_BonusList(Activity activity, List<DB_Cards> CardList) {
+    public Adapter_BonusList(Activity activity) {
         super();
         this.activity = activity;
-        UpdateListItem(CardList);
+        //UpdateListItem(CardList);
     }
 
     private void UpdateListItem(List<DB_Cards> CardList) {

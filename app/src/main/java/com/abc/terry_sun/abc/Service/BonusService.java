@@ -91,7 +91,6 @@ public class BonusService {
                                     ProcessControlService.AlertMessage(MainActivity.GetMainActivityContext(),"兌換成功!!");
                                     Button_Exchange.setText("已兌換");
                                     Button_Exchange.setEnabled(false);
-                                    BonusListActivity.Update_List();
                                 }
                                 else
                                 {

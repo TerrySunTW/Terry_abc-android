@@ -79,7 +79,7 @@ public class BonusListActivity extends BaseFragment {
 	static String SelectedCategoryID="";
 	static String SelectedGroupID="";
 	static String SelectedRepresentativeID="";
-	static Adapter_BonusList _Adapter_ActionList;
+	Adapter_BonusList _Adapter_ActionList;
 	static boolean IsFavorate=false;
 	static Context context;
 	private View mRootView;
@@ -121,19 +121,22 @@ public class BonusListActivity extends BaseFragment {
 				UpdateServerData();
 			}
 		});
-		List<ListItem_Actions> data=new ArrayList<ListItem_Actions>();
-		List<DB_Cards> AllCards = CardService.getInstance().GetAllCards();
-
-		_Adapter_ActionList=new Adapter_BonusList(getActivity(), AllCards);
+		_Adapter_ActionList=new Adapter_BonusList(getActivity());
 		listview_activity_list.setAdapter(_Adapter_ActionList);
+		Update_List();
 	}
-	public static void Update_List() {
+	public void Update_List() {
+		Log.i(TAG, "Update_List");
+		Log.i(TAG, "IsFavorate=" + String.valueOf(IsFavorate));
 		if(IsFavorate)
 		{
 			_Adapter_ActionList.UpdateData(CardService.getInstance().GetFavorateCards());
 		}
 		else
 		{
+			Log.i(TAG, "SelectedCategoryID="+ String.valueOf(SelectedCategoryID));
+			Log.i(TAG, "SelectedGroupID="+ String.valueOf(SelectedGroupID));
+			Log.i(TAG, "SelectedRepresentativeID="+ String.valueOf(SelectedRepresentativeID));
 			_Adapter_ActionList.UpdateData(CardService.getInstance().GetFilteredCards(SelectedCategoryID, SelectedGroupID, SelectedRepresentativeID));
 		}
 		_Adapter_ActionList.notifyDataSetChanged();
@@ -182,6 +185,7 @@ public class BonusListActivity extends BaseFragment {
 		popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
+				Log.i(TAG, "onMenuItemClick item.getItemId()="+String.valueOf(item.getItemId()));
 				if (item.getItemId() == 1) {
 					//Select all && Reset Menu
 					ResetMenuStatusForChangeCategory();
@@ -192,6 +196,9 @@ public class BonusListActivity extends BaseFragment {
 					IsFavorate = true;
 					Update_List();
 				} else {
+					IsFavorate = false;
+					Log.i(TAG, "CategoryList CategoryList.size()=" + String.valueOf(CategoryList.size()));
+
 					for (CategoryInfo CategoryInfoItem : CategoryList) {
 						if (CategoryInfoItem.getCategoryName().equals(item.getTitle().toString())) {
 							ButtonCategory.setText(item.getTitle().toString());

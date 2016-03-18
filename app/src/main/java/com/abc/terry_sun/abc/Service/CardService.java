@@ -289,7 +289,7 @@ public class CardService {
                 TempCardList.add(item);
             }
         }
-
+        Log.i(TAG,"GetFilteredCards.size()="+ String.valueOf(TempCardList.size()));
         return TempCardList;
     }
     public List<DB_Events> GetAllEvents()
