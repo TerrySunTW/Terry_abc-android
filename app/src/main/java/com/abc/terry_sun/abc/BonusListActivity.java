@@ -37,13 +37,12 @@ import butterknife.OnClick;
 
 public class BonusListActivity extends BaseFragment {
 	/** Called when the activity is first created. */
-	Handler messageHandler;
 	@InjectView(R.id.listview_activity_list)
 	ListView listview_activity_list;
 
 	@InjectView(R.id.swipe)
 	SwipeRefreshLayout swipeRefreshLayout;
-	String[][] TableArray;
+
 	@InjectView(R.id.ButtonCategory)
 	Button ButtonCategory;
 	@InjectView(R.id.ButtonGroup)
@@ -70,7 +69,6 @@ public class BonusListActivity extends BaseFragment {
 	List<RepresentativeInfo> RepresentativeList;
 	List<CardInfo> CardList;
 
-	List<GalleryItem> GalleryItemList;
 
 	//MenuItem
 	List<GalleryItem> CategoryGalleryItemList;
@@ -81,7 +79,6 @@ public class BonusListActivity extends BaseFragment {
 	static String SelectedCategoryID="";
 	static String SelectedGroupID="";
 	static String SelectedRepresentativeID="";
-	String SelectedEntityCardID;
 	static Adapter_BonusList _Adapter_ActionList;
 	static boolean IsFavorate=false;
 	static Context context;
