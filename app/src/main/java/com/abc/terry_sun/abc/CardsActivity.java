@@ -59,11 +59,7 @@ public class CardsActivity extends BaseFragment {
 
 
     List<CategoryInfo> CategoryList;
-    List<GroupInfo> GroupList;
-    List<RepresentativeInfo> RepresentativeList;
     List<CardInfo> CardList;
-
-    List<GalleryItem> GalleryItemList;
 
     //MenuItem
     List<GalleryItem> GroupGalleryItemList=new ArrayList<GalleryItem>();
