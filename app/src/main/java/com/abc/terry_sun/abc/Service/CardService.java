@@ -308,7 +308,7 @@ public class CardService {
     }
     public DB_Events GetVirtualEventsByCardID(String CardID)
     {
-        List<DB_Events> DataList=DB_Events.find(DB_Events.class, "Card_ID=? and Card_Type='vitual'", CardID);
+        List<DB_Events> DataList=DB_Events.find(DB_Events.class, "Card_ID=? and Card_Type='virtual'", CardID);
         if(DataList.size()>0)
         {
             return DataList.get(0);
