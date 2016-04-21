@@ -173,7 +173,6 @@ public class MainActivity extends AppCompatActivity {
 					{
 						mTabHost.setCurrentTab(1);
 					}
-
 				}
 				else
 				{

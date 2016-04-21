@@ -226,8 +226,6 @@ public class ServerCommunicationService {
                 Log.i("info","StorageService.GetImagePath(_context,Item.getCardImage()):"+ StorageService.GetImagePath(Item.getCardImage()));
                 Item.setCreatedTimeFormated(StringService.GetJsonDate(Item.getCreatedTime()));
                 Item.save();
-                Result= InternetUtil.DownloadFile(HttpURL_Provider.ImageServerLocation + ImageService.GetImageFileName(Item.getCategoryImage()), StorageService.GetImagePath(Item.getCategoryImage()));
-                Result+=InternetUtil.DownloadFile(HttpURL_Provider.ImageServerLocation+ImageService.GetImageFileName(Item.getGroupImage()), StorageService.GetImagePath(Item.getGroupImage()));
                 Result+=InternetUtil.DownloadFile(HttpURL_Provider.ImageServerLocation+ImageService.GetImageFileName(Item.getCardImage()), StorageService.GetImagePath(Item.getCardImage()));
                 Log.i("info","StorageService.Result:"+ Result);
             }
