@@ -37,7 +37,7 @@ public class BaseFragment extends Fragment {
             mStacks.add(fragment);
         }
         transaction.replace(R.id.container_framelayout, fragment);
-        transaction.commit();
+        transaction.commitAllowingStateLoss();
         getChildFragmentManager().executePendingTransactions();
     }
 
