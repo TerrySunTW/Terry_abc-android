@@ -9,7 +9,8 @@ import lombok.Data;
  */
 
 @Data
-public class DB_Events extends SugarRecord<DB_Events> {
+public class DB_Events extends SugarRecord {
+    public DB_Events() {}
     String CardID;
     String CategoryID;
     String GroupID;

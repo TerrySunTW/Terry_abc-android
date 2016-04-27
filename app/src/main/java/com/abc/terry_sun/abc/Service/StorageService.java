@@ -24,7 +24,7 @@ public class StorageService {
     }
     public static String GetAppStoragePath()
     {
-        String AppName=ABCApplication.getSugarContext().getString(R.string.app_name);
+        String AppName=ABCApplication.getAppContext().getString(R.string.app_name);
         if (android.os.Environment.getExternalStorageState().equals(
                 android.os.Environment.MEDIA_MOUNTED)) {
 
@@ -34,7 +34,7 @@ public class StorageService {
         } else {
             /* save the folder in internal memory of phone */
 
-            File podcastFolder = new File("/data/data/" + ABCApplication.getSugarContext().getPackageName()
+            File podcastFolder = new File("/data/data/" + ABCApplication.getAppContext().getPackageName()
                     + AppName);
             return podcastFolder.getAbsolutePath();
         }

@@ -9,7 +9,8 @@ import lombok.Data;
  */
 
 @Data
-public class DB_Friend extends SugarRecord<DB_Friend> {
+public class DB_Friend extends SugarRecord {
+    public DB_Friend() {}
     String FriendID;
     String FriendName;
     String FriendImage;

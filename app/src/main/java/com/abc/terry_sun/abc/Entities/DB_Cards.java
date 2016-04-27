@@ -14,8 +14,8 @@ import lombok.Data;
  * Created by terry_sun on 2015/6/29.
  */
 @Data
-public class DB_Cards extends SugarRecord<DB_Cards> {
-
+public class DB_Cards extends SugarRecord {
+    public DB_Cards() {}
     String CategoryID;
     String CategoryName;
     String CategoryImage;

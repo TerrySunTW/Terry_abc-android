@@ -19,7 +19,7 @@ public class MyService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Notification notification = new Notification(R.drawable.ic_launcher,
+        Notification notification = new Notification(R.drawable.icon,
                 "服務運行中...", System.currentTimeMillis());
         Intent notificationIntent = new Intent(this, this.getClass());
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,

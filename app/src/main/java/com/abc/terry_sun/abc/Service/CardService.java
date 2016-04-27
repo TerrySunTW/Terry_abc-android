@@ -31,6 +31,7 @@ import com.abc.terry_sun.abc.Models.RepresentativeInfo;
 import com.abc.terry_sun.abc.R;
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.BootstrapText;
+import com.orm.util.NamingHelper;
 
 import net.glxn.qrgen.android.QRCode;
 
@@ -52,7 +53,7 @@ public class CardService {
     public List<CategoryInfo> GetAllCategory()
     {
         List<CategoryInfo> CategoryInfoList=new ArrayList<CategoryInfo>();
-        List<DB_Cards> CardList = DB_Cards.findWithQuery(DB_Cards.class, "Select * from "+DB_Cards.getTableName(DB_Cards.class)+" group by CATEGORY_ID,CATEGORY_NAME,CATEGORY_IMAGE", null);
+        List<DB_Cards> CardList = DB_Cards.findWithQuery(DB_Cards.class, "Select * from "+ NamingHelper.toSQLName(DB_Cards.class)+" group by CATEGORY_ID,CATEGORY_NAME,CATEGORY_IMAGE");
         for(DB_Cards Item:CardList)
         {
             CategoryInfoList.add(
@@ -67,7 +68,7 @@ public class CardService {
     public List<GroupInfo> GetAllGroup()
     {
         List<GroupInfo> GroupInfoList=new ArrayList<GroupInfo>();
-        List<DB_Cards> CardList = DB_Cards.findWithQuery(DB_Cards.class, "Select * from "+DB_Cards.getTableName(DB_Cards.class)+"  group by GROUP_ID,GROUP_NAME,GROUP_IMAGE", null);
+        List<DB_Cards> CardList = DB_Cards.findWithQuery(DB_Cards.class, "Select * from "+NamingHelper.toSQLName(DB_Cards.class)+"  group by GROUP_ID,GROUP_NAME,GROUP_IMAGE");
         for(DB_Cards Item:CardList)
         {
             GroupInfoList.add(
@@ -96,7 +97,7 @@ public class CardService {
     public List<RepresentativeInfo> GetAllRepresentative()
     {
         List<RepresentativeInfo> RepresentativeInfoList=new ArrayList<RepresentativeInfo>();
-        List<DB_Cards> CardList = DB_Cards.findWithQuery(DB_Cards.class, "Select * from "+DB_Cards.getTableName(DB_Cards.class)+ " group by GROUP_ID,REPRESENTATIVE_ID,REPRESENTATIVE_NAME,REPRESENTATIVE_IMAGE", null);
+        List<DB_Cards> CardList = DB_Cards.findWithQuery(DB_Cards.class, "Select * from "+NamingHelper.toSQLName(DB_Cards.class)+ " group by GROUP_ID,REPRESENTATIVE_ID,REPRESENTATIVE_NAME,REPRESENTATIVE_IMAGE");
         for(DB_Cards Item:CardList)
         {
             RepresentativeInfoList.add(
@@ -250,7 +251,7 @@ public class CardService {
     public void SetMainCards(DB_Cards Card)
     {
         List<DB_Cards> CardList= GetAllCards();
-        DB_Cards.executeQuery("UPDATE "+DB_Cards.getTableName(DB_Cards.class)+"  set IS_MAIN_CARD=0");
+        DB_Cards.executeQuery("UPDATE "+NamingHelper.toSQLName(DB_Cards.class)+"  set IS_MAIN_CARD=0");
         Card.setIsMainCard(true);
         Card.save();
         ServerCommunicationService.getInstance().SetMainCard(Card.getEntityCardID());

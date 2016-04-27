@@ -73,13 +73,13 @@ public class ServerCommunicationService {
     }
 
     //CARD QR
-    public int AddNewCard(final String EntityCardID)
+    public int AddNewCard(final String CardSN)
     {
         int result=0;//0:fail >0:CardID:
         try {
             ContentValues UrlParams = new ContentValues();
             UrlParams.put("UserFacebookID", VariableProvider.getInstance().getFacebookID());
-            UrlParams.put("EntityCardID", EntityCardID);
+            UrlParams.put("CardSN", CardSN);
             result=OkHttpUtil.getIntFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.AddNewCard, UrlParams));
             if (result>0)
             {

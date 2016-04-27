@@ -42,7 +42,7 @@ public class FriendService {
     }
 
     public void AddFriendDialog() {
-        final InputMethodManager imm = (InputMethodManager) ABCApplication.getSugarContext().getSystemService(ABCApplication.getSugarContext().INPUT_METHOD_SERVICE);
+        final InputMethodManager imm = (InputMethodManager) ABCApplication.getAppContext().getSystemService(ABCApplication.getAppContext().INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.HIDE_NOT_ALWAYS, 0);
         final AlertDialog.Builder AddFriendDialog = new AlertDialog.Builder(MainActivity.GetMainActivityContext());
         AddFriendDialog.setTitle("Please input friend ID:");

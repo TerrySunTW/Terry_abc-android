@@ -10,55 +10,99 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.abc.terry_sun.abc.Entities.DB_Cards;
 import com.abc.terry_sun.abc.Service.CardService;
 import com.abc.terry_sun.abc.Service.ProcessControlService;
 import com.abc.terry_sun.abc.Service.ServerCommunicationService;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.Result;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 /**
  * Created by terry_sun on 2015/7/20.
  */
-public class R_CardNewCardActivity extends Fragment {
-    String TAG="R_CardNewCardActivity";
+public class R_CardNewCardActivity extends Fragment implements ZXingScannerView.ResultHandler {
+    private ZXingScannerView mScannerView;
     Handler messageHandler;
+    String LastReadEntityID;
     Thread ProcessThread;
     int GotCardID=0;
-    static String LastReadEntityID="";
-    QRCodeReaderView scanner;
-    boolean IsRunning=false;
-    Context context;
-    private View mRootView;
+    static String EntityCardID;
+    final static String TAG="R_CardNewCardActivity";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (mRootView == null) {
-            mRootView = inflater.inflate(R.layout.activity_r_card_new_card, container, false);
-        }
-        context = getActivity();
-        scanner = (QRCodeReaderView)mRootView.findViewById(R.id.scanner);
+        mScannerView = new ZXingScannerView(getActivity());
         HandlerSetting();
-        QR_Setting();
-        return mRootView;
+        return mScannerView;
     }
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            //相当于Fragment的onResume
-            IsRunning=true;
-            LastReadEntityID=null;
-            scanner.getCameraManager().startPreview();
-        } else {
-            //相当于Fragment的onPause
-            IsRunning=false;
-            scanner.getCameraManager().stopPreview();
-        }
+    public void onResume() {
+        super.onResume();
+        mScannerView.setResultHandler(this);
+        mScannerView.startCamera();
     }
 
+    @Override
+    public void handleResult(Result rawResult) {
+        EntityCardID=rawResult.getText();
+        if(rawResult.getBarcodeFormat()== BarcodeFormat.CODE_128 && !rawResult.getText().equals(LastReadEntityID))
+        {
+            DB_Cards ScannedCard = CardService.getInstance().GetUserOwnCardsByEntityCardID(EntityCardID);
+            if (ScannedCard != null) {
+                CardService.getInstance().CloseCardDetailDialog();
+                CardService.getInstance().ShowCardDetailDialog(ScannedCard.getEntityCardID(),null, MainActivity.GetMainActivityContext());
+                return;
+            }
+
+            LastReadEntityID = EntityCardID;
+            if (ProcessThread == null) {
+                ProcessControlService.ShowProgressDialog(MainActivity.GetMainActivityContext(), "取得資料處理中...", "");
+                ProcessThread = new Thread(new Runnable() {
+                    public void run() {
+                        Message msg = new Message();
+
+                        //add new card
+                        GotCardID = ServerCommunicationService.getInstance().AddNewCard(EntityCardID);
+                        Log.i(TAG,"GotCardID="+String.valueOf(GotCardID));
+                        if (GotCardID > 0) {
+                            ServerCommunicationService.getInstance().UpdateServerInfo();
+
+                            msg.what = 1;
+                        } else {
+                            msg.what = 99;
+                        }
+                        messageHandler.sendMessage(msg);
+                    }
+                });
+                ProcessThread.start();
+            }
+            //Toast.makeText(getActivity(), "Contents = " + rawResult.getText() +
+                    //", Format = " + rawResult.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
+
+        }
+
+/**
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mScannerView.resumeCameraPreview(R_CardNewCardActivity.this);
+            }
+        }, 2000);**/
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mScannerView.stopCamera();
+    }
 
     private void HandlerSetting() {
         messageHandler = new Handler(){
@@ -80,65 +124,9 @@ public class R_CardNewCardActivity extends Fragment {
                 }
                 super.handleMessage(msg);
                 ProcessControlService.CloseProgressDialog();
+                mScannerView.resumeCameraPreview(R_CardNewCardActivity.this);
             }
         };
     }
-    private void QR_Setting()
-    {
-        scanner.setOnQRCodeReadListener(new QRCodeReaderView.OnQRCodeReadListener() {
-            @Override
-            public void onQRCodeRead(final String EntityCardID, PointF[] points) {
-                //scanner.stopScanner();
-                Log.i(TAG, "QRdata=" + EntityCardID);
-                scanner.getCameraManager().stopPreview();
-                //same card with previous
-                if (EntityCardID.equals(LastReadEntityID)) {
-                    scanner.getCameraManager().startPreview();
-                    return;
-                }
 
-                //local card
-                DB_Cards ScannedCard = CardService.getInstance().GetUserOwnCardsByEntityCardID(EntityCardID);
-                if (ScannedCard != null) {
-                    CardService.getInstance().CloseCardDetailDialog();
-                    CardService.getInstance().ShowCardDetailDialog(ScannedCard.getEntityCardID(),null, MainActivity.GetMainActivityContext());
-                    scanner.getCameraManager().startPreview();
-                    return;
-                }
-
-                Log.i(TAG, "InProcessing");
-                LastReadEntityID = EntityCardID;
-                if (ProcessThread == null) {
-                    ProcessControlService.ShowProgressDialog(MainActivity.GetMainActivityContext(), "取得資料處理中...", "");
-                    ProcessThread = new Thread(new Runnable() {
-                        public void run() {
-                            Message msg = new Message();
-
-                            //add new card
-                            GotCardID = ServerCommunicationService.getInstance().AddNewCard(EntityCardID);
-                            if (GotCardID > 0) {
-                                ServerCommunicationService.getInstance().UpdateServerInfo();
-
-                                msg.what = 1;
-                            } else {
-                                msg.what = 99;
-                            }
-                            messageHandler.sendMessage(msg);
-                        }
-                    });
-                    ProcessThread.start();
-                }
-            }
-
-            @Override
-            public void cameraNotFound() {
-
-            }
-
-            @Override
-            public void QRCodeNotFoundOnCamImage() {
-
-            }
-        });
-    }
 }
