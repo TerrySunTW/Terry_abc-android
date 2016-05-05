@@ -83,19 +83,7 @@ public class R_CardNewCardActivity extends Fragment implements ZXingScannerView.
                 });
                 ProcessThread.start();
             }
-            //Toast.makeText(getActivity(), "Contents = " + rawResult.getText() +
-                    //", Format = " + rawResult.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
-
         }
-
-/**
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mScannerView.resumeCameraPreview(R_CardNewCardActivity.this);
-            }
-        }, 2000);**/
     }
 
     @Override
