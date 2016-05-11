@@ -55,16 +55,11 @@ public class Adapter_BonusList extends BaseAdapter {
             //get card bonus
             //Entity Event
             DB_Events EntityCardEvent= CardService.getInstance().GetEntityEventsByCardID(item.getCardID());
-            if(EntityCardEvent!=null)
-            {
-                _ListItem_Actions.setEntityCardEvent(EntityCardEvent);
-            }
+            _ListItem_Actions.setEntityCardEvent(EntityCardEvent);
+
             //Entity Event
             DB_Events VirtualCardEvent=CardService.getInstance().GetVirtualEventsByCardID(item.getCardID());
-            if(VirtualCardEvent!=null)
-            {
-                _ListItem_Actions.setVirtualCardEvent(VirtualCardEvent);
-            }
+            _ListItem_Actions.setVirtualCardEvent(VirtualCardEvent);
 
             stringPairList.add(_ListItem_Actions);
         }

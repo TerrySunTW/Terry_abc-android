@@ -54,6 +54,10 @@ dependencies {
     //orm utility
     compile 'com.squareup.okhttp:okhttp:2.4.0'
 
+    compile ('me.dm7.barcodescanner:zbar:1.8.4'){
+        exclude group: 'com.google.zxing', module: 'core'
+    }
+
     compile ('me.dm7.barcodescanner:zxing:1.8.4'){
         exclude group: 'com.google.zxing', module: 'core'
     }

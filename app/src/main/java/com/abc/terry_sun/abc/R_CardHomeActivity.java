@@ -38,7 +38,6 @@ public class R_CardHomeActivity extends BaseFragment {
     @OnClick(R.id.ButtonFriendCard)
     protected void onButtonClicked_ButtonFriendCard() {
         Log.i(TAG,"onButtonClicked_ButtonFriendCard");
-        ((BaseFragment) getParentFragment()).replaceFragment(new R_CardRealFriendCardActivity(), true);
+        ((BaseFragment) getParentFragment()).replaceFragment(new R_CardReadFriendCard(), true);
     }
-
 }
