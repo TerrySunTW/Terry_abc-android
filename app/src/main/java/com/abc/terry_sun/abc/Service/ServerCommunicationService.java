@@ -93,14 +93,14 @@ public class ServerCommunicationService {
         return result;
     }
     //for NFC&QR
-    public int AddFriendEntityCard(final String EntityCardID,final String UserCardID)
+    public int AddFriendEntityCard(final String ReadUserCardID,final String ReadCardID)
     {
         int result=0;//0:fail >0:CardID:
         try {
             ContentValues UrlParams = new ContentValues();
             UrlParams.put("UserFacebookID", VariableProvider.getInstance().getFacebookID());
-            UrlParams.put("EntityCardID", EntityCardID);
-            UrlParams.put("UserCardID", UserCardID);
+            UrlParams.put("ReadUserCardID", ReadUserCardID);
+            UrlParams.put("ReadCardID", ReadCardID);
 
             result=OkHttpUtil.getIntFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.AddFriendEntityCard, UrlParams));
             if (result>0)
@@ -135,25 +135,7 @@ public class ServerCommunicationService {
         }
         return result;
     }
-    public int AddFriendQRCard(final String QRCardID)
-    {
-        int result=0;//0:fail >0:CardID:
-        try {
-            ContentValues UrlParams = new ContentValues();
-            UrlParams.put("UserFacebookID", VariableProvider.getInstance().getFacebookID());
-            UrlParams.put("QR_UserCardID", QRCardID);
-            result=OkHttpUtil.getIntFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.AddFriendQRCard, UrlParams));
-            if (result>0)
-            {
-                ServerCommunicationService.getInstance().GetUserCardInfo();
-            }
-        }
-        catch (Exception ex)
-        {
-            Log.e(TAG,ex.getMessage());
-        }
-        return result;
-    }
+
     public String GetCardByEntityID(final String EntityCardID)
     {
         String CardID="";
@@ -212,7 +194,6 @@ public class ServerCommunicationService {
             }
             if(IsNeedRemove) {
                 OldItem.delete();
-                OldItem.save();
             }
         }
 
