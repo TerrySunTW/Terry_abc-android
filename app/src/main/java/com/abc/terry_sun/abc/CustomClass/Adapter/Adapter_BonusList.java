@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.abc.terry_sun.abc.CustomClass.Application.ABCApplication;
 import com.abc.terry_sun.abc.Entities.DB_Cards;
 import com.abc.terry_sun.abc.Entities.DB_Events;
 import com.abc.terry_sun.abc.MainActivity;
@@ -41,27 +42,36 @@ public class Adapter_BonusList extends BaseAdapter {
     }
 
     private void UpdateListItem(List<DB_Cards> CardList) {
-        for (DB_Cards item:CardList)
+
+        List<ListItem_Actions> TempstringPairList= ((ABCApplication)ABCApplication.getAppContext()).GetCacheBounsPairList(CardList);
+        if(TempstringPairList!=null)
         {
-            ListItem_Actions _ListItem_Actions=new ListItem_Actions();
-            _ListItem_Actions.setCardInfo(item);
-            _ListItem_Actions.setItemImage(BitmapFactory.decodeFile(StorageService.GetImagePath(item.getCardImage())));
-            _ListItem_Actions.setEntityCardID(item.getEntityCardID());
-            _ListItem_Actions.setDirectPoint(item.getDirectPoint());
-            _ListItem_Actions.setIndirectPoint(item.getIndirectPoint());
+            stringPairList=TempstringPairList;
+        }
+        else
+        {
+            for (DB_Cards item : CardList) {
+                ListItem_Actions _ListItem_Actions = new ListItem_Actions();
+                _ListItem_Actions.setCardInfo(item);
+                _ListItem_Actions.setItemImage(BitmapFactory.decodeFile(StorageService.GetImagePath(item.getCardImage())));
+                _ListItem_Actions.setEntityCardID(item.getEntityCardID());
+                _ListItem_Actions.setDirectPoint(item.getDirectPoint());
+                _ListItem_Actions.setIndirectPoint(item.getIndirectPoint());
 
 
+                //get card bonus
+                //Entity Event
+                DB_Events EntityCardEvent = CardService.getInstance().GetEntityEventsByCardID(item.getCardID());
+                _ListItem_Actions.setEntityCardEvent(EntityCardEvent);
 
-            //get card bonus
-            //Entity Event
-            DB_Events EntityCardEvent= CardService.getInstance().GetEntityEventsByCardID(item.getCardID());
-            _ListItem_Actions.setEntityCardEvent(EntityCardEvent);
+                //Entity Event
+                DB_Events VirtualCardEvent = CardService.getInstance().GetVirtualEventsByCardID(item.getCardID());
+                _ListItem_Actions.setVirtualCardEvent(VirtualCardEvent);
 
-            //Entity Event
-            DB_Events VirtualCardEvent=CardService.getInstance().GetVirtualEventsByCardID(item.getCardID());
-            _ListItem_Actions.setVirtualCardEvent(VirtualCardEvent);
+                stringPairList.add(_ListItem_Actions);
+            }
+            ((ABCApplication)ABCApplication.getAppContext()).SetCacheBounsPairList(CardList,stringPairList);
 
-            stringPairList.add(_ListItem_Actions);
         }
     }
 
