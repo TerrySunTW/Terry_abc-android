@@ -52,7 +52,7 @@ public class R_CardNewCardActivity extends Fragment implements ZXingScannerView.
     @Override
     public void handleResult(Result rawResult) {
         EntityCardID=rawResult.getText();
-        if(rawResult.getBarcodeFormat()== BarcodeFormat.CODE_128 && !rawResult.getText().equals(LastReadEntityID))
+        if(rawResult.getBarcodeFormat()== BarcodeFormat.QR_CODE && !rawResult.getText().equals(LastReadEntityID))
         {
             DB_Cards ScannedCard = CardService.getInstance().GetUserOwnCardsByEntityCardID(EntityCardID);
             if (ScannedCard != null) {
