@@ -39,6 +39,7 @@ public class R_CardReadFriendCard extends Fragment implements ZBarScannerView.Re
     String LastReadEntityID;
     String LastReadUserCardID;
     Thread ProcessThread;
+    private Boolean HasReadRealCard=false;
     static String LastLogMessage;
     int GotCardID=0;
     static String EntityCardID;
@@ -47,6 +48,7 @@ public class R_CardReadFriendCard extends Fragment implements ZBarScannerView.Re
     Context context;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        HasReadRealCard=false;
         if (mRootView == null){
             mRootView = inflater.inflate(R.layout.activity_r_card_zbar_layout,container,false);
         }
@@ -73,10 +75,12 @@ public class R_CardReadFriendCard extends Fragment implements ZBarScannerView.Re
         //scan virtual QR-Code
         if(ReadCardID.equals(LastReadEntityID))
         {
-
+            return;
         }
-        else if(result.getBarcodeFormat()== BarcodeFormat.QRCODE )
+
+        if(!HasReadRealCard )
         {
+
             //[Time , UserCardID]
             LastReadEntityID=ReadCardID;
             Log.i(TAG, "InProcessing");
@@ -102,7 +106,7 @@ public class R_CardReadFriendCard extends Fragment implements ZBarScannerView.Re
             ProcessThread.start();
         }
         //scan real card Code
-        else if(result.getBarcodeFormat()== BarcodeFormat.CODE128)
+        else
         {
             LastReadEntityID=ReadCardID;
             ProcessControlService.ShowProgressDialog(MainActivity.GetMainActivityContext(), "取得資料處理中...", "");
@@ -138,6 +142,7 @@ public class R_CardReadFriendCard extends Fragment implements ZBarScannerView.Re
             public void handleMessage(Message msg) {
                 switch(msg.what){
                     case 0:
+                        HasReadRealCard=true;
                         //read QR/NFC from EmU
                         new AlertDialog.Builder(MainActivity.GetMainActivityContext())//
                                 .setMessage("Wanna read real card?")//
