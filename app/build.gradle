@@ -14,7 +14,7 @@ android {
     defaultConfig {
         applicationId "com.abc.terry_sun.abc"
         minSdkVersion 19
-        targetSdkVersion 23
+        targetSdkVersion 22
         versionCode 1
         versionName "1.1"
     }

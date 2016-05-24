@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 	static Context MainActivityContext;
 
 	private FragmentTabHost mTabHost;
-	private ViewPager mViewPager;
+	private com.abc.terry_sun.abc.CustomClass.ViewPager.MyViewPager mViewPager;
 	private int OldPagePosition=0;
 	private List<Fragment> mFragmentList;
 	private Class mClass[] = {CardsActivity.class,BonusListActivity.class,Fragment.class,FriendsContainerFragment.class,R_CardContainerFragment.class};
@@ -88,8 +88,9 @@ public class MainActivity extends AppCompatActivity {
 
 	private void initView() {
 		mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
-		mViewPager = (ViewPager) findViewById(R.id.view_pager);
-
+		mViewPager = (com.abc.terry_sun.abc.CustomClass.ViewPager.MyViewPager) findViewById(R.id.view_pager);
+		mViewPager.setPagingEnabled(false);
+		mViewPager.setOffscreenPageLimit(0);
 		mFragmentList = new ArrayList<Fragment>();
 
 		mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
@@ -100,11 +101,12 @@ public class MainActivity extends AppCompatActivity {
 			mTabHost.addTab(tabSpec, mClass[i], null);
 			mFragmentList.add(mFragment[i]);
 		}
-
 		mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
 			@Override
 			public Fragment getItem(int position) {
-				return mFragmentList.get(position);
+				int TempPosition=position;
+				Log.e(TAG,"position="+String.valueOf(position));
+				return mFragmentList.get(TempPosition);
 			}
 
 			@Override
@@ -152,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
 
 			}
 		});
-
 		mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
 			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -162,23 +163,20 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public void onPageSelected(int position) {
 				int tempPosition=OldPagePosition;
-				OldPagePosition=position;
+				int newPosition=position;
 				if(position==2)
 				{
 					if(tempPosition==1)
 					{
-						mTabHost.setCurrentTab(3);
+						newPosition=3;
 					}
 					else
 					{
-						mTabHost.setCurrentTab(1);
+						newPosition=1;
 					}
 				}
-				else
-				{
-					mTabHost.setCurrentTab(position);
-				}
-
+				OldPagePosition=newPosition;
+				mTabHost.setCurrentTab(newPosition);
 			}
 
 			@Override
@@ -186,7 +184,6 @@ public class MainActivity extends AppCompatActivity {
 
 			}
 		});
-
 	}
 
 	public static Context GetMainActivityContext()
