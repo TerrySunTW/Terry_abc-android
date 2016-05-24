@@ -34,8 +34,6 @@ public class FriendsListActivity extends Fragment {
 	TextView TextViewCard;
 	@InjectView(R.id.TextViewID)
 	TextView TextViewID;
-	@InjectView(R.id.FriendButton)
-	ImageButton FriendButton;
 
 	@InjectView(R.id.ButtonAddFriendID)
 	Button ButtonAddFriend;
@@ -69,9 +67,6 @@ public class FriendsListActivity extends Fragment {
 		TextViewName.setText(_DB_Friend.getFriendName());
 		TextViewCard.setText(_DB_Friend.getCardCount());
 		TextViewID.setText(_DB_Friend.getFriendID());
-		FriendButton.setImageBitmap(
-				ImageService.GetBitmapFromPath(StorageService.GetFriendImagePath(_DB_Friend.getFriendID()))
-		);
 		ButtonAddFriend.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {

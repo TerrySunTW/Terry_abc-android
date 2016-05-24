@@ -111,18 +111,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="5dp">
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:scaleType="fitCenter"
-                    android:background="@null"
-                    android:id="@+id/FriendButton"
-                    android:src="@drawable/smiling"
-                    android:padding="5dp" />
-                <LinearLayout
+
+        <LinearLayout
                     android:orientation="vertical"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:layout_alignParentLeft="false"
@@ -131,58 +123,54 @@
                     android:layout_alignParentTop="false"
                     android:layout_alignWithParentIfMissing="false"
                     android:layout_alignParentEnd="false"
-                    android:layout_alignParentStart="false"
-                    android:layout_toRightOf="@+id/FriendButton">
+                    android:layout_alignParentStart="false">
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/textWhite"
-                            android:text="Name:"
-                            android:layout_gravity="right" />
                         <TextView
                             android:id="@+id/TextViewName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/textWhite"
+                            android:layout_weight="1.0"
                             android:text="aaaaa" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_weight="1.0"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/textWhite"
-                            android:text="Card:"
-                            android:layout_gravity="right" />
-                        <TextView
-                            android:id="@+id/TextViewCard"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/textWhite"
+                                android:text="Card:"
+                                android:layout_gravity="right" />
+                            <TextView
+                                android:id="@+id/TextViewCard"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/textWhite"
+                                android:text="111"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_weight="1.0"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/textWhite"
-                            android:text="111"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/textWhite"
-                            android:text="ID:"
-                            android:layout_gravity="right" />
-                        <TextView
-                            android:id="@+id/TextViewID"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/textWhite"
-                            android:text="777777"/>
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/textWhite"
+                                android:text="ID:"
+                                android:layout_gravity="right" />
+                            <TextView
+                                android:id="@+id/TextViewID"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/textWhite"
+                                android:text="777777"/>
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -190,8 +178,7 @@
             android:background="#787878"
             android:layout_width="match_parent"
             android:layout_height="1sp"
-            android:layout_alignParentBottom="false"
-            android:layout_below="@+id/FriendButton"></View>
+            android:layout_alignParentBottom="false"></View>
     </RelativeLayout>
     <LinearLayout
         android:orientation="horizontal"

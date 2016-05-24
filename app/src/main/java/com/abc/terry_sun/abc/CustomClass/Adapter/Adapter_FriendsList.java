@@ -75,11 +75,6 @@ public class Adapter_FriendsList extends BaseAdapter {
         TextView_Name.setText(_ListItem_Friend.getFriendName());
         TextView_Content.setText("Card:"+_ListItem_Friend.getCardCount());
 
-        if(position==0)
-        {
-            TextView_Name.setBackgroundColor(Color.BLUE);
-        }
-
         return convertView;
     }
 }
