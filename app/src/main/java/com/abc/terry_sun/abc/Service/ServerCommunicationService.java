@@ -208,7 +208,10 @@ public class ServerCommunicationService {
                 Item.setCreatedTimeFormated(StringService.GetJsonDate(Item.getCreatedTime()));
                 Item.save();
                 Result+=InternetUtil.DownloadFile(HttpURL_Provider.ImageServerLocation+ImageService.GetImageFileName(Item.getCardImage()), StorageService.GetImagePath(Item.getCardImage()));
-                Log.i("info","StorageService.Result:"+ Result);
+
+                Log.i(TAG,"StorageService.URL:"+ HttpURL_Provider.ImageServerLocation+ImageService.GetImageFileName(Item.getCardImage()));
+                Log.i(TAG,"StorageService.LocalPath:"+ StorageService.GetImagePath(Item.getCardImage()));
+                Log.i(TAG,"StorageService.Result:"+ Result);
             }
             else
             {
