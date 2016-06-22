@@ -167,10 +167,10 @@ public class CardsActivity extends BaseFragment {
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                ResetMenuStatusForChangeCategory();
                 if (item.getItemId() == 1) {
                     //Select all && Reset Menu
                     IsFavorate=false;
-                    ResetMenuStatusForChangeCategory();
                     ShowCard(null);
                 } else if (item.getItemId() == 2) {
                     //select Favorite
