@@ -194,8 +194,7 @@ public class CardsActivity extends BaseFragment {
         popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
             @Override
             public void onDismiss(PopupMenu popupMenu) {
-                //ButtonCategory.setShowOutline(false);
-                ViewIndication1.setVisibility(View.INVISIBLE);
+                //ViewIndication1.setVisibility(View.INVISIBLE);
             }
         });
         popupMenu.getMenu().add(0,1,0,"All");
@@ -205,8 +204,9 @@ public class CardsActivity extends BaseFragment {
             popupMenu.getMenu().add(CategoryList.get(i).getCategoryName());
         }
         popupMenu.show();
-        //ButtonCategory.setShowOutline(true);
         ViewIndication1.setVisibility(View.VISIBLE);
+        ViewIndication2.setVisibility(View.INVISIBLE);
+        ViewIndication3.setVisibility(View.INVISIBLE);
     }
 
     @OnClick(R.id.ButtonGroup)
@@ -234,7 +234,7 @@ public class CardsActivity extends BaseFragment {
             popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
                 @Override
                 public void onDismiss(PopupMenu popupMenu) {
-                    ViewIndication2.setVisibility(View.INVISIBLE);
+                    //ViewIndication2.setVisibility(View.INVISIBLE);
                 }
             });
             for(int i=0; i<GroupGalleryItemList.size(); i++)
@@ -242,8 +242,8 @@ public class CardsActivity extends BaseFragment {
                 popupMenu.getMenu().add(GroupGalleryItemList.get(i).getTitle());
             }
             popupMenu.show();
-            //ButtonGroup.setShowOutline(true);
             ViewIndication2.setVisibility(View.VISIBLE);
+            ViewIndication3.setVisibility(View.INVISIBLE);
         }
     }
     @OnClick(R.id.ButtonRepresentative)
@@ -268,8 +268,7 @@ public class CardsActivity extends BaseFragment {
             popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
                 @Override
                 public void onDismiss(PopupMenu popupMenu) {
-                    //ButtonRepresentative.setShowOutline(false);
-                    ViewIndication3.setVisibility(View.INVISIBLE);
+                    //ViewIndication3.setVisibility(View.INVISIBLE);
                 }
             });
             for(int i=0; i<RepresentativeGalleryItemList.size(); i++)
@@ -277,7 +276,6 @@ public class CardsActivity extends BaseFragment {
                 popupMenu.getMenu().add(RepresentativeGalleryItemList.get(i).getTitle());
             }
             popupMenu.show();
-            //ButtonRepresentative.setShowOutline(true);
             ViewIndication3.setVisibility(View.VISIBLE);
         }
     }
