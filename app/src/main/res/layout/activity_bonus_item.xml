@@ -4,16 +4,18 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:paddingBottom="5dp">
-    <ImageButton
-        android:layout_width="100sp"
-        android:layout_height="100sp"
+    <ImageView
+        android:layout_width="200px"
+        android:layout_height="270px"
+        android:padding="2dp"
+        android:layout_gravity="center_horizontal"
         android:scaleType="centerInside"
-        android:background="@null"
         android:id="@+id/CardButton" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:paddingLeft="20px"
         android:gravity="center_vertical|center_horizontal">
 
         <LinearLayout

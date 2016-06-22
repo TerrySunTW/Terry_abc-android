@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -57,7 +58,7 @@ public class Adapter_BonusList extends BaseAdapter {
                 _ListItem_Actions.setEntityCardID(item.getEntityCardID());
                 _ListItem_Actions.setDirectPoint(item.getDirectPoint());
                 _ListItem_Actions.setIndirectPoint(item.getIndirectPoint());
-
+                _ListItem_Actions.setIsOwner(item.getHasRealCard());
 
                 //get card bonus
                 //Entity Event
@@ -110,9 +111,17 @@ public class Adapter_BonusList extends BaseAdapter {
         final DB_Events VirtualCardEvent= _ListItem_Actions.getVirtualCardEvent();
 
 
-        ImageButton CardButton = (ImageButton) convertView.findViewById(R.id.CardButton);
+        ImageView CardButton = (ImageView) convertView.findViewById(R.id.CardButton);
         CardButton.setImageBitmap(_ListItem_Actions.getItemImage());
         CardButton.setTag(_ListItem_Actions.getEntityCardID());
+        if(_ListItem_Actions.getIsOwner())
+        {
+            CardButton.setBackgroundColor(Color.YELLOW);
+        }
+        else
+        {
+            CardButton.setBackgroundColor(Color.BLACK);
+        }
         CardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

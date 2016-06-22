@@ -26,4 +26,5 @@ public class ListItem_Actions {
 
     private String DirectPoint;
     private String IndirectPoint;
+    private Boolean IsOwner;
 }
