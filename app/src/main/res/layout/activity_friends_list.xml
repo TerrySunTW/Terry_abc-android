@@ -166,6 +166,12 @@
         android:gravity="center|center_vertical|center_horizontal|bottom|top">
 
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
     <ListView android:id="@+id/listview_activity_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
