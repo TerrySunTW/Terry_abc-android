@@ -473,8 +473,7 @@ public class CardService {
         else
         {
             Button_FavoriteCard.setBootstrapText(new BootstrapText.Builder(context)
-                    .addFontAwesomeIcon("fa_heart_o")
-                    .addText("Favorite")
+                    .addText("Add to favorite")
                     .build());
         }
         Button_FavoriteCard.setOnClickListener(new View.OnClickListener() {
@@ -492,8 +491,7 @@ public class CardService {
                 else
                 {
                     Button_FavoriteCard.setBootstrapText(new BootstrapText.Builder(context)
-                            .addFontAwesomeIcon("fa_heart_o")
-                            .addText("Favorite")
+                            .addText("Add to favorite")
                             .build());
                     Toast.makeText(context, "Removed from favorites.", Toast.LENGTH_SHORT).show();
                 }
