@@ -125,21 +125,27 @@ public class Adapter_BonusList extends BaseAdapter {
         });
 
         TextView Bonus1_Title = (TextView) convertView.findViewById(R.id.action1_title);
+        TextView Bonus1_Title_Point = (TextView) convertView.findViewById(R.id.action1_title_point);
+        TextView Bonus1_Title2 = (TextView) convertView.findViewById(R.id.action1_title2);
         TextView Bonus1_Content = (TextView) convertView.findViewById(R.id.action1_content);
 
-        Bonus1_Title.setText(EntityCardEvent.getEventTitle()+
-                "-DP:("+_ListItem_Actions.getDirectPoint()+"/"+
-                EntityCardEvent.getDirectPointTarget()+")");
+        Bonus1_Title.setText(EntityCardEvent.getEventTitle()+"-DP:(");
+        Bonus1_Title_Point.setText(_ListItem_Actions.getDirectPoint());
+        Bonus1_Title2.setText("/"+EntityCardEvent.getDirectPointTarget()+")");
+
         Bonus1_Content.setText(EntityCardEvent.getEventDescription());
 
 
         TextView Bonus2_Title = (TextView) convertView.findViewById(R.id.action2_title);
+        TextView Bonus2_Title_Point = (TextView) convertView.findViewById(R.id.action2_title_point);
+        TextView Bonus2_Title2 = (TextView) convertView.findViewById(R.id.action2_title2);
         TextView Bonus2_Content = (TextView) convertView.findViewById(R.id.action2_content);
 
 
-        Bonus2_Title.setText(VirtualCardEvent.getEventTitle() +
-                "-IP:(" + _ListItem_Actions.getIndirectPoint() + "/" +
-                VirtualCardEvent.getIndirectPointTarget() + ")");
+        Bonus2_Title.setText(VirtualCardEvent.getEventTitle() + "-IP:(");
+        Bonus2_Title_Point.setText(_ListItem_Actions.getIndirectPoint());
+        Bonus2_Title2.setText("/" + VirtualCardEvent.getIndirectPointTarget() + ")");
+
         Bonus2_Content.setText(VirtualCardEvent.getEventDescription());
         if(VirtualCardEvent==null) {
             Bonus2_Title.setVisibility(View.GONE);

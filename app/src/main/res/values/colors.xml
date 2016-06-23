@@ -6,7 +6,8 @@
 	<color name="tabMedium">#2B2B2B</color>
 	<color name="tabDark">#000000</color>
 	<color name="tabTransparent">#10ffffff</color>
-	<color name="textWhite">#ffffffff</color>
+	<color name="textWhite">#ffffff</color>
+	<color name="textRed">#ff3300</color>
 	
 	
 	
