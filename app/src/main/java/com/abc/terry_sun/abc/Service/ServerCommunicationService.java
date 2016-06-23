@@ -71,6 +71,27 @@ public class ServerCommunicationService {
                 });
         _AsyncTaskHttpRequest.execute();
     }
+    public void RemoveUserCard(final String EntityCardID)
+    {
+        AsyncTaskHttpRequest _AsyncTaskHttpRequest = new AsyncTaskHttpRequest(
+                MainActivity.GetMainActivityContext(),
+                new AsyncTaskProcessingInterface() {
+                    @Override
+                    public void DoProcessing() {
+                        try {
+                            ContentValues UrlParams = new ContentValues();
+                            UrlParams.put("UserFacebookID", VariableProvider.getInstance().getFacebookID());
+                            UrlParams.put("EntityCardID", EntityCardID);
+                            OkHttpUtil.getStringFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.RemoveUserCard, UrlParams));
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.e(TAG,ex.getMessage());
+                        }
+                    }
+                });
+        _AsyncTaskHttpRequest.execute();
+    }
 
     //CARD QR
     public int AddNewCard(final String CardSN)

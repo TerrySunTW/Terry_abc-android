@@ -13,6 +13,9 @@ import android.widget.GridView;
 import android.widget.PopupMenu;
 
 import com.abc.terry_sun.abc.CustomClass.Adapter.AdapterCardsImage;
+import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskHttpRequest;
+import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskPostProcessingInterface;
+import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskProcessingInterface;
 import com.abc.terry_sun.abc.Models.CardInfo;
 import com.abc.terry_sun.abc.Models.CategoryInfo;
 import com.abc.terry_sun.abc.Models.GalleryItem;
@@ -20,6 +23,7 @@ import com.abc.terry_sun.abc.Models.GroupInfo;
 import com.abc.terry_sun.abc.Models.RepresentativeInfo;
 import com.abc.terry_sun.abc.Service.CardService;
 import com.abc.terry_sun.abc.Service.ScreenService;
+import com.abc.terry_sun.abc.Service.ServerCommunicationService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +74,7 @@ public class CardsActivity extends BaseFragment {
     String SelectedGroupID="";
     String SelectedRepresentativeID="";
     String SelectedEntityCardID;
-
+    final String TAG="CardsActivity";
     Context context;
     static boolean IsFavorate=false;
     private View mRootView;
@@ -82,7 +86,7 @@ public class CardsActivity extends BaseFragment {
         context=getActivity();
         ButterKnife.inject(this, mRootView);
 
-        Log.i("INFO", "size.x=" + String.valueOf(ScreenService.GetScreenWidth(context)));
+        Log.i(TAG, "size.x=" + String.valueOf(ScreenService.GetScreenWidth(context)));
         int ColumnWidth=(ScreenService.GetScreenWidth(context).x - 30) / 3;
         gridView.setColumnWidth(ColumnWidth);
         gridView.setNumColumns(3);
@@ -122,7 +126,33 @@ public class CardsActivity extends BaseFragment {
                                     int position, long id) {
                 SelectedEntityCardID = CardGalleryItemList.get(position).getItemID();
                 CardService.getInstance().ShowCardDetailDialog(SelectedEntityCardID,null, context);
-                Log.i("Info", "SelectedEntityCardID" + SelectedEntityCardID);
+                Log.i(TAG, "SelectedEntityCardID" + SelectedEntityCardID);
+            }
+        });
+        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                SelectedEntityCardID = CardGalleryItemList.get(position).getItemID();
+                PopupMenu popupMenu = new PopupMenu(context, view);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Log.i(TAG, "SelectedEntityCardID=" + SelectedEntityCardID);
+                        ServerCommunicationService.getInstance().RemoveUserCard(SelectedEntityCardID);
+                        CardService.getInstance().RemoveCards(SelectedEntityCardID);
+                        ShowCard(null);
+                        return false;
+                    }
+                });
+                popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
+                    @Override
+                    public void onDismiss(PopupMenu popupMenu) {
+
+                    }
+                });
+                popupMenu.getMenu().add(0,1,0,"Remove this item");
+                popupMenu.show();
+                return true;
             }
         });
     }
@@ -293,5 +323,18 @@ public class CardsActivity extends BaseFragment {
         SelectedRepresentativeID="";
         RepresentativeGalleryItemList.clear();
         ButtonRepresentative.setText("Member>>");
+    }
+    private void UpdateServerData() {
+        new AsyncTaskHttpRequest(MainActivity.MainActivityContext, new AsyncTaskProcessingInterface() {
+            @Override
+            public void DoProcessing() {
+                ServerCommunicationService.getInstance().UpdateServerInfo();
+            }
+        }, new AsyncTaskPostProcessingInterface() {
+            @Override
+            public void DoProcessing() {
+                ShowCard(null);
+            }
+        }).execute();
     }
 }

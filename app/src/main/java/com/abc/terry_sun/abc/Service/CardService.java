@@ -203,6 +203,17 @@ public class CardService {
         }
         return null;
     }
+
+    public void RemoveCards(String EntityCardID)
+    {
+        List<DB_Cards> CardList= DB_Cards.find(DB_Cards.class, "ENTITY_CARD_ID=?", EntityCardID);
+        if(CardList.size()>0)
+        {
+            for(DB_Cards item:CardList) {
+                DB_Cards.delete(item);
+            }
+        }
+    }
     public DB_Cards GetCardsByEntityCardID(String EntityCardID)
     {
         List<DB_Cards> CardList= DB_Cards.find(DB_Cards.class, "ENTITY_CARD_ID=?", EntityCardID);
@@ -498,52 +509,6 @@ public class CardService {
             }
         });
 
-        /**
-        final ImageView ImageView_ShowCard=(ImageView)CardDetailDialog.findViewById(R.id.ImageView_ShowCard);
-        if(selectedCardInfo.getIsMainCard())
-        {
-            ImageView_ShowCard.setImageDrawable(context.getResources().getDrawable(R.drawable.circle_green_main));
-        }
-        else
-        {
-            ImageView_ShowCard.setImageDrawable(context.getResources().getDrawable(R.drawable.circle_red_main));
-        }
-        ImageView_ShowCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ImageView_ShowCard.setImageDrawable(context.getResources().getDrawable(R.drawable.circle_green_main));
-                CardService.getInstance().SetMainCards(selectedCardInfo);
-                MainActivity.ChangeMainCardImage(ImageService.GetBitmapFromImageName(selectedCardInfo.getCardImage()), selectedCardInfo.getEntityCardID());
-                Toast.makeText(context, "This card is Show card now.", Toast.LENGTH_SHORT).show();
-            }
-        });
-        final ImageView ImageView_FavoriteCard=(ImageView)CardDetailDialog.findViewById(R.id.ImageView_FavoriteCard);
-        if(selectedCardInfo.getIsFavorite())
-        {
-            ImageView_FavoriteCard.setImageDrawable(context.getResources().getDrawable(R.drawable.circle_green_favorite));
-        }
-        else
-        {
-            ImageView_FavoriteCard.setImageDrawable(context.getResources().getDrawable(R.drawable.circle_red_favorite));
-        }
-        ImageView_FavoriteCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CardService.getInstance().ToggleIsCardFavorite(selectedCardInfo);
-                if(selectedCardInfo.getIsFavorite())
-                {
-                    ImageView_FavoriteCard.setImageDrawable(context.getResources().getDrawable(R.drawable.circle_green_favorite));
-                    Toast.makeText(context, "Added to favorites.", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    ImageView_FavoriteCard.setImageDrawable(context.getResources().getDrawable(R.drawable.circle_red_favorite));
-                    Toast.makeText(context, "Removed from favorites.", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-**/
 
         final BootstrapButton Button_Media=(BootstrapButton)CardDetailDialog.findViewById(R.id.Button_Media);
         Button_Media.setOnClickListener(new View.OnClickListener() {
