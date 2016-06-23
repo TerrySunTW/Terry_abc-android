@@ -189,9 +189,11 @@ public class BonusListActivity extends BaseFragment {
 				ResetMenuStatusForChangeCategory();
 				if (item.getItemId() == 1) {
 					SelectedCategoryID="";
+					ButtonCategory.setText("All");
 					//Select all && Reset Menu
 				} else if (item.getItemId() == 2) {
 					//select Favorite
+					ButtonCategory.setText("Favorite");
 					IsFavorate = true;
 				} else {
 					Log.i(TAG, "CategoryList CategoryList.size()=" + String.valueOf(CategoryList.size()));
