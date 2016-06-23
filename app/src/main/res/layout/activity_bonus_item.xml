@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
+    android:id="@+id/ItemLinearLayout"
     android:paddingBottom="5dp">
     <ImageView
         android:layout_width="200px"

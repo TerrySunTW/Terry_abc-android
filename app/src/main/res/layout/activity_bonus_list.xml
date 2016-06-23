@@ -107,8 +107,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="7dp">
+        android:layout_height="wrap_content">
         <View
             android:id="@+id/view_position1"
             android:layout_weight="1"

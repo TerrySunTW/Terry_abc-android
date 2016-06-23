@@ -67,7 +67,7 @@ public class Adapter_BonusList extends BaseAdapter {
 
             stringPairList.add(_ListItem_Actions);
         }
-
+        stringPairList.add(null);
 
     }
 
@@ -101,10 +101,18 @@ public class Adapter_BonusList extends BaseAdapter {
         }
 
         final ListItem_Actions _ListItem_Actions=stringPairList.get(position);
+        if(_ListItem_Actions==null)
+        {
+            LinearLayout _LinearLayout = (LinearLayout) convertView.findViewById(R.id.ItemLinearLayout);
+            _LinearLayout.setVisibility(View.INVISIBLE);
+            return convertView;
+        }
         final DB_Cards CardInfo =_ListItem_Actions.getCardInfo();
         final DB_Events EntityCardEvent= _ListItem_Actions.getEntityCardEvent();
         final DB_Events VirtualCardEvent= _ListItem_Actions.getVirtualCardEvent();
 
+        LinearLayout _LinearLayout = (LinearLayout) convertView.findViewById(R.id.ItemLinearLayout);
+        _LinearLayout.setVisibility(View.VISIBLE);
 
         ImageView CardButton = (ImageView) convertView.findViewById(R.id.CardButton);
         CardButton.setImageBitmap(_ListItem_Actions.getItemImage());
