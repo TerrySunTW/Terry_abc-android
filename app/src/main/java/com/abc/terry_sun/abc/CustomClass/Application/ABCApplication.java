@@ -24,7 +24,6 @@ import java.util.Map;
         resToastText = R.string.crash_toast_text)
 public class ABCApplication extends SugarApp {
         private static Context context;
-        private Map<Object, Object> MyCache = new HashMap<Object, Object>();
         @Override
         public void onCreate() {
                 super.onCreate();
@@ -34,17 +33,5 @@ public class ABCApplication extends SugarApp {
         }
         public static Context getAppContext() {
                 return ABCApplication.context;
-        }
-        public List<ListItem_Actions> GetCacheBounsPairList(List<DB_Cards> CardList)
-        {
-                if(MyCache.containsKey(CardList))
-                {
-                        return (List<ListItem_Actions>)MyCache.get(CardList);
-                }
-                return null;
-        }
-        public void SetCacheBounsPairList(List<DB_Cards> CardList,List<ListItem_Actions> Value)
-        {
-                MyCache.put(CardList,Value);
         }
 }

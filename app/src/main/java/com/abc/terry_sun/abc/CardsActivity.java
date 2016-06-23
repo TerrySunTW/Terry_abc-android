@@ -170,7 +170,6 @@ public class CardsActivity extends BaseFragment {
                 ResetMenuStatusForChangeCategory();
                 if (item.getItemId() == 1) {
                     //Select all && Reset Menu
-                    IsFavorate=false;
                     ShowCard(null);
                 } else if (item.getItemId() == 2) {
                     //select Favorite
@@ -178,7 +177,6 @@ public class CardsActivity extends BaseFragment {
                     ButtonCategory.setText("Favorite");
                     FavoriteCardListDataSetting();
                 } else {
-                    IsFavorate=false;
                     for (CategoryInfo CategoryInfoItem : CategoryList) {
                         if (CategoryInfoItem.getCategoryName().equals(item.getTitle().toString())) {
                             ButtonCategory.setText(item.getTitle().toString());
@@ -281,6 +279,7 @@ public class CardsActivity extends BaseFragment {
     }
 
     private void ResetMenuStatusForChangeCategory() {
+        IsFavorate=false;
         SelectedCategoryID="";
         SelectedGroupID="";
         SelectedRepresentativeID="";

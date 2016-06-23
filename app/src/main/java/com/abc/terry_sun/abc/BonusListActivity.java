@@ -186,29 +186,25 @@ public class BonusListActivity extends BaseFragment {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
 				Log.i(TAG, "onMenuItemClick item.getItemId()="+String.valueOf(item.getItemId()));
+				ResetMenuStatusForChangeCategory();
 				if (item.getItemId() == 1) {
+					SelectedCategoryID="";
 					//Select all && Reset Menu
-					ResetMenuStatusForChangeCategory();
-					IsFavorate = false;
-					Update_List();
 				} else if (item.getItemId() == 2) {
 					//select Favorite
 					IsFavorate = true;
-					Update_List();
 				} else {
-					IsFavorate = false;
 					Log.i(TAG, "CategoryList CategoryList.size()=" + String.valueOf(CategoryList.size()));
-
 					for (CategoryInfo CategoryInfoItem : CategoryList) {
 						if (CategoryInfoItem.getCategoryName().equals(item.getTitle().toString())) {
 							ButtonCategory.setText(item.getTitle().toString());
 							SelectedCategoryID = CategoryInfoItem.getCategoryID();
-							Update_List();
 							GroupDataSetting();
+							break;
 						}
 					}
-
 				}
+				Update_List();
 
 				return false;
 			}
@@ -217,7 +213,7 @@ public class BonusListActivity extends BaseFragment {
 			@Override
 			public void onDismiss(PopupMenu popupMenu) {
 				//ButtonCategory.setShowOutline(false);
-				ViewIndication1.setVisibility(View.INVISIBLE);
+				//ViewIndication1.setVisibility(View.INVISIBLE);
 			}
 		});
 		popupMenu.getMenu().add(0,1,0,"All");
@@ -228,6 +224,8 @@ public class BonusListActivity extends BaseFragment {
 		}
 		popupMenu.show();
 		ViewIndication1.setVisibility(View.VISIBLE);
+		ViewIndication2.setVisibility(View.INVISIBLE);
+		ViewIndication3.setVisibility(View.INVISIBLE);
 	}
 
 	@OnClick(R.id.ButtonGroup)
@@ -255,7 +253,7 @@ public class BonusListActivity extends BaseFragment {
 			popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
 				@Override
 				public void onDismiss(PopupMenu popupMenu) {
-					ViewIndication2.setVisibility(View.INVISIBLE);
+					//ViewIndication2.setVisibility(View.INVISIBLE);
 				}
 			});
 			for(int i=0; i<GroupGalleryItemList.size(); i++)
@@ -264,6 +262,7 @@ public class BonusListActivity extends BaseFragment {
 			}
 			popupMenu.show();
 			ViewIndication2.setVisibility(View.VISIBLE);
+			ViewIndication3.setVisibility(View.INVISIBLE);
 		}
 	}
 	@OnClick(R.id.ButtonRepresentative)
@@ -289,7 +288,7 @@ public class BonusListActivity extends BaseFragment {
 			popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
 				@Override
 				public void onDismiss(PopupMenu popupMenu) {
-					ViewIndication3.setVisibility(View.INVISIBLE);
+					//ViewIndication3.setVisibility(View.INVISIBLE);
 				}
 			});
 			for(int i=0; i<RepresentativeGalleryItemList.size(); i++)
@@ -302,6 +301,7 @@ public class BonusListActivity extends BaseFragment {
 	}
 
 	private void ResetMenuStatusForChangeCategory() {
+		IsFavorate = false;
 		GroupGalleryItemList=null;
 		RepresentativeGalleryItemList=null;
 		SelectedCategoryID="";

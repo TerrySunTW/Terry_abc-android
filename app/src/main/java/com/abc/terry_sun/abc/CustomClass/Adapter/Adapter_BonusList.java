@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,7 @@ import java.util.List;
 public class Adapter_BonusList extends BaseAdapter {
     private Activity activity;
     private List<ListItem_Actions> stringPairList=new ArrayList<ListItem_Actions>();
-
+    final String TAG="Adapter_BonusList";
 
     public Adapter_BonusList(Activity activity) {
         super();
@@ -43,37 +44,31 @@ public class Adapter_BonusList extends BaseAdapter {
     }
 
     private void UpdateListItem(List<DB_Cards> CardList) {
+        Log.i(TAG, "CardList.size()="+ String.valueOf(CardList.size()));
 
-        List<ListItem_Actions> TempstringPairList= ((ABCApplication)ABCApplication.getAppContext()).GetCacheBounsPairList(CardList);
-        if(TempstringPairList!=null)
-        {
-            stringPairList=TempstringPairList;
+        Log.i(TAG, "TempstringPairList is null");
+        for (DB_Cards item : CardList) {
+            ListItem_Actions _ListItem_Actions = new ListItem_Actions();
+            _ListItem_Actions.setCardInfo(item);
+            _ListItem_Actions.setItemImage(BitmapFactory.decodeFile(StorageService.GetImagePath(item.getCardImage())));
+            _ListItem_Actions.setEntityCardID(item.getEntityCardID());
+            _ListItem_Actions.setDirectPoint(item.getDirectPoint());
+            _ListItem_Actions.setIndirectPoint(item.getIndirectPoint());
+            _ListItem_Actions.setIsOwner(item.getHasRealCard());
+
+            //get card bonus
+            //Entity Event
+            DB_Events EntityCardEvent = CardService.getInstance().GetEntityEventsByCardID(item.getCardID());
+            _ListItem_Actions.setEntityCardEvent(EntityCardEvent);
+
+            //Entity Event
+            DB_Events VirtualCardEvent = CardService.getInstance().GetVirtualEventsByCardID(item.getCardID());
+            _ListItem_Actions.setVirtualCardEvent(VirtualCardEvent);
+
+            stringPairList.add(_ListItem_Actions);
         }
-        else
-        {
-            for (DB_Cards item : CardList) {
-                ListItem_Actions _ListItem_Actions = new ListItem_Actions();
-                _ListItem_Actions.setCardInfo(item);
-                _ListItem_Actions.setItemImage(BitmapFactory.decodeFile(StorageService.GetImagePath(item.getCardImage())));
-                _ListItem_Actions.setEntityCardID(item.getEntityCardID());
-                _ListItem_Actions.setDirectPoint(item.getDirectPoint());
-                _ListItem_Actions.setIndirectPoint(item.getIndirectPoint());
-                _ListItem_Actions.setIsOwner(item.getHasRealCard());
 
-                //get card bonus
-                //Entity Event
-                DB_Events EntityCardEvent = CardService.getInstance().GetEntityEventsByCardID(item.getCardID());
-                _ListItem_Actions.setEntityCardEvent(EntityCardEvent);
 
-                //Entity Event
-                DB_Events VirtualCardEvent = CardService.getInstance().GetVirtualEventsByCardID(item.getCardID());
-                _ListItem_Actions.setVirtualCardEvent(VirtualCardEvent);
-
-                stringPairList.add(_ListItem_Actions);
-            }
-            ((ABCApplication)ABCApplication.getAppContext()).SetCacheBounsPairList(CardList,stringPairList);
-
-        }
     }
 
     public void UpdateData(List<DB_Cards> CardList)
