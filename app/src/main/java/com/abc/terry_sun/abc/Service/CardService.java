@@ -214,6 +214,16 @@ public class CardService {
             }
         }
     }
+    public void RemoveFriend(String FriendID)
+    {
+        List<DB_Friend> FriendList= DB_Friend.find(DB_Friend.class, "FRIEND_ID=?", FriendID);
+        if(FriendList.size()>0)
+        {
+            for(DB_Friend item:FriendList) {
+                DB_Friend.delete(item);
+            }
+        }
+    }
     public DB_Cards GetCardsByEntityCardID(String EntityCardID)
     {
         List<DB_Cards> CardList= DB_Cards.find(DB_Cards.class, "ENTITY_CARD_ID=?", EntityCardID);

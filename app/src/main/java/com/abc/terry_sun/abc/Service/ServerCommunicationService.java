@@ -348,4 +348,25 @@ public class ServerCommunicationService {
         }
         return VersionProvider.CurrentVersion.equals(ServerVersion);
     }
+    public void RemoveUserFriend(final String FriendID)
+    {
+        AsyncTaskHttpRequest _AsyncTaskHttpRequest = new AsyncTaskHttpRequest(
+                MainActivity.GetMainActivityContext(),
+                new AsyncTaskProcessingInterface() {
+                    @Override
+                    public void DoProcessing() {
+                        try {
+                            ContentValues UrlParams = new ContentValues();
+                            UrlParams.put("UserFacebookID", VariableProvider.getInstance().getFacebookID());
+                            UrlParams.put("FriendID", FriendID);
+                            OkHttpUtil.getStringFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.RemoveFriend, UrlParams));
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.e(TAG,ex.getMessage());
+                        }
+                    }
+                });
+        _AsyncTaskHttpRequest.execute();
+    }
 }

@@ -4,17 +4,23 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.abc.terry_sun.abc.Entities.DB_Friend;
+import com.abc.terry_sun.abc.MainActivity;
 import com.abc.terry_sun.abc.Models.ListItem_Friend;
 import com.abc.terry_sun.abc.R;
+import com.abc.terry_sun.abc.Service.CardService;
 import com.abc.terry_sun.abc.Service.FriendService;
 import com.abc.terry_sun.abc.Service.ImageService;
+import com.abc.terry_sun.abc.Service.ServerCommunicationService;
 import com.abc.terry_sun.abc.Service.StorageService;
 
 import java.util.ArrayList;
@@ -67,7 +73,32 @@ public class Adapter_FriendsList extends BaseAdapter {
         FriendButton.setImageBitmap(
                 ImageService.GetBitmapFromPath(StorageService.GetFriendImagePath(_ListItem_Friend.getFriendID()))
                 );
+        FriendButton.setTag(_ListItem_Friend);
+        FriendButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(final View v) {
+                final DB_Friend FriendData= (DB_Friend)v.getTag();
+                PopupMenu popupMenu = new PopupMenu(MainActivity.GetMainActivityContext(), v);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        ServerCommunicationService.getInstance().RemoveUserFriend(FriendData.getFriendID());
+                        CardService.getInstance().RemoveFriend(FriendData.getFriendID());
+                        ((View) v.getParent()).setVisibility(View.GONE);
+                        return false;
+                    }
+                });
+                popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
+                    @Override
+                    public void onDismiss(PopupMenu popupMenu) {
 
+                    }
+                });
+                popupMenu.getMenu().add(0,1,0,"Remove this item");
+                popupMenu.show();
+                return false;
+            }
+        });
 
         TextView TextView_Name = (TextView) convertView.findViewById(R.id.TextView_Name);
         TextView TextView_Content = (TextView) convertView.findViewById(R.id.TextView_Content);

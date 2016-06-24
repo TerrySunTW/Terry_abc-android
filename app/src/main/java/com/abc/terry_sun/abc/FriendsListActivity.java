@@ -5,17 +5,22 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.abc.terry_sun.abc.CustomClass.Adapter.Adapter_FriendsList;
 import com.abc.terry_sun.abc.Entities.DB_Friend;
+import com.abc.terry_sun.abc.Service.CardService;
 import com.abc.terry_sun.abc.Service.FriendService;
 import com.abc.terry_sun.abc.Service.ImageService;
+import com.abc.terry_sun.abc.Service.ServerCommunicationService;
 import com.abc.terry_sun.abc.Service.StorageService;
 
 import butterknife.ButterKnife;
@@ -57,9 +62,11 @@ public class FriendsListActivity extends Fragment {
 
 
 	private void List_Setting() {
+		Log.e(TAG, "List_Setting()");
 		_Adapter_FriendsList=new Adapter_FriendsList(getActivity());
 		listview_activity_list.setAdapter(_Adapter_FriendsList);
 		listview_activity_list.deferNotifyDataSetChanged();
+
 	}
 	void InitialParameter()
 	{
@@ -84,4 +91,6 @@ public class FriendsListActivity extends Fragment {
 		Log.e(TAG, "GoSettingActivity");
 		((BaseFragment) getParentFragment()).replaceFragment(new SettingActivity(), true);
 	}
+
+
 }
