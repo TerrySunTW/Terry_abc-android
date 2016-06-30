@@ -3,16 +3,15 @@ package com.abc.terry_sun.abc.Service;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -430,6 +429,11 @@ public class CardService {
     private void CardDetailUISetting(final Context context, final DB_Cards selectedCardInfo) {
         LinearLayout LinearLayout_Background =(LinearLayout)CardDetailDialog.findViewById(R.id.LinearLayout_Background);
         LinearLayout_Background.setBackground(new BitmapDrawable(CardService.getInstance().GetCardImageByCardID(selectedCardInfo.getCardID())));
+        //calculate photo height
+        int CardWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
+        int CardHeight=(CardWidth/5)*7;
+        LinearLayout_Background.getLayoutParams().height = CardHeight;
+        LinearLayout_Background.requestLayout();
 
         ImageView Button_Exit=(ImageView)CardDetailDialog.findViewById(R.id.Button_Exit);
         Button_Exit.setOnClickListener(new View.OnClickListener() {
