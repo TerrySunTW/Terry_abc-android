@@ -86,8 +86,8 @@ public class CardsActivity extends BaseFragment {
         context=getActivity();
         ButterKnife.inject(this, mRootView);
 
-        Log.i(TAG, "size.x=" + String.valueOf(ScreenService.GetScreenWidth(context)));
-        int ColumnWidth=(ScreenService.GetScreenWidth(context).x - 30) / 3;
+        Log.i(TAG, "size.x=" + String.valueOf(ScreenService.GetScreenWidth()));
+        int ColumnWidth=(ScreenService.GetScreenWidth() - 30) / 3;
         gridView.setColumnWidth(ColumnWidth);
         gridView.setNumColumns(3);
         InitialParameter();

@@ -3,15 +3,16 @@ package com.abc.terry_sun.abc.Service;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -410,7 +411,7 @@ public class CardService {
         CardDetailDialog.setContentView(R.layout.dialog_emulator);
         Window window = CardDetailDialog.getWindow();
         window.setBackgroundDrawable(new ColorDrawable(0));
-        window.setLayout(ScreenService.GetScreenWidth(context).x, ScreenService.GetScreenWidth(context).y - 150);
+        window.setLayout(ScreenService.GetScreenWidth(), ScreenService.GetScreenHeight());
 
         CardDetailUISetting(context, SelectedCardInfo);
         CardDetailBonusUISetting(SelectedCardInfo);
@@ -430,8 +431,10 @@ public class CardService {
         LinearLayout LinearLayout_Background =(LinearLayout)CardDetailDialog.findViewById(R.id.LinearLayout_Background);
         LinearLayout_Background.setBackground(new BitmapDrawable(CardService.getInstance().GetCardImageByCardID(selectedCardInfo.getCardID())));
         //calculate photo height
-        int CardWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
+        int CardWidth = ScreenService.GetScreenWidth();
         int CardHeight=(CardWidth/5)*7;
+        Log.i(TAG,"CardWidth="+ String.valueOf(CardWidth));
+        Log.i(TAG,"CardHeight="+ String.valueOf(CardHeight));
         LinearLayout_Background.getLayoutParams().height = CardHeight;
         LinearLayout_Background.requestLayout();
 

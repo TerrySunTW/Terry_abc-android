@@ -43,7 +43,7 @@ public class BonusService {
 
         BonusDialog.setContentView(R.layout.dialog_bonus_info);
         Window window = BonusDialog.getWindow();
-        window.setLayout(ScreenService.GetScreenWidth(context).x - 100, ScreenService.GetScreenWidth(context).y - 300);
+        window.setLayout(ScreenService.GetScreenWidth() - 100, ScreenService.GetScreenHeight() - 300);
 
 
 
@@ -122,7 +122,7 @@ public class BonusService {
         final DB_Cards SelectedCardInfo=CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
         BonusDialog.setContentView(R.layout.dialog_all_bonus_info);
         Window window = BonusDialog.getWindow();
-        window.setLayout(ScreenService.GetScreenWidth(context).x - 100, ScreenService.GetScreenWidth(context).y - 300);
+        window.setLayout(ScreenService.GetScreenWidth() - 100, ScreenService.GetScreenHeight() - 300);
 
 
         final DB_Events EntityCardEvent= CardService.getInstance().GetEntityEventsByCardID(SelectedCardInfo.getCardID());
