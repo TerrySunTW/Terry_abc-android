@@ -33,15 +33,15 @@ public class FriendsListActivity extends Fragment {
 
 	@InjectView(R.id.listview_activity_list)
 	ListView listview_activity_list;
-	@InjectView(R.id.TextViewName)
+	@InjectView(R.id.TextView_Name)
 	TextView TextViewName;
-	@InjectView(R.id.TextViewCard)
+	@InjectView(R.id.TextView_Content)
 	TextView TextViewCard;
-	@InjectView(R.id.TextViewID)
-	TextView TextViewID;
 
 	@InjectView(R.id.ButtonAddFriendID)
 	Button ButtonAddFriend;
+	@InjectView(R.id.MyButton)
+	ImageButton MyImageButton;
 
 	final String TAG="FriendsListActivity";
 	static Adapter_FriendsList _Adapter_FriendsList;
@@ -71,15 +71,17 @@ public class FriendsListActivity extends Fragment {
 	void InitialParameter()
 	{
 		DB_Friend _DB_Friend= FriendService.getInstance().GetMyInfo();
-		TextViewName.setText(_DB_Friend.getFriendName());
-		TextViewCard.setText(_DB_Friend.getCardCount());
-		TextViewID.setText(_DB_Friend.getFriendID());
+		TextViewName.setText(_DB_Friend.getFriendName() + "(ID:"+_DB_Friend.getFriendID()+")");
+		TextViewCard.setText("Card:"+_DB_Friend.getCardCount());
 		ButtonAddFriend.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				FriendService.getInstance().AddFriendDialog();
 			}
 		});
+		MyImageButton.setImageBitmap(
+				ImageService.GetBitmapFromPath(StorageService.GetFriendImagePath(_DB_Friend.getFriendID()))
+		);
 	}
 	public static void UpdateList()
 	{
