@@ -160,7 +160,7 @@ public class R_CardReadFriendCard extends Fragment implements ZBarScannerView.Re
                                                         int which) {
                                         CardService.getInstance().ShowCardDetailDialog(
                                                 CardService.getInstance().GetEntityCardIDByCardID(String.valueOf(GotCardID)),
-                                                null,
+                                                "successfully read a virtual card.",
                                                 MainActivity.MainActivityContext);
                                         TextView_Log.setText(TextView_Log.getText() + "\n" + LastLogMessage);
                                     }
@@ -171,7 +171,7 @@ public class R_CardReadFriendCard extends Fragment implements ZBarScannerView.Re
                         //success //entity card
                         CardService.getInstance().ShowCardDetailDialog(
                                 CardService.getInstance().GetEntityCardIDByCardID(String.valueOf(EntityCardID)),
-                                null,
+                                "successfully read a real card.",
                                 MainActivity.MainActivityContext);
                         TextView_Log.setText(TextView_Log.getText()+"\n"+LastLogMessage);
                         break;
