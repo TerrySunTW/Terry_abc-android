@@ -37,7 +37,6 @@
                     android:layout_marginLeft="5dp" />
                 <View
                     android:id="@+id/ViewIndication1"
-                    android:visibility="invisible"
                     android:background="#03A9F4"
                     android:layout_width="fill_parent"
                     android:layout_height="5sp"></View>
