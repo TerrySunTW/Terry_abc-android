@@ -152,10 +152,9 @@
         android:layout_width="match_parent"
         android:layout_height="3dp"
         android:background="@android:color/darker_gray"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="2dp"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginRight="10dp" />
+        android:layout_marginRight="2dp" />
     <ListView android:id="@+id/listview_activity_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
