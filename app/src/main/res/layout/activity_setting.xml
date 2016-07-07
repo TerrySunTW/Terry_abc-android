@@ -7,14 +7,12 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:background="#323331"
-        android:paddingBottom="5dp">
+        android:background="#323331">
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:baselineAligned="false"
-            android:paddingTop="5dp"
             >
             <LinearLayout
                 android:orientation="vertical"

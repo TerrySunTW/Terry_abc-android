@@ -62,7 +62,6 @@ public class FriendsListActivity extends Fragment {
 
 
 	private void List_Setting() {
-		Log.e(TAG, "List_Setting()");
 		_Adapter_FriendsList=new Adapter_FriendsList(getActivity());
 		listview_activity_list.setAdapter(_Adapter_FriendsList);
 		listview_activity_list.deferNotifyDataSetChanged();
@@ -71,7 +70,7 @@ public class FriendsListActivity extends Fragment {
 	void InitialParameter()
 	{
 		DB_Friend _DB_Friend= FriendService.getInstance().GetMyInfo();
-		TextViewName.setText(_DB_Friend.getFriendName() + "(ID:"+_DB_Friend.getFriendID()+")");
+		TextViewName.setText(_DB_Friend.getFriendName() + " (ID:"+_DB_Friend.getFriendID()+")");
 		TextViewCard.setText("Card:"+_DB_Friend.getCardCount());
 		ButtonAddFriend.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -90,7 +89,6 @@ public class FriendsListActivity extends Fragment {
 	}
 	@OnClick(R.id.ButtonSetting)
 	public void GoSettingActivity() {
-		Log.e(TAG, "GoSettingActivity");
 		((BaseFragment) getParentFragment()).replaceFragment(new SettingActivity(), true);
 	}
 
