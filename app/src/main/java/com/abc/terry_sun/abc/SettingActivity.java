@@ -3,6 +3,7 @@ package com.abc.terry_sun.abc;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.facebook.login.widget.LoginButton;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 
 /**
@@ -66,4 +68,8 @@ public class SettingActivity extends Fragment {
         }
     }
 
+    @OnClick(R.id.ButtonLink)
+    public void GoLinkActivity() {
+        ((BaseFragment) getParentFragment()).replaceFragment(new FriendsListActivity(), true);
+    }
 }
