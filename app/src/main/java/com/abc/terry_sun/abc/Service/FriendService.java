@@ -29,6 +29,7 @@ public class FriendService {
     public static FriendService getInstance() {
         return _FriendService;
     }
+    static String GotFriendID="";
     public List<DB_Friend> GetAllFriends()
     {
         List<DB_Friend> list=DB_Friend.listAll(DB_Friend.class);
@@ -64,15 +65,25 @@ public class FriendService {
                                         @Override
                                         public void DoProcessing() {
                                             //send to server
-                                            ServerCommunicationService.getInstance().AddFriend(EditTextFriendIDInput.getText().toString());
+                                            GotFriendID=ServerCommunicationService.getInstance().AddFriend(EditTextFriendIDInput.getText().toString());
                                             //update friends info
-                                            ServerCommunicationService.getInstance().UpdateFriendInfo();
+                                            if(GotFriendID!="0")
+                                            {
+                                                ServerCommunicationService.getInstance().UpdateFriendInfo();
+                                            }
                                         }
                                     },
                                     new AsyncTaskPostProcessingInterface() {
                                         @Override
                                         public void DoProcessing() {
-                                            FriendsListActivity.UpdateList();
+                                            if(GotFriendID.equals("0"))
+                                            {
+                                                ProcessControlService.AlertMessage(MainActivity.GetMainActivityContext(),"無此帳號!!");
+                                            }
+                                            else
+                                            {
+                                                FriendsListActivity.UpdateList();
+                                            }
                                         }
                                     }
                             ).execute();
