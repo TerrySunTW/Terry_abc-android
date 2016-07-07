@@ -74,8 +74,8 @@ public class FriendsListActivity extends Fragment {
 	void InitialParameter()
 	{
 		DB_Friend _DB_Friend= FriendService.getInstance().GetMyInfo();
-		TextViewName.setText(_DB_Friend.getFriendName() + " (ID:"+_DB_Friend.getFriendID()+")");
-		TextViewCard.setText("Card:"+_DB_Friend.getCardCount());
+		TextViewName.setText(_DB_Friend.getFriendName());
+		TextViewCard.setText("Card:"+_DB_Friend.getCardCount() + "    ID:"+_DB_Friend.getFriendID());
 		ButtonAddFriend.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
