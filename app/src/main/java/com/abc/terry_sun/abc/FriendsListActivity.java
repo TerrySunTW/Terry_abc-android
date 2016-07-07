@@ -43,6 +43,9 @@ public class FriendsListActivity extends Fragment {
 	@InjectView(R.id.MyButton)
 	ImageButton MyImageButton;
 
+
+	static View AddFriendViewIndication;
+
 	final String TAG="FriendsListActivity";
 	static Adapter_FriendsList _Adapter_FriendsList;
 
@@ -53,6 +56,7 @@ public class FriendsListActivity extends Fragment {
 		if (mRootView == null){
 			mRootView = inflater.inflate(R.layout.activity_friends_list,container,false);
 		}
+		AddFriendViewIndication = mRootView.findViewById(R.id.ViewIndication1);
 		context=getActivity();
 		ButterKnife.inject(this, mRootView);
 		InitialParameter();
@@ -75,6 +79,7 @@ public class FriendsListActivity extends Fragment {
 		ButtonAddFriend.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				AddFriendViewIndication.setVisibility(View.VISIBLE);
 				FriendService.getInstance().AddFriendDialog();
 			}
 		});
@@ -90,6 +95,14 @@ public class FriendsListActivity extends Fragment {
 	@OnClick(R.id.ButtonSetting)
 	public void GoSettingActivity() {
 		((BaseFragment) getParentFragment()).replaceFragment(new SettingActivity(), true);
+	}
+	public static void SetViewIndicationInvisible() {
+
+		if(context!=null)
+		{
+			AddFriendViewIndication.findViewById(R.id.ViewIndication1);
+			AddFriendViewIndication.setVisibility(View.GONE);
+		}
 	}
 
 

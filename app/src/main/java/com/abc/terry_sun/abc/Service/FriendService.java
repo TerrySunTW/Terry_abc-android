@@ -84,6 +84,7 @@ public class FriendService {
                                             {
                                                 FriendsListActivity.UpdateList();
                                             }
+                                            FriendsListActivity.SetViewIndicationInvisible();
                                         }
                                     }
                             ).execute();
@@ -97,6 +98,7 @@ public class FriendService {
                     public void onClick(DialogInterface dialog, int which) {
                         imm.toggleSoftInput(InputMethodManager.HIDE_NOT_ALWAYS, 0);
                         dialog.cancel();
+                        FriendsListActivity.SetViewIndicationInvisible();
                     }
                 });
         AddFriendDialog.show();

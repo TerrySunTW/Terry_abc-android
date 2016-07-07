@@ -105,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public Fragment getItem(int position) {
 				int TempPosition=position;
-				Log.e(TAG,"position="+String.valueOf(position));
 				return mFragmentList.get(TempPosition);
 			}
 
