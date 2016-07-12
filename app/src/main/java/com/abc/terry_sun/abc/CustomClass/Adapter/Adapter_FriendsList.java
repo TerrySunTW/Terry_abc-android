@@ -104,7 +104,7 @@ public class Adapter_FriendsList extends BaseAdapter {
         TextView TextView_Content = (TextView) convertView.findViewById(R.id.TextView_Content);
 
         TextView_Name.setText(_ListItem_Friend.getFriendName());
-        TextView_Content.setText("Card:"+_ListItem_Friend.getCardCount() + "    ID:"+_ListItem_Friend.getFriendID());
+        TextView_Content.setText("ID:"+_ListItem_Friend.getFriendID() + "    Card:"+_ListItem_Friend.getCardCount());
 
         return convertView;
     }
