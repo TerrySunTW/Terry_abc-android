@@ -64,7 +64,7 @@ public class AdapterCardsImage extends BaseAdapter {
             }
             else
             {
-                imageView.setBackgroundColor(Color.BLACK);
+                imageView.setBackgroundColor(Color.GRAY);
             }
 
         } else {

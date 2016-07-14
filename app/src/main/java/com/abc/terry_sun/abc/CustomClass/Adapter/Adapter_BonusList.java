@@ -123,7 +123,7 @@ public class Adapter_BonusList extends BaseAdapter {
         }
         else
         {
-            CardButton.setBackgroundColor(Color.BLACK);
+            CardButton.setBackgroundColor(Color.GRAY);
         }
         CardButton.setOnClickListener(new View.OnClickListener() {
             @Override
