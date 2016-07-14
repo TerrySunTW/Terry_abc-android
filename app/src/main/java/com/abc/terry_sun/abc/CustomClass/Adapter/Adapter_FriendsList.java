@@ -84,7 +84,9 @@ public class Adapter_FriendsList extends BaseAdapter {
                     public boolean onMenuItemClick(MenuItem item) {
                         ServerCommunicationService.getInstance().RemoveUserFriend(FriendData.getFriendID());
                         CardService.getInstance().RemoveFriend(FriendData.getFriendID());
-                        ((View) v.getParent()).setVisibility(View.GONE);
+                        FriendData.delete();
+                        UpdateData();
+                        notifyDataSetChanged();
                         return false;
                     }
                 });
