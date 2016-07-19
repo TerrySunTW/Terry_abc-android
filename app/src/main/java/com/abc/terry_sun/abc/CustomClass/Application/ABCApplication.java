@@ -8,6 +8,7 @@ import com.abc.terry_sun.abc.R;
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 import com.orm.SugarApp;
 
+import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 
@@ -29,7 +30,7 @@ public class ABCApplication extends SugarApp {
                 super.onCreate();
                 TypefaceProvider.registerDefaultIconSets();
                 ABCApplication.context = getApplicationContext();
-                //ACRA.init(this);
+                ACRA.init(this);
         }
         public static Context getAppContext() {
                 return ABCApplication.context;
