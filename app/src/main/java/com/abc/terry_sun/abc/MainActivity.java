@@ -3,6 +3,7 @@ package com.abc.terry_sun.abc;
 import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 		ButterKnife.inject(this);
 		MainActivityContext=this;
 		MainCardImageButton=ImageButtonMainCard;
-
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 		DB_Cards MainCard= CardService.getInstance().GetMainCards();
 		if(MainCard!=null) {
