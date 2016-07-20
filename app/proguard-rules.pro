@@ -64,3 +64,11 @@
 }
 #db
 -keep class com.abc.terry_sun.abc.Entities.** { *; }
+
+#lombok
+-dontwarn javax.**
+-dontwarn lombok.**
+-dontwarn org.apache.**
+-dontwarn com.squareup.**
+-dontwarn com.sun.**
+-dontwarn **retrofit**
