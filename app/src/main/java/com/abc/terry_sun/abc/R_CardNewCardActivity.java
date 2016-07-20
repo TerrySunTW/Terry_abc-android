@@ -16,12 +16,10 @@ import com.abc.terry_sun.abc.Entities.DB_Cards;
 import com.abc.terry_sun.abc.Service.CardService;
 import com.abc.terry_sun.abc.Service.ProcessControlService;
 import com.abc.terry_sun.abc.Service.ServerCommunicationService;
-import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
+
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 /**

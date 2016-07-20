@@ -20,12 +20,6 @@ import com.abc.terry_sun.abc.Provider.VariableProvider;
 import com.abc.terry_sun.abc.Service.CardService;
 import com.abc.terry_sun.abc.Service.ProcessControlService;
 import com.abc.terry_sun.abc.Service.ServerCommunicationService;
-import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
-
-
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-import me.dm7.barcodescanner.zbar.BarcodeFormat;
 import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
 /**

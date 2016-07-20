@@ -16,8 +16,8 @@ import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.widget.LoginButton;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 
 
@@ -28,8 +28,7 @@ public class SettingActivity extends Fragment {
     LoginButton loginButton;
     CallbackManager callbackManager;
 
-    @InjectView(R.id.username)
-    protected TextView TextViewUsername;
+    @BindView(R.id.username)protected TextView TextViewUsername;
 
     Context context;
     private View mRootView;
@@ -40,7 +39,7 @@ public class SettingActivity extends Fragment {
         if (mRootView == null){
             mRootView = inflater.inflate(R.layout.activity_setting,container,false);
         }
-        ButterKnife.inject(this, mRootView);
+        ButterKnife.bind(this, mRootView);
         callbackManager = CallbackManager.Factory.create();
         TextViewUsername.setText(VariableProvider.getInstance().getFacebookUserName());
 

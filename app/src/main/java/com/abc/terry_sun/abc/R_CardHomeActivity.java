@@ -26,7 +26,7 @@ public class R_CardHomeActivity extends BaseFragment {
             mRootView = inflater.inflate(R.layout.activity_r_cardhome,container,false);
         }
         context=getActivity();
-        ButterKnife.inject(this, mRootView);
+        ButterKnife.bind(this, mRootView);
         return mRootView;
     }
 

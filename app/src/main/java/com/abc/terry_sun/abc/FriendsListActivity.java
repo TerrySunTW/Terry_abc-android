@@ -23,25 +23,20 @@ import com.abc.terry_sun.abc.Service.ImageService;
 import com.abc.terry_sun.abc.Service.ServerCommunicationService;
 import com.abc.terry_sun.abc.Service.StorageService;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 
 
 public class FriendsListActivity extends Fragment {
 	/** Called when the activity is first created. */
 
-	@InjectView(R.id.listview_activity_list)
-	ListView listview_activity_list;
-	@InjectView(R.id.TextView_Name)
-	TextView TextViewName;
-	@InjectView(R.id.TextView_Content)
-	TextView TextViewCard;
+	@BindView(R.id.listview_activity_list)ListView listview_activity_list;
+	@BindView(R.id.TextView_Name)TextView TextViewName;
+	@BindView(R.id.TextView_Content)TextView TextViewCard;
 
-	@InjectView(R.id.ButtonAddFriendID)
-	Button ButtonAddFriend;
-	@InjectView(R.id.MyButton)
-	ImageButton MyImageButton;
+	@BindView(R.id.ButtonAddFriendID)Button ButtonAddFriend;
+	@BindView(R.id.MyButton)ImageButton MyImageButton;
 
 
 	static View AddFriendViewIndication;
@@ -58,7 +53,7 @@ public class FriendsListActivity extends Fragment {
 		}
 		AddFriendViewIndication = mRootView.findViewById(R.id.ViewIndication1);
 		context=getActivity();
-		ButterKnife.inject(this, mRootView);
+		ButterKnife.bind(this, mRootView);
 		InitialParameter();
 		List_Setting();
 		return mRootView;

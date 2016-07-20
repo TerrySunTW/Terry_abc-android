@@ -9,8 +9,8 @@ import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
 import com.abc.terry_sun.abc.Provider.BusProvider;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 
 /**
@@ -18,17 +18,15 @@ import butterknife.OnClick;
  */
 public class Test_EventBusActivity extends Activity {
 
-    @InjectView(R.id.editTextUsername)
-    protected EditText editTextUsername;
+    @BindView(R.id.editTextUsername)protected EditText editTextUsername;
 
-    @InjectView(R.id.editTextPassword)
-    protected EditText editTextPassword;
+    @BindView(R.id.editTextPassword)protected EditText editTextPassword;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_eventbustest);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
     }
 
     @Override

@@ -9,8 +9,8 @@ import com.abc.terry_sun.abc.Entities.TestDB_Book;
 
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 
 /**
@@ -18,17 +18,15 @@ import butterknife.OnClick;
  */
 public class Test_DBActivity extends Activity {
 
-    @InjectView(R.id.editTextUsername)
-    protected EditText editTextUsername;
+    @BindView(R.id.editTextUsername)protected EditText editTextUsername;
 
-    @InjectView(R.id.editTextPassword)
-    protected EditText editTextPassword;
+    @BindView(R.id.editTextPassword)protected EditText editTextPassword;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dbtest);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
     }
 
     @OnClick(R.id.buttonLogin)

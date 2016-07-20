@@ -21,8 +21,6 @@ import com.abc.terry_sun.abc.Service.ProcessControlService;
 import com.abc.terry_sun.abc.Service.ServerCommunicationService;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 /**
  * Created by terry_sun on 2015/7/20.

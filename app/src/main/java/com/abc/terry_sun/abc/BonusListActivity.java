@@ -30,39 +30,28 @@ import com.abc.terry_sun.abc.Service.ServerCommunicationService;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 
 
 public class BonusListActivity extends BaseFragment {
 	/** Called when the activity is first created. */
-	@InjectView(R.id.listview_activity_list)
-	ListView listview_activity_list;
+	@BindView(R.id.listview_activity_list)ListView listview_activity_list;
 
-	@InjectView(R.id.swipe)
-	SwipeRefreshLayout swipeRefreshLayout;
+	@BindView(R.id.swipe)SwipeRefreshLayout swipeRefreshLayout;
 
-	@InjectView(R.id.ButtonCategory)
-	Button ButtonCategory;
-	@InjectView(R.id.ButtonGroup)
-	Button ButtonGroup;
-	@InjectView(R.id.ButtonRepresentative)
-	Button ButtonRepresentative;
+	@BindView(R.id.ButtonCategory)Button ButtonCategory;
+	@BindView(R.id.ButtonGroup)Button ButtonGroup;
+	@BindView(R.id.ButtonRepresentative)Button ButtonRepresentative;
 
-	@InjectView(R.id.view_position1)
-	View view_position1;
-	@InjectView(R.id.view_position2)
-	View view_position2;
-	@InjectView(R.id.view_position3)
-	View view_position3;
+	@BindView(R.id.view_position1)View view_position1;
+	@BindView(R.id.view_position2)	View view_position2;
+	@BindView(R.id.view_position3)	View view_position3;
 
-	@InjectView(R.id.ViewIndication1)
-	View ViewIndication1;
-	@InjectView(R.id.ViewIndication2)
-	View ViewIndication2;
-	@InjectView(R.id.ViewIndication3)
-	View ViewIndication3;
+	@BindView(R.id.ViewIndication1)View ViewIndication1;
+	@BindView(R.id.ViewIndication2)View ViewIndication2;
+	@BindView(R.id.ViewIndication3)View ViewIndication3;
 
 	List<CategoryInfo> CategoryList;
 	List<GroupInfo> GroupList;
@@ -90,7 +79,7 @@ public class BonusListActivity extends BaseFragment {
 			mRootView = inflater.inflate(R.layout.activity_bonus_list,container,false);
 		}
 		context=getActivity();
-		ButterKnife.inject(this, mRootView);
+		ButterKnife.bind(this, mRootView);
 		List_Setting();
 		InitialParameter();
 		return mRootView;

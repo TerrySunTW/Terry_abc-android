@@ -28,8 +28,8 @@ import com.abc.terry_sun.abc.Service.ServerCommunicationService;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 
 /**
@@ -37,29 +37,18 @@ import butterknife.OnClick;
  */
 public class CardsActivity extends BaseFragment {
 
-    @InjectView(R.id.gridView1)
-    GridView gridView;
-    @InjectView(R.id.ButtonCategory)
-    Button ButtonCategory;
-    @InjectView(R.id.ButtonGroup)
-    Button ButtonGroup;
-    @InjectView(R.id.ButtonRepresentative)
-    Button ButtonRepresentative;
+    @BindView(R.id.gridView1)GridView gridView;
+    @BindView(R.id.ButtonCategory)Button ButtonCategory;
+    @BindView(R.id.ButtonGroup)Button ButtonGroup;
+    @BindView(R.id.ButtonRepresentative)Button ButtonRepresentative;
 
-    @InjectView(R.id.view_position1)
-    View view_position1;
-    @InjectView(R.id.view_position2)
-    View view_position2;
-    @InjectView(R.id.view_position3)
-    View view_position3;
+    @BindView(R.id.view_position1)View view_position1;
+    @BindView(R.id.view_position2)View view_position2;
+    @BindView(R.id.view_position3)View view_position3;
 
-    @InjectView(R.id.ViewIndication1)
-    View ViewIndication1;
-    @InjectView(R.id.ViewIndication2)
-    View ViewIndication2;
-    @InjectView(R.id.ViewIndication3)
-    View ViewIndication3;
-
+    @BindView(R.id.ViewIndication1)View ViewIndication1;
+    @BindView(R.id.ViewIndication2)View ViewIndication2;
+    @BindView(R.id.ViewIndication3)View ViewIndication3;
 
 
     List<CategoryInfo> CategoryList;
@@ -84,9 +73,10 @@ public class CardsActivity extends BaseFragment {
             mRootView = inflater.inflate(R.layout.activity_cards,container,false);
         }
         context=getActivity();
-        ButterKnife.inject(this, mRootView);
+        ButterKnife.bind(this, mRootView);
 
         Log.i(TAG, "size.x=" + String.valueOf(ScreenService.GetScreenWidth()));
+        Log.i(TAG, "gridView=" + String.valueOf(gridView.getNumColumns()));
         int ColumnWidth=(ScreenService.GetScreenWidth() - 30) / 3;
         gridView.setColumnWidth(ColumnWidth);
         gridView.setNumColumns(3);
