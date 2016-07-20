@@ -40,13 +40,6 @@ import butterknife.InjectView;
 
 public class MainActivity extends AppCompatActivity {
 	final static String TAG="MainActivity";
-	/** Called when the activity is first created. */
-	@InjectView(R.id.ImageButtonMainCard)
-	ImageButton ImageButtonMainCard;
-
-
-
-
 	public static final String TAB1  = "tab_1_identifier";
 	public static final String TAB2  = "tab_2_identifier";
 	public static final String TAB3  = "tab_3_identifier";
@@ -73,13 +66,13 @@ public class MainActivity extends AppCompatActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		ButterKnife.inject(this);
 		MainActivityContext=this;
-		MainCardImageButton=ImageButtonMainCard;
+		MainCardImageButton=(ImageButton) findViewById(R.id.ImageButtonMainCard);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 		DB_Cards MainCard= CardService.getInstance().GetMainCards();
 		if(MainCard!=null) {
+			Log.i(TAG, "MainCardID=" + String.valueOf(MainCard.getCardID()));
 			ChangeMainCardImage(ImageService.GetBitmapFromImageName(MainCard.getCardImage()), MainCard.getEntityCardID());
 		}
 
@@ -192,7 +185,8 @@ public class MainActivity extends AppCompatActivity {
 	}
 	public static void ChangeMainCardImage(final Bitmap MainCardImage,final String EntityCardID)
 	{
-		//default NFC Card ID
+		Log.i(TAG, "EntityCardID=" + String.valueOf(EntityCardID));
+		Log.i(TAG, "MainCardImage.getByteCount=" + String.valueOf(MainCardImage.getByteCount()));
 		MainCardImageButton.setImageBitmap(MainCardImage);
 		MainCardImageButton.setTag(EntityCardID);
 		MainCardImageButton.setOnClickListener(new View.OnClickListener() {
