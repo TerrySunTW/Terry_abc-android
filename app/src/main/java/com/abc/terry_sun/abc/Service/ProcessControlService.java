@@ -17,7 +17,13 @@ public class ProcessControlService {
     {
         CloseProgressDialog();
         if(!((Activity) _Context).isFinishing()) {
-            MyProgressDialog = ProgressDialog.show(_Context, Title, Message, true);
+            try
+            {
+                MyProgressDialog = ProgressDialog.show(_Context, Title, Message, true);
+            }
+            catch (Exception ex)
+            {
+            }
         }
     }
     public static void CloseProgressDialog()

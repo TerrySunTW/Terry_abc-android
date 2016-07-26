@@ -20,11 +20,11 @@ android {
     }
     buildTypes {
         release {
-            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
         }
         debug{
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //minifyEnabled true
+            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     productFlavors {
@@ -58,7 +58,7 @@ dependencies {
     //web servcie utility
     compile 'com.google.code.gson:gson:2.3.+'
     //json utility
-    compile 'com.github.satyan:sugar:1.4'
+    compile 'com.github.satyan:sugar:1.5'
     //orm utility
     compile 'com.squareup.okhttp:okhttp:2.4.0'
 
