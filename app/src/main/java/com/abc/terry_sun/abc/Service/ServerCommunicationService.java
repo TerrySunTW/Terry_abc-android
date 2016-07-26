@@ -262,6 +262,7 @@ public class ServerCommunicationService {
 
         for (DB_Events Item: onlineEvents)
         {
+            Item.setEndDateFormated(StringService.GetJsonDate(Item.getEndDate()));
             Item.save();
         }
     }

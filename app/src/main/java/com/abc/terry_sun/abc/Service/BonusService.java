@@ -20,6 +20,7 @@ import com.abc.terry_sun.abc.Models.BaseReturnModel;
 import com.abc.terry_sun.abc.Provider.VariableProvider;
 import com.abc.terry_sun.abc.R;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,6 +31,13 @@ public class BonusService {
     private static final BonusService _BonusService = new BonusService();
     public static BonusService getInstance() {
         return _BonusService;
+    }
+
+    public static String GetBonusLeftDayString(DB_Events _DB_Events) {
+        Date CurrentTime=new Date();
+        long diff = Math.abs(_DB_Events.getEndDateFormated().getTime() - CurrentTime.getTime());
+        long diffDays = diff / (24 * 60 * 60 * 1000);
+        return String.valueOf(diffDays);
     }
     public void ShowSingleBonusDialog(final String CardEventID,final String EntityCardID)
     {

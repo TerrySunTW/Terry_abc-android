@@ -2,6 +2,8 @@ package com.abc.terry_sun.abc.Entities;
 
 import com.orm.SugarRecord;
 
+import java.util.Date;
+
 import lombok.Data;
 
 /**
@@ -23,4 +25,6 @@ public class DB_Events extends SugarRecord {
     String IndirectPointTarget;
     Boolean HasExchanged;
     String Link;
+    String EndDate;
+    Date EndDateFormated;
 }

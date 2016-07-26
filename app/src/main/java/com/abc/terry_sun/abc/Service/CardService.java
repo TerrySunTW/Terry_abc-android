@@ -576,8 +576,8 @@ public class CardService {
         Bonus1_Title_Point.setText(selectedCardInfo.getDirectPoint());
         Bonus1_Title2.setText("/"+EntityCardEvent.getDirectPointTarget()+")");
 
-        Bonus1_Content.setText(EntityCardEvent.getEventDescription());
-
+        //Bonus1_Content.setText(EntityCardEvent.getEventDescription());
+        Bonus1_Content.setText(BonusService.GetBonusLeftDayString(EntityCardEvent)+" days left!");
 
         TextView Bonus2_Title = (TextView) CardDetailDialog.findViewById(R.id.action2_title);
         TextView Bonus2_Title_Point = (TextView) CardDetailDialog.findViewById(R.id.action2_title_point);
@@ -589,7 +589,8 @@ public class CardService {
         Bonus2_Title_Point.setText(selectedCardInfo.getIndirectPoint());
         Bonus2_Title2.setText("/"+EntityCardEvent.getIndirectPointTarget()+")");
 
-        Bonus2_Content.setText(VirtualCardEvent.getEventDescription());
+        //Bonus2_Content.setText(VirtualCardEvent.getEventDescription());
+        Bonus2_Content.setText(BonusService.GetBonusLeftDayString(VirtualCardEvent)+" days left!");
         if(VirtualCardEvent==null) {
             Bonus2_Title.setVisibility(View.GONE);
             Bonus2_Content.setVisibility(View.GONE);

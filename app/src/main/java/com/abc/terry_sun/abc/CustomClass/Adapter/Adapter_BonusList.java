@@ -27,6 +27,7 @@ import com.abc.terry_sun.abc.Service.CardService;
 import com.abc.terry_sun.abc.Service.StorageService;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -141,7 +142,10 @@ public class Adapter_BonusList extends BaseAdapter {
         Bonus1_Title_Point.setText(_ListItem_Actions.getDirectPoint());
         Bonus1_Title2.setText("/"+EntityCardEvent.getDirectPointTarget()+")");
 
-        Bonus1_Content.setText(EntityCardEvent.getEventDescription());
+
+        //Bonus1_Content.setText(EntityCardEvent.getEventDescription());
+
+        Bonus1_Content.setText(BonusService.GetBonusLeftDayString(EntityCardEvent)+" days left!");
 
 
         TextView Bonus2_Title = (TextView) convertView.findViewById(R.id.action2_title);
@@ -154,7 +158,8 @@ public class Adapter_BonusList extends BaseAdapter {
         Bonus2_Title_Point.setText(_ListItem_Actions.getIndirectPoint());
         Bonus2_Title2.setText("/" + VirtualCardEvent.getIndirectPointTarget() + ")");
 
-        Bonus2_Content.setText(VirtualCardEvent.getEventDescription());
+        Bonus2_Content.setText(BonusService.GetBonusLeftDayString(VirtualCardEvent)+" days left!");
+
         if(VirtualCardEvent==null) {
             Bonus2_Title.setVisibility(View.GONE);
             Bonus2_Content.setVisibility(View.GONE);
