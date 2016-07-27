@@ -2,11 +2,17 @@ package com.abc.terry_sun.abc.Service;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.abc.terry_sun.abc.BonusListActivity;
@@ -51,18 +57,22 @@ public class BonusService {
 
         BonusDialog.setContentView(R.layout.dialog_bonus_info);
         Window window = BonusDialog.getWindow();
-        window.setLayout(ScreenService.GetScreenWidth() - 100, ScreenService.GetScreenHeight() - 300);
+        window.setBackgroundDrawable(new ColorDrawable(0));
+        window.setLayout(ScreenService.GetScreenWidth(), ScreenService.GetScreenHeight());
 
-
+        TextView TextView_BonusLeftDay=(TextView)BonusDialog.findViewById(R.id.TextView_BonusLeftDay);
+        TextView_BonusLeftDay.setText(BonusService.GetBonusLeftDayString(_DB_Events) + " days left!!");
 
         final Button Button_Exchange=(Button)BonusDialog.findViewById(R.id.Button_Exchange);
-        Button_Exchange.setVisibility(View.INVISIBLE);
+        Button_Exchange.setVisibility(View.GONE);
         if(
             Integer.parseInt(SelectedCardInfo.getDirectPoint())>=Integer.parseInt(_DB_Events.getDirectPointTarget()) &&
             Integer.parseInt(SelectedCardInfo.getIndirectPoint())>=Integer.parseInt(_DB_Events.getIndirectPointTarget())
+                //&&沒有換過
                 )
         {
             Button_Exchange.setVisibility(View.VISIBLE);
+            TextView_BonusLeftDay.setVisibility(View.GONE);
         }
         if(_DB_Events.getHasExchanged())
         {
@@ -112,11 +122,30 @@ public class BonusService {
             }
         });
 
+        LinearLayout LinearLayout_Background =(LinearLayout)BonusDialog.findViewById(R.id.LinearLayout_Background);
+        LinearLayout_Background.setBackground(new BitmapDrawable(CardService.getInstance().GetCardImageByCardID(SelectedCardInfo.getCardID())));
+        int CardWidth = ScreenService.GetScreenWidth();
+        int CardHeight=(CardWidth/5)*7;
+        LinearLayout_Background.getLayoutParams().height = CardHeight;
+        LinearLayout_Background.requestLayout();
+
         TextView TextView_BonusTitle=(TextView)BonusDialog.findViewById(R.id.TextView_BonusTitle);
         TextView_BonusTitle.setText(_DB_Events.getEventTitle());
 
         TextView TextView_BonusContent=(TextView)BonusDialog.findViewById(R.id.TextView_BonusContent);
         TextView_BonusContent.setText(_DB_Events.getEventDescription());
+
+        TextView TextView_BonusLink=(TextView)BonusDialog.findViewById(R.id.TextView_BonusLink);
+        TextView_BonusLink.setTag(_DB_Events.getLink());
+        TextView_BonusLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = v.getTag().toString();
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                MainActivity.GetMainActivityContext().startActivity(i);
+            }
+        });
 
         BonusDialog.show();
     }
@@ -130,7 +159,7 @@ public class BonusService {
         final DB_Cards SelectedCardInfo=CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
         BonusDialog.setContentView(R.layout.dialog_all_bonus_info);
         Window window = BonusDialog.getWindow();
-        window.setLayout(ScreenService.GetScreenWidth() - 100, ScreenService.GetScreenHeight() - 300);
+        window.setLayout(ScreenService.GetScreenWidth(), ScreenService.GetScreenHeight());
 
 
         final DB_Events EntityCardEvent= CardService.getInstance().GetEntityEventsByCardID(SelectedCardInfo.getCardID());

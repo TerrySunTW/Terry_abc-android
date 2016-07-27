@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:layout_centerInParent="true"
+	android:visibility="gone">
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:layout_centerVertical="true"
+		android:background="@drawable/boder"
+		android:layout_marginTop="10dp">
+			<TextView android:id="@+id/TextViewMessage"
+				android:textColor="@color/textWhite"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="20dp"
+				android:layout_marginBottom="20dp"
+				android:layout_marginLeft="3dp"
+				android:layout_marginRight="3dp"
+				android:text="Message...Message...Message...Message..."/>
+	</LinearLayout>
+	<ImageView
+		android:id="@+id/ImageViewCloseMessage"
+		android:layout_width="50sp"
+		android:layout_height="50sp"
+		android:clickable="true"
+		android:src="@drawable/close"
+		android:layout_gravity="left|top"></ImageView>
+</FrameLayout>

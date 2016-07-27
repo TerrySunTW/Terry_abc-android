@@ -3,46 +3,72 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/ImageViewCloseBonus"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:clickable="true"
+        android:src="@drawable/close"
+        android:layout_gravity="left|top"></ImageView>
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <TableLayout
-                android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:id="@+id/LinearLayout_Background"
+            android:gravity="center_vertical">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="false"
-                android:stretchColumns="*">
-                <TableRow>
-                    <Button
-                        android:id="@+id/Button_Exchange"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="兌換"
-                        android:layout_gravity="center_horizontal" />
-                </TableRow>
-            </TableLayout>
-            <TextView
-                android:id="@+id/TextView_BonusTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="10% off Baseball Game ticket(2/5)" />
-            <TextView
-                android:id="@+id/TextView_BonusContent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="
-                Due date
-                兌換期限
-                From Whom (Link Chain)
-                Who did the actions(50).
-                Suggest who to R-Card.
-                " />
+                android:background="@android:color/black">
+                <Button
+                    android:id="@+id/Button_Exchange"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="兌換"
+                    android:visibility="gone"
+                    android:layout_gravity="center_horizontal" />
+
+                <TextView
+                    android:id="@+id/TextView_BonusLeftDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/textWhite"
+                    android:text="5 days left!!" />
+                <TextView
+                    android:id="@+id/TextView_BonusTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/textWhite"
+                    android:text="10% off Baseball Game ticket(2/5)" />
+                <TextView
+                    android:id="@+id/TextView_BonusContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/textWhite"
+                    android:text="
+                    Due date
+                    兌換期限
+                    From Whom (Link Chain)
+                    Who did the actions(50).
+                    Suggest who to R-Card.
+                    " />
+                <TextView
+                    android:id="@+id/TextView_BonusLink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|right"
+
+                    android:autoLink="web"
+                    android:linksClickable="true"
+                    android:textColor="@android:color/holo_blue_light"
+                    android:text="Bonus Link"
+                    android:singleLine="false"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
-    </ScrollView>
 </LinearLayout>

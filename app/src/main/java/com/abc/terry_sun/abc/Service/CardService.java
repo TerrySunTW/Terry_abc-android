@@ -433,8 +433,6 @@ public class CardService {
         //calculate photo height
         int CardWidth = ScreenService.GetScreenWidth();
         int CardHeight=(CardWidth/5)*7;
-        Log.i(TAG,"CardWidth="+ String.valueOf(CardWidth));
-        Log.i(TAG,"CardHeight="+ String.valueOf(CardHeight));
         LinearLayout_Background.getLayoutParams().height = CardHeight;
         LinearLayout_Background.requestLayout();
 
@@ -567,10 +565,10 @@ public class CardService {
             }
         });
 
-        TextView Bonus1_Title = (TextView) CardDetailDialog.findViewById(R.id.action1_title);
-        TextView Bonus1_Title_Point = (TextView) CardDetailDialog.findViewById(R.id.action1_title_point);
-        TextView Bonus1_Title2 = (TextView) CardDetailDialog.findViewById(R.id.action1_title2);
-        TextView Bonus1_Content = (TextView) CardDetailDialog.findViewById(R.id.action1_content);
+        TextView Bonus1_Title = (TextView) FrameLayout_CardBonus.findViewById(R.id.action1_title);
+        TextView Bonus1_Title_Point = (TextView) FrameLayout_CardBonus.findViewById(R.id.action1_title_point);
+        TextView Bonus1_Title2 = (TextView) FrameLayout_CardBonus.findViewById(R.id.action1_title2);
+        TextView Bonus1_Content = (TextView) FrameLayout_CardBonus.findViewById(R.id.action1_content);
 
         Bonus1_Title.setText(EntityCardEvent.getEventTitle()+"-DP:(");
         Bonus1_Title_Point.setText(selectedCardInfo.getDirectPoint());
@@ -579,10 +577,10 @@ public class CardService {
         //Bonus1_Content.setText(EntityCardEvent.getEventDescription());
         Bonus1_Content.setText(BonusService.GetBonusLeftDayString(EntityCardEvent)+" days left!");
 
-        TextView Bonus2_Title = (TextView) CardDetailDialog.findViewById(R.id.action2_title);
-        TextView Bonus2_Title_Point = (TextView) CardDetailDialog.findViewById(R.id.action2_title_point);
-        TextView Bonus2_Title2 = (TextView) CardDetailDialog.findViewById(R.id.action2_title2);
-        TextView Bonus2_Content = (TextView) CardDetailDialog.findViewById(R.id.action2_content);
+        TextView Bonus2_Title = (TextView) FrameLayout_CardBonus.findViewById(R.id.action2_title);
+        TextView Bonus2_Title_Point = (TextView) FrameLayout_CardBonus.findViewById(R.id.action2_title_point);
+        TextView Bonus2_Title2 = (TextView) FrameLayout_CardBonus.findViewById(R.id.action2_title2);
+        TextView Bonus2_Content = (TextView) FrameLayout_CardBonus.findViewById(R.id.action2_content);
 
 
         Bonus2_Title.setText(VirtualCardEvent.getEventTitle() +"-IP:(");
@@ -597,10 +595,10 @@ public class CardService {
         }
     }
     private void ShowMessage(String Message) {
-        final FrameLayout FrameLayout_Message=(FrameLayout)CardDetailDialog.findViewById(R.id.FrameLayout_Message);
+        final View FrameLayout_Message=CardDetailDialog.findViewById(R.id.FrameLayout_Message);
         FrameLayout_Message.setVisibility(View.VISIBLE);
 
-        final ImageView ImageViewCloseMessage=(ImageView)CardDetailDialog.findViewById(R.id.ImageViewCloseMessage);
+        final ImageView ImageViewCloseMessage=(ImageView)FrameLayout_Message.findViewById(R.id.ImageViewCloseMessage);
         ImageViewCloseMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -608,7 +606,7 @@ public class CardService {
             }
         });
 
-        final TextView TextViewMessage=(TextView)CardDetailDialog.findViewById(R.id.TextViewMessage);
+        final TextView TextViewMessage=(TextView)FrameLayout_Message.findViewById(R.id.TextViewMessage);
         TextViewMessage.setText(Message);
     }
 

@@ -23,6 +23,7 @@ public class ProcessControlService {
             }
             catch (Exception ex)
             {
+                ex.printStackTrace();
             }
         }
     }
