@@ -14,6 +14,7 @@ import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskProcessingInterface;
 import com.abc.terry_sun.abc.Provider.HttpURL_Provider;
 import com.abc.terry_sun.abc.Provider.VariableProvider;
 import com.abc.terry_sun.abc.Service.AppUpdateService;
+import com.abc.terry_sun.abc.Service.ProcessControlService;
 import com.abc.terry_sun.abc.Service.ServerCommunicationService;
 import com.abc.terry_sun.abc.Utilits.OkHttpUtil;
 import com.facebook.AccessToken;
@@ -117,6 +118,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 ServerCommunicationService.getInstance().UpdateServerInfo();
                                                 Intent intent = new Intent();
                                                 intent.setClass(LoginActivity.this, MainActivity.class);
+                                                ProcessControlService.CloseProgressDialog();
                                                 startActivity(intent);
                                                 finish();
                                             }
