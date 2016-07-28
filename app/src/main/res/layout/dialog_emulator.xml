@@ -22,6 +22,7 @@
                 android:layout_height="0dip"
                 android:layout_weight="1.09">
                 <include android:id="@+id/FrameLayout_CardBonus" layout="@layout/dialog_emulator_bonus" />
+                <include android:id="@+id/FrameLayout_CardBonusDetail" layout="@layout/dialog_emulator_bonusdetail" />
                 <include android:id="@+id/FrameLayout_Message" layout="@layout/dialog_emulator_message" />
 
                 <ImageView

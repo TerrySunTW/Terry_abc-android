@@ -1,39 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="wrap_content"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:layout_centerInParent="true"
-	android:visibility="gone">
+	android:visibility="gone"
+>
 
 	<LinearLayout
 
-		android:layout_width="wrap_content"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
 		android:layout_centerVertical="true"
 		android:background="@android:drawable/dark_header"
-		android:layout_marginTop="10dp"
-		android:padding="5dp">
+		android:layout_marginTop="15dp"
+		android:padding="10dp">
 
-		<ImageButton
+		<com.beardedhen.androidbootstrap.BootstrapButton
+			android:id="@+id/Button_Award"
 			android:layout_width="100sp"
 			android:layout_height="100sp"
-			android:scaleType="centerInside"
-			android:id="@+id/CardButton"
-			android:src="@drawable/smiling"
-			android:layout_gravity="center_vertical"
-			android:background="@null"
-			android:layout_marginTop="5dp"
-			android:layout_marginBottom="5dp" />
+			app:roundedCorners="true"
+			app:bootstrapBrand="primary"
+			app:bootstrapText="{fa_gift}Award"
+			android:layout_gravity="center_horizontal|right"
+			android:gravity="center_vertical|right"
+			style="@style/wrapping_button"
+			app:showOutline="true" />
 
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:orientation="vertical"
 			android:gravity="center_vertical">
-
 			<LinearLayout
-				android:id="@+id/LinearLayoutBonus1"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:orientation="vertical">
@@ -41,30 +42,28 @@
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:orientation="horizontal">
-					<TextView android:id="@+id/action1_title"
+					<TextView android:id="@+id/ActionDetail_title"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:textColor="@color/textWhite"
 						android:text="111111"/>
-					<TextView android:id="@+id/action1_title_point"
+					<TextView android:id="@+id/ActionDetail_point"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:textColor="@color/textRed"
 						android:text="111111"/>
-					<TextView android:id="@+id/action1_title2"
+					<TextView android:id="@+id/ActionDetail_title2"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:textColor="@color/textWhite"
 						android:text="111111"/>
 				</LinearLayout>
 
-				<TextView android:id="@+id/action1_content"
+				<TextView android:id="@+id/ActionDetail_left_message"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:textColor="@color/textWhite"
 					android:text="222222222"/>
-
-
 			</LinearLayout>
 			<View
 				android:layout_width="match_parent"
@@ -72,44 +71,16 @@
 				android:background="@android:color/darker_gray"
 				android:layout_marginLeft="10dp"
 				android:layout_marginRight="10dp" />
-			<LinearLayout
-				android:id="@+id/LinearLayoutBonus2"
-				android:layout_width="match_parent"
+
+			<TextView android:id="@+id/ActionDetail_content"
+				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:orientation="vertical">
-				<LinearLayout
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:orientation="horizontal">
-					<TextView android:id="@+id/action2_title"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:textColor="@color/textWhite"
-						android:text="111111"/>
-					<TextView android:id="@+id/action2_title_point"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:textColor="@color/textRed"
-						android:text="111111"/>
-					<TextView android:id="@+id/action2_title2"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:textColor="@color/textWhite"
-						android:text="111111"/>
-				</LinearLayout>
-
-				<TextView android:id="@+id/action2_content"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:textColor="@color/textWhite"
-					android:text="222222222"/>
-
-			</LinearLayout>
+				android:textColor="@color/textWhite"
+				android:text="222222222"/>
 		</LinearLayout>
-
 	</LinearLayout>
 	<ImageView
-		android:id="@+id/ImageViewCloseBonus"
+		android:id="@+id/ImageViewCloseBonusDetail"
 		android:layout_width="50sp"
 		android:layout_height="50sp"
 		android:clickable="true"

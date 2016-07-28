@@ -405,6 +405,10 @@ public class CardService {
     }
     public void ShowCardDetailDialog(final String EntityCardID,final String Message,final Context context,boolean IsMainCard)
     {
+        ShowCardDetailDialog(EntityCardID, Message, context, IsMainCard,null);
+    }
+    public void ShowCardDetailDialog(final String EntityCardID,final String Message,final Context context,boolean IsMainCard,DB_Events _DB_Events)
+    {
         CardDetailDialog=new Dialog(context);
         final DB_Cards SelectedCardInfo=CardService.getInstance().GetCardsByEntityCardID(EntityCardID);
 
@@ -415,6 +419,12 @@ public class CardService {
 
         CardDetailUISetting(context, SelectedCardInfo);
         CardDetailBonusUISetting(SelectedCardInfo);
+
+        if(_DB_Events!=null)
+        {
+            //setup bonus detail
+            CardDetailBonusDetailUISetting(SelectedCardInfo,_DB_Events);
+        }
 
         if(Message!=null)
         {
@@ -541,18 +551,18 @@ public class CardService {
 
     private void CardDetailBonusUISetting(final DB_Cards selectedCardInfo) {
 
-        DB_Events EntityCardEvent= CardService.getInstance().GetEntityEventsByCardID(selectedCardInfo.getCardID());
-        DB_Events VirtualCardEvent= CardService.getInstance().GetVirtualEventsByCardID(selectedCardInfo.getCardID());
+        final DB_Events EntityCardEvent= CardService.getInstance().GetEntityEventsByCardID(selectedCardInfo.getCardID());
+        final DB_Events VirtualCardEvent= CardService.getInstance().GetVirtualEventsByCardID(selectedCardInfo.getCardID());
 
 
-        ImageButton CardButton = (ImageButton) CardDetailDialog.findViewById(R.id.CardButton);
-        CardButton.setImageBitmap(BitmapFactory.decodeFile(StorageService.GetImagePath(selectedCardInfo.getCardImage())));
 
         final BootstrapButton Button_Bonus=(BootstrapButton)CardDetailDialog.findViewById(R.id.Button_Bonus);
         final FrameLayout FrameLayout_CardBonus=(FrameLayout)CardDetailDialog.findViewById(R.id.FrameLayout_CardBonus);
         Button_Bonus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FrameLayout FrameLayout_CardBonusDetail=(FrameLayout)CardDetailDialog.findViewById(R.id.FrameLayout_CardBonusDetail);
+                FrameLayout_CardBonusDetail.setVisibility(View.GONE);
                 FrameLayout_CardBonus.setVisibility(View.VISIBLE);
             }
         });
@@ -564,6 +574,26 @@ public class CardService {
                 FrameLayout_CardBonus.setVisibility(View.GONE);
             }
         });
+
+
+        LinearLayout LinearLayoutBonus1 = (LinearLayout) FrameLayout_CardBonus.findViewById(R.id.LinearLayoutBonus1);
+        LinearLayoutBonus1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CardDetailBonusDetailUISetting(selectedCardInfo,EntityCardEvent);
+            }
+        });
+
+        LinearLayout LinearLayoutBonus2 = (LinearLayout) FrameLayout_CardBonus.findViewById(R.id.LinearLayoutBonus2);
+        LinearLayoutBonus2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CardDetailBonusDetailUISetting(selectedCardInfo,VirtualCardEvent);
+            }
+        });
+
+        ImageButton CardButton = (ImageButton) FrameLayout_CardBonus.findViewById(R.id.CardButton);
+        CardButton.setImageBitmap(BitmapFactory.decodeFile(StorageService.GetImagePath(selectedCardInfo.getCardImage())));
 
         TextView Bonus1_Title = (TextView) FrameLayout_CardBonus.findViewById(R.id.action1_title);
         TextView Bonus1_Title_Point = (TextView) FrameLayout_CardBonus.findViewById(R.id.action1_title_point);
@@ -593,6 +623,46 @@ public class CardService {
             Bonus2_Title.setVisibility(View.GONE);
             Bonus2_Content.setVisibility(View.GONE);
         }
+    }
+    private void CardDetailBonusDetailUISetting(final DB_Cards selectedCardInfo,final DB_Events _DB_Events)
+    {
+        final FrameLayout FrameLayout_CardBonusDetail=(FrameLayout)CardDetailDialog.findViewById(R.id.FrameLayout_CardBonusDetail);
+        FrameLayout_CardBonusDetail.setVisibility(View.VISIBLE);
+        final BootstrapButton Button_Bonus=(BootstrapButton)FrameLayout_CardBonusDetail.findViewById(R.id.Button_Award);
+
+
+        TextView ActionDetail_title = (TextView) FrameLayout_CardBonusDetail.findViewById(R.id.ActionDetail_title);
+        TextView ActionDetail_point = (TextView) FrameLayout_CardBonusDetail.findViewById(R.id.ActionDetail_point);
+        TextView ActionDetail_title2 = (TextView) FrameLayout_CardBonusDetail.findViewById(R.id.ActionDetail_title2);
+        TextView ActionDetail_left_message = (TextView) FrameLayout_CardBonusDetail.findViewById(R.id.ActionDetail_left_message);
+        TextView ActionDetail_content = (TextView) FrameLayout_CardBonusDetail.findViewById(R.id.ActionDetail_content);
+
+        final ImageView ImageViewCloseBonusDetail=(ImageView)FrameLayout_CardBonusDetail.findViewById(R.id.ImageViewCloseBonusDetail);
+        ImageViewCloseBonusDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FrameLayout_CardBonusDetail.setVisibility(View.GONE);
+            }
+        });
+
+
+        String PointInfo="";
+        if(!_DB_Events.getDirectPointTarget().equals("0"))
+        {
+            ActionDetail_title.setText("DP[");
+            ActionDetail_point.setText(selectedCardInfo.getDirectPoint());
+            ActionDetail_title2.setText("/"+_DB_Events.getDirectPointTarget()+"]:"+_DB_Events.getEventTitle());
+        }
+        if(!_DB_Events.getIndirectPointTarget().equals("0"))
+        {
+            ActionDetail_title.setText("IP[");
+            ActionDetail_point.setText(selectedCardInfo.getIndirectPoint());
+            ActionDetail_title2.setText("/"+_DB_Events.getIndirectPointTarget()+"]:"+_DB_Events.getEventTitle());
+        }
+
+        ActionDetail_left_message.setText(BonusService.GetBonusLeftDayString(_DB_Events)+" days left!");
+
+        ActionDetail_content.setText(_DB_Events.getEventDescription());
     }
     private void ShowMessage(String Message) {
         final View FrameLayout_Message=CardDetailDialog.findViewById(R.id.FrameLayout_Message);

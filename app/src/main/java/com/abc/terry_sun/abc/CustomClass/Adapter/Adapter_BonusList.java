@@ -172,7 +172,8 @@ public class Adapter_BonusList extends BaseAdapter {
         LinearLayout1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BonusService.getInstance().ShowSingleBonusDialog(EntityCardEvent.getEventID(),_ListItem_Actions.getEntityCardID());
+                //BonusService.getInstance().ShowSingleBonusDialog(EntityCardEvent.getEventID(),_ListItem_Actions.getEntityCardID());
+                CardService.getInstance().ShowCardDetailDialog(CardInfo.getEntityCardID(), null, MainActivity.GetMainActivityContext(), true,EntityCardEvent);
             }
         });
 
@@ -181,7 +182,8 @@ public class Adapter_BonusList extends BaseAdapter {
         LinearLayout2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BonusService.getInstance().ShowSingleBonusDialog(VirtualCardEvent.getEventID(),_ListItem_Actions.getEntityCardID());
+                //BonusService.getInstance().ShowSingleBonusDialog(VirtualCardEvent.getEventID(),_ListItem_Actions.getEntityCardID());
+                CardService.getInstance().ShowCardDetailDialog(CardInfo.getEntityCardID(), null, MainActivity.GetMainActivityContext(), true,VirtualCardEvent);
             }
         });
 
