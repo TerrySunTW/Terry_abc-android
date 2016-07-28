@@ -138,9 +138,9 @@ public class Adapter_BonusList extends BaseAdapter {
         TextView Bonus1_Title2 = (TextView) convertView.findViewById(R.id.action1_title2);
         TextView Bonus1_Content = (TextView) convertView.findViewById(R.id.action1_content);
 
-        Bonus1_Title.setText(EntityCardEvent.getEventTitle()+"-DP:(");
+        Bonus1_Title.setText("DP[");
         Bonus1_Title_Point.setText(_ListItem_Actions.getDirectPoint());
-        Bonus1_Title2.setText("/"+EntityCardEvent.getDirectPointTarget()+")");
+        Bonus1_Title2.setText("/"+EntityCardEvent.getDirectPointTarget()+"]: "+EntityCardEvent.getEventTitle());
 
 
         //Bonus1_Content.setText(EntityCardEvent.getEventDescription());
@@ -154,9 +154,9 @@ public class Adapter_BonusList extends BaseAdapter {
         TextView Bonus2_Content = (TextView) convertView.findViewById(R.id.action2_content);
 
 
-        Bonus2_Title.setText(VirtualCardEvent.getEventTitle() + "-IP:(");
+        Bonus2_Title.setText("IP[");
         Bonus2_Title_Point.setText(_ListItem_Actions.getIndirectPoint());
-        Bonus2_Title2.setText("/" + VirtualCardEvent.getIndirectPointTarget() + ")");
+        Bonus2_Title2.setText("/" + VirtualCardEvent.getIndirectPointTarget() + "]: "+VirtualCardEvent.getEventTitle());
 
         Bonus2_Content.setText(BonusService.GetBonusLeftDayString(VirtualCardEvent)+" days left!");
 

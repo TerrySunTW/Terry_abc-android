@@ -86,4 +86,17 @@
 		android:clickable="true"
 		android:src="@drawable/close"
 		android:layout_gravity="left|top"></ImageView>
+
+	<com.beardedhen.androidbootstrap.BootstrapButton
+		android:id="@+id/ActionDetail_Link"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:roundedCorners="true"
+		app:bootstrapBrand="primary"
+		app:bootstrapText="{fa_external_link_square}Link"
+		android:layout_gravity="center_horizontal|right"
+		android:gravity="center_vertical|right"
+		style="@style/wrapping_button"
+		android:layout_marginTop="5dp" />
+
 </FrameLayout>

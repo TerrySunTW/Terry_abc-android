@@ -8,6 +8,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -600,12 +602,16 @@ public class CardService {
         TextView Bonus1_Title2 = (TextView) FrameLayout_CardBonus.findViewById(R.id.action1_title2);
         TextView Bonus1_Content = (TextView) FrameLayout_CardBonus.findViewById(R.id.action1_content);
 
-        Bonus1_Title.setText(EntityCardEvent.getEventTitle()+"-DP:(");
+
+
+        Bonus1_Title.setText("DP[");
         Bonus1_Title_Point.setText(selectedCardInfo.getDirectPoint());
-        Bonus1_Title2.setText("/"+EntityCardEvent.getDirectPointTarget()+")");
+        Bonus1_Title2.setText("/"+EntityCardEvent.getDirectPointTarget()+"]: " + EntityCardEvent.getEventTitle());
 
         //Bonus1_Content.setText(EntityCardEvent.getEventDescription());
         Bonus1_Content.setText(BonusService.GetBonusLeftDayString(EntityCardEvent)+" days left!");
+
+
 
         TextView Bonus2_Title = (TextView) FrameLayout_CardBonus.findViewById(R.id.action2_title);
         TextView Bonus2_Title_Point = (TextView) FrameLayout_CardBonus.findViewById(R.id.action2_title_point);
@@ -613,9 +619,12 @@ public class CardService {
         TextView Bonus2_Content = (TextView) FrameLayout_CardBonus.findViewById(R.id.action2_content);
 
 
-        Bonus2_Title.setText(VirtualCardEvent.getEventTitle() +"-IP:(");
+        Bonus2_Title.setText("IP[");
         Bonus2_Title_Point.setText(selectedCardInfo.getIndirectPoint());
-        Bonus2_Title2.setText("/"+EntityCardEvent.getIndirectPointTarget()+")");
+
+
+
+        Bonus2_Title2.setText("/"+EntityCardEvent.getIndirectPointTarget()+"]: "+VirtualCardEvent.getEventTitle());
 
         //Bonus2_Content.setText(VirtualCardEvent.getEventDescription());
         Bonus2_Content.setText(BonusService.GetBonusLeftDayString(VirtualCardEvent)+" days left!");
@@ -623,6 +632,8 @@ public class CardService {
             Bonus2_Title.setVisibility(View.GONE);
             Bonus2_Content.setVisibility(View.GONE);
         }
+
+
     }
     private void CardDetailBonusDetailUISetting(final DB_Cards selectedCardInfo,final DB_Events _DB_Events)
     {
@@ -646,23 +657,56 @@ public class CardService {
         });
 
 
+        final BootstrapButton ActionDetail_Link=(BootstrapButton)FrameLayout_CardBonusDetail.findViewById(R.id.ActionDetail_Link);
+        ActionDetail_Link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(_DB_Events.getLink()));
+                MainActivity.GetMainActivityContext().startActivity(i);
+            }
+        });
+        final BootstrapButton Button_Award=(BootstrapButton)FrameLayout_CardBonusDetail.findViewById(R.id.Button_Award);
+        Button_Award.setShowOutline(true);
+        boolean OpenAward=false;
         String PointInfo="";
         if(!_DB_Events.getDirectPointTarget().equals("0"))
         {
             ActionDetail_title.setText("DP[");
             ActionDetail_point.setText(selectedCardInfo.getDirectPoint());
-            ActionDetail_title2.setText("/"+_DB_Events.getDirectPointTarget()+"]:"+_DB_Events.getEventTitle());
+            ActionDetail_title2.setText("/"+_DB_Events.getDirectPointTarget()+"]: "+_DB_Events.getEventTitle());
+            if(Integer.valueOf(selectedCardInfo.getDirectPoint())>Integer.valueOf(_DB_Events.getDirectPointTarget()))
+            {
+                OpenAward=true;
+            }
         }
         if(!_DB_Events.getIndirectPointTarget().equals("0"))
         {
             ActionDetail_title.setText("IP[");
             ActionDetail_point.setText(selectedCardInfo.getIndirectPoint());
-            ActionDetail_title2.setText("/"+_DB_Events.getIndirectPointTarget()+"]:"+_DB_Events.getEventTitle());
+            ActionDetail_title2.setText("/"+_DB_Events.getIndirectPointTarget()+"]: "+_DB_Events.getEventTitle());
+            if(Integer.valueOf(selectedCardInfo.getIndirectPoint())>Integer.valueOf(_DB_Events.getIndirectPointTarget()))
+            {
+                OpenAward=true;
+            }
         }
 
         ActionDetail_left_message.setText(BonusService.GetBonusLeftDayString(_DB_Events)+" days left!");
-
         ActionDetail_content.setText(_DB_Events.getEventDescription());
+
+        if(OpenAward && !_DB_Events.getHasExchanged())
+        {
+            Button_Award.setShowOutline(false);
+            Button_Award.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Button_Award.setText("Coupon:\nABC12313");
+                }
+            });
+        }
+
+
+
     }
     private void ShowMessage(String Message) {
         final View FrameLayout_Message=CardDetailDialog.findViewById(R.id.FrameLayout_Message);
