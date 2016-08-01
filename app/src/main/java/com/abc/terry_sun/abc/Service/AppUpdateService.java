@@ -3,29 +3,14 @@ package com.abc.terry_sun.abc.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
-import android.os.Looper;
-import android.os.Message;
-import android.util.Log;
 
-import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskHttpRequest;
-import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskPostProcessingInterface;
-import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskProcessingInterface;
 import com.abc.terry_sun.abc.Provider.HttpURL_Provider;
-import com.abc.terry_sun.abc.Provider.VariableProvider;
-import com.abc.terry_sun.abc.Provider.VersionProvider;
-import com.abc.terry_sun.abc.Utilits.OkHttpUtil;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.ContentHandler;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 

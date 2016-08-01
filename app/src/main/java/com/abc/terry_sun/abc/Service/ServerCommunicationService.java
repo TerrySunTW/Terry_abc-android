@@ -1,6 +1,8 @@
 package com.abc.terry_sun.abc.Service;
 
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.util.Log;
 
 import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskHttpRequest;
@@ -12,7 +14,6 @@ import com.abc.terry_sun.abc.MainActivity;
 import com.abc.terry_sun.abc.Models.BaseReturnModel;
 import com.abc.terry_sun.abc.Provider.HttpURL_Provider;
 import com.abc.terry_sun.abc.Provider.VariableProvider;
-import com.abc.terry_sun.abc.Provider.VersionProvider;
 import com.abc.terry_sun.abc.Utilits.InternetUtil;
 import com.abc.terry_sun.abc.Utilits.OkHttpUtil;
 import com.google.gson.Gson;
@@ -336,7 +337,7 @@ public class ServerCommunicationService {
         }
         return CardID;
     }
-    public boolean IsVersionSameWithServer()
+    public boolean IsVersionSameWithServer(Context context)
     {
         String ServerVersion="";
         try
@@ -347,7 +348,15 @@ public class ServerCommunicationService {
         {
             Log.e(TAG,ex.getMessage());
         }
-        return VersionProvider.CurrentVersion.equals(ServerVersion);
+        String AppVersion="";
+        try {
+            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            AppVersion= pInfo.versionName;
+        }
+        catch(Exception ex) {
+
+        }
+        return AppVersion.equals(ServerVersion);
     }
     public void RemoveUserFriend(final String FriendID)
     {

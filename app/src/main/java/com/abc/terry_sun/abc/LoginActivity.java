@@ -45,7 +45,6 @@ public class LoginActivity extends AppCompatActivity {
     LoginButton loginButton;
     CallbackManager callbackManager;
     private AccessToken accessToken;
-    AccessTokenTracker accessTokenTracker;
     static Context _context;
     static Boolean IsVersionSameWithServer=false;
     ContentValues LoginParams= new ContentValues();
@@ -110,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void DoProcessing() {
                                         try {
-                                            IsVersionSameWithServer = ServerCommunicationService.getInstance().IsVersionSameWithServer();
+                                            IsVersionSameWithServer = ServerCommunicationService.getInstance().IsVersionSameWithServer(_context);
                                             if (IsVersionSameWithServer) {
                                                 //login
                                                 OkHttpUtil.getStringFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.FacebookLogin, LoginParams));
