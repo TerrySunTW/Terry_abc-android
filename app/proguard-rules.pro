@@ -72,3 +72,6 @@
 -dontwarn com.squareup.**
 -dontwarn com.sun.**
 -dontwarn **retrofit**
+
+#zbar
+-keep class net.sourceforge.zbar.** { *; }
