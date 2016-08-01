@@ -29,6 +29,9 @@ public class SettingActivity extends Fragment {
     CallbackManager callbackManager;
 
     @BindView(R.id.username)protected TextView TextViewUsername;
+    @BindView(R.id.TextViewVersion)protected TextView TextViewVersion;
+
+
 
     Context context;
     private View mRootView;
@@ -42,6 +45,8 @@ public class SettingActivity extends Fragment {
         ButterKnife.bind(this, mRootView);
         callbackManager = CallbackManager.Factory.create();
         TextViewUsername.setText(VariableProvider.getInstance().getFacebookUserName());
+
+        TextViewVersion.setText(VariableProvider.GetVersion(context));
 
         loginButton = (LoginButton) mRootView.findViewById(R.id.login_button);
         loginButton.setOnClickListener(new View.OnClickListener() {

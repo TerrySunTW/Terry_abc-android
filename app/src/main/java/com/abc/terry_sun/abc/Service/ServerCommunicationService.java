@@ -348,15 +348,8 @@ public class ServerCommunicationService {
         {
             Log.e(TAG,ex.getMessage());
         }
-        String AppVersion="";
-        try {
-            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            AppVersion= pInfo.versionName;
-        }
-        catch(Exception ex) {
 
-        }
-        return AppVersion.equals(ServerVersion);
+        return VariableProvider.GetVersion(context).equals(ServerVersion);
     }
     public void RemoveUserFriend(final String FriendID)
     {

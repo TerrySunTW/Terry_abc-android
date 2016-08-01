@@ -1,5 +1,8 @@
 package com.abc.terry_sun.abc.Provider;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+
 import com.abc.terry_sun.abc.BonusListActivity;
 
 import lombok.Data;
@@ -43,5 +46,18 @@ public final class VariableProvider {
     public boolean CheckLastNFCKeyIsNotNull()
     {
         return LastNFCKey!=null;
+    }
+
+    public static String GetVersion(Context context)
+    {
+        String AppVersion="";
+        try {
+            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            AppVersion= pInfo.versionName;
+        }
+        catch(Exception ex) {
+
+        }
+        return AppVersion;
     }
 }
