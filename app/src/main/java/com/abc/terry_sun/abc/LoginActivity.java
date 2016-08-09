@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.abc.terry_sun.abc.CustomClass.AsyncTask.AsyncTaskHttpRequest;
@@ -16,6 +17,7 @@ import com.abc.terry_sun.abc.Provider.VariableProvider;
 import com.abc.terry_sun.abc.Service.AppUpdateService;
 import com.abc.terry_sun.abc.Service.ProcessControlService;
 import com.abc.terry_sun.abc.Service.ServerCommunicationService;
+import com.abc.terry_sun.abc.Utilits.InternetUtil;
 import com.abc.terry_sun.abc.Utilits.OkHttpUtil;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -48,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     static Context _context;
     static Boolean IsVersionSameWithServer=false;
     ContentValues LoginParams= new ContentValues();
+    TextView TextViewMessage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,13 +60,22 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         //Log.e(TAG, "Key:" + FacebookService.GetKeyHash(this));
 
-
-
-
+        TextViewMessage = (TextView) findViewById(R.id.Message);
 
         loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setLoginBehavior(LoginBehavior.NATIVE_WITH_FALLBACK);
         loginButton.setReadPermissions(Arrays.asList("public_profile"));
+        if(!InternetUtil.IsOnline(this))
+        {
+            TextViewMessage.setText("Can't Connect to Server, Please Try Again Later.");
+        }
+        else
+        {
+            FacebookLoginSetting();
+        }
+    }
+
+    private void FacebookLoginSetting() {
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
@@ -91,7 +103,6 @@ public class LoginActivity extends AppCompatActivity {
                 });
         //login
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
-
     }
 
     private void GetFacebookInfoProcess() {

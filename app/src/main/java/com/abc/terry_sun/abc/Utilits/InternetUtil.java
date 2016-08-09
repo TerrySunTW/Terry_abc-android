@@ -1,5 +1,8 @@
 package com.abc.terry_sun.abc.Utilits;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,6 +15,10 @@ import java.net.URL;
  * Created by terry_sun on 2015/7/1.
  */
 public class InternetUtil {
+    public static boolean IsOnline(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnectedOrConnecting();
+    }
     public static String DownloadFile(String Url,String LocalPath)
     {
         File ImageFile = new File(LocalPath);
