@@ -65,17 +65,47 @@ public class R_CardReadFriendCard extends Fragment implements ZBarScannerView.Re
     public void handleResult(me.dm7.barcodescanner.zbar.Result result) {
         final String ReadCardID=result.getContents();
         //scan virtual QR-Code
+        Log.i(TAG, "handleResult ReadCardID="+ReadCardID);
+        Log.i(TAG, "handleResult LastReadEntityID="+LastReadEntityID);
         if(ReadCardID.equals(LastReadEntityID))
         {
             return;
         }
 
-        if(!HasReadRealCard )
+        if(HasReadRealCard)
         {
+            Log.i(TAG, "HasReadRealCard Processing");
+            LastReadEntityID=ReadCardID;
+            ProcessControlService.ShowProgressDialog(MainActivity.GetMainActivityContext(), "取得資料處理中...", "");
+            //Emu card ID
+            ProcessThread = new Thread(new Runnable() {
+                public void run() {
+                    Message msg = new Message();
 
+                    //add new card
+                    GotCardID = ServerCommunicationService.getInstance().AddFriendEntityCard(LastReadUserCardID,ReadCardID);
+                    Log.i(TAG, "FacebookID="+VariableProvider.getInstance().getFacebookID());
+                    Log.i(TAG, "LastReadEntityID="+LastReadUserCardID);
+                    Log.i(TAG, "ReadCardID="+ReadCardID);
+                    Log.i(TAG, "GotCardID="+GotCardID);
+                    if (GotCardID>0) {
+                        LastLogMessage="IP + 1";
+                        EntityCardID=String.valueOf(GotCardID);
+                        msg.what = 1 ;
+                    } else {
+                        msg.what = 99;
+                    }
+                    messageHandler.sendMessage(msg);
+                }
+            });
+            ProcessThread.start();
+
+        }
+        else
+        {
             //[Time , UserCardID]
             LastReadEntityID=ReadCardID;
-            Log.i(TAG, "InProcessing");
+            Log.i(TAG, "!HasReadRealCard Processing");
             ImageView_Scanner.setImageDrawable(getResources().getDrawable(R.drawable.circle_green));
             LastReadUserCardID = ReadCardID.split(",")[1];;
             ProcessControlService.ShowProgressDialog(MainActivity.GetMainActivityContext(), "取得資料處理中...", "");
@@ -85,33 +115,13 @@ public class R_CardReadFriendCard extends Fragment implements ZBarScannerView.Re
                     Message msg = new Message();
                     //add new card
                     GotCardID = ServerCommunicationService.getInstance().AddFriendNFCCard(LastReadUserCardID);
+                    Log.i(TAG, "LastReadUserCardID="+LastReadUserCardID);
+                    Log.i(TAG, "FacebookID="+VariableProvider.getInstance().getFacebookID());
+                    Log.i(TAG, "GotCardID="+GotCardID);
                     if (GotCardID>0) {
                         ServerCommunicationService.getInstance().UpdateServerInfo();
                         LastLogMessage="DP + 1";
                         msg.what = 0 ;
-                    } else {
-                        msg.what = 99;
-                    }
-                    messageHandler.sendMessage(msg);
-                }
-            });
-            ProcessThread.start();
-        }
-        //scan real card Code
-        else
-        {
-            LastReadEntityID=ReadCardID;
-            ProcessControlService.ShowProgressDialog(MainActivity.GetMainActivityContext(), "取得資料處理中...", "");
-            //Emu card ID
-            ProcessThread = new Thread(new Runnable() {
-                public void run() {
-                    Message msg = new Message();
-                    //add new card
-                    GotCardID = ServerCommunicationService.getInstance().AddFriendEntityCard(LastReadUserCardID,ReadCardID);
-                    if (GotCardID>0) {
-                        LastLogMessage="IP + 1";
-                        EntityCardID=String.valueOf(GotCardID);
-                        msg.what = 1 ;
                     } else {
                         msg.what = 99;
                     }
@@ -132,6 +142,7 @@ public class R_CardReadFriendCard extends Fragment implements ZBarScannerView.Re
         messageHandler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
+                Log.i(TAG, "msg.what="+String.valueOf(msg.what));
                 switch(msg.what){
                     case 0:
                         HasReadRealCard=true;
@@ -144,12 +155,14 @@ public class R_CardReadFriendCard extends Fragment implements ZBarScannerView.Re
                                             public void onClick(DialogInterface dialog,
                                                                 int which) {
                                                 VariableProvider.getInstance().setLastNFCKey(String.valueOf(GotCardID));
+                                                mScannerView.resumeCameraPreview(R_CardReadFriendCard.this);
                                             }
                                         })//
                                 .setNeutralButton("No", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog,
                                                         int which) {
+                                        Log.i(TAG, "GotCardID="+GotCardID);
                                         CardService.getInstance().ShowCardDetailDialog(
                                                 CardService.getInstance().GetEntityCardIDByCardID(String.valueOf(GotCardID)),
                                                 "successfully read a virtual card.",
@@ -173,7 +186,7 @@ public class R_CardReadFriendCard extends Fragment implements ZBarScannerView.Re
                 }
                 super.handleMessage(msg);
                 ProcessControlService.CloseProgressDialog();
-                mScannerView.resumeCameraPreview(R_CardReadFriendCard.this);
+                //mScannerView.resumeCameraPreview(R_CardReadFriendCard.this);
             }
         };
     }
