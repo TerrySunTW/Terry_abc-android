@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -610,7 +611,25 @@ public class CardService {
 
         //Bonus1_Content.setText(EntityCardEvent.getEventDescription());
         Bonus1_Content.setText(BonusService.GetBonusLeftDayString(EntityCardEvent)+" days left!");
-
+        if(Integer.valueOf(selectedCardInfo.getDirectPoint())>=Integer.valueOf(EntityCardEvent.getDirectPointTarget()))
+        {
+            Bonus1_Content.setTextColor(Color.YELLOW);
+            if(VirtualCardEvent.getHasExchanged())
+            {
+                Bonus1_Content.setText("You have got the bonus.");
+            }
+            else
+            {
+                Bonus1_Content.setText("Get your bonus now!!");
+            }
+            Bonus1_Title_Point.setTextColor(Color.YELLOW);
+        }
+        else
+        {
+            Bonus1_Content.setTextColor(Color.WHITE);
+            Bonus1_Content.setText(BonusService.GetBonusLeftDayString(VirtualCardEvent) + " days left!");
+            Bonus1_Title_Point.setTextColor(Color.RED);
+        }
 
 
         TextView Bonus2_Title = (TextView) FrameLayout_CardBonus.findViewById(R.id.action2_title);
@@ -621,13 +640,29 @@ public class CardService {
 
         Bonus2_Title.setText("IP[");
         Bonus2_Title_Point.setText(selectedCardInfo.getIndirectPoint());
+        Bonus2_Title2.setText("/"+VirtualCardEvent.getIndirectPointTarget()+"]: "+VirtualCardEvent.getEventTitle());
+
+        if(Integer.valueOf(selectedCardInfo.getIndirectPoint())>=Integer.valueOf(VirtualCardEvent.getIndirectPointTarget()))
+        {
+            Bonus2_Content.setTextColor(Color.YELLOW);
+            if(VirtualCardEvent.getHasExchanged())
+            {
+                Bonus2_Content.setText("You have got the bonus.");
+            }
+            else
+            {
+                Bonus2_Content.setText("Get your bonus now!!");
+            }
+            Bonus2_Title_Point.setTextColor(Color.YELLOW);
+        }
+        else
+        {
+            Bonus2_Content.setTextColor(Color.WHITE);
+            Bonus2_Content.setText(BonusService.GetBonusLeftDayString(VirtualCardEvent) + " days left!");
+            Bonus2_Title_Point.setTextColor(Color.RED);
+        }
 
 
-
-        Bonus2_Title2.setText("/"+EntityCardEvent.getIndirectPointTarget()+"]: "+VirtualCardEvent.getEventTitle());
-
-        //Bonus2_Content.setText(VirtualCardEvent.getEventDescription());
-        Bonus2_Content.setText(BonusService.GetBonusLeftDayString(VirtualCardEvent)+" days left!");
         if(VirtualCardEvent==null) {
             Bonus2_Title.setVisibility(View.GONE);
             Bonus2_Content.setVisibility(View.GONE);
@@ -675,7 +710,9 @@ public class CardService {
             ActionDetail_title.setText("DP[");
             ActionDetail_point.setText(selectedCardInfo.getDirectPoint());
             ActionDetail_title2.setText("/"+_DB_Events.getDirectPointTarget()+"]: "+_DB_Events.getEventTitle());
-            if(Integer.valueOf(selectedCardInfo.getDirectPoint())>Integer.valueOf(_DB_Events.getDirectPointTarget()))
+            //Log.i(TAG,"selectedCardInfo.getDirectPoint()="+ String.valueOf(selectedCardInfo.getDirectPoint()));
+            //Log.i(TAG,"_DB_Events.getDirectPointTarget()="+ String.valueOf(_DB_Events.getDirectPointTarget()));
+            if(Integer.valueOf(selectedCardInfo.getDirectPoint())>=Integer.valueOf(_DB_Events.getDirectPointTarget()))
             {
                 OpenAward=true;
             }
@@ -685,17 +722,22 @@ public class CardService {
             ActionDetail_title.setText("IP[");
             ActionDetail_point.setText(selectedCardInfo.getIndirectPoint());
             ActionDetail_title2.setText("/"+_DB_Events.getIndirectPointTarget()+"]: "+_DB_Events.getEventTitle());
-            if(Integer.valueOf(selectedCardInfo.getIndirectPoint())>Integer.valueOf(_DB_Events.getIndirectPointTarget()))
+            //Log.i(TAG,"selectedCardInfo.getIndirectPoint()="+ String.valueOf(selectedCardInfo.getIndirectPoint()));
+            //Log.i(TAG,"_DB_Events.getIndirectPointTarget()="+ String.valueOf(_DB_Events.getIndirectPointTarget()));
+            if(Integer.valueOf(selectedCardInfo.getIndirectPoint())>=Integer.valueOf(_DB_Events.getIndirectPointTarget()))
             {
                 OpenAward=true;
             }
         }
 
-        ActionDetail_left_message.setText(BonusService.GetBonusLeftDayString(_DB_Events)+" days left!");
+
         ActionDetail_content.setText(_DB_Events.getEventDescription());
 
+        //Log.i(TAG,"OpenAward="+ String.valueOf(OpenAward));
+        //Log.i(TAG,"_DB_Events.getHasExchanged()="+ String.valueOf(_DB_Events.getHasExchanged()));
         if(OpenAward && !_DB_Events.getHasExchanged())
         {
+            ActionDetail_left_message.setText("");
             Button_Award.setShowOutline(false);
             Button_Award.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -703,6 +745,10 @@ public class CardService {
                     Button_Award.setText("Coupon:\nABC12313");
                 }
             });
+        }
+        else
+        {
+            ActionDetail_left_message.setText(BonusService.GetBonusLeftDayString(_DB_Events)+" days left!");
         }
 
 

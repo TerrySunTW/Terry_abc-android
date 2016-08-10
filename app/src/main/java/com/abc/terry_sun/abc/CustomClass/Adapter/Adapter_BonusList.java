@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.support.v4.app.NotificationCompatSideChannelService;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -143,9 +144,26 @@ public class Adapter_BonusList extends BaseAdapter {
         Bonus1_Title2.setText("/"+EntityCardEvent.getDirectPointTarget()+"]: "+EntityCardEvent.getEventTitle());
 
 
-        //Bonus1_Content.setText(EntityCardEvent.getEventDescription());
-
-        Bonus1_Content.setText(BonusService.GetBonusLeftDayString(EntityCardEvent)+" days left!");
+        //BONUS1 STYLE
+        if(Integer.valueOf(CardInfo.getDirectPoint())>=Integer.valueOf(EntityCardEvent.getDirectPointTarget()))
+        {
+            Bonus1_Content.setTextColor(Color.YELLOW);
+            if(EntityCardEvent.getHasExchanged())
+            {
+                Bonus1_Content.setText("You have got the bonus.");
+            }
+            else
+            {
+                Bonus1_Content.setText("Get your bonus now!!");
+            }
+            Bonus1_Title_Point.setTextColor(Color.YELLOW);
+        }
+        else
+        {
+            Bonus1_Content.setTextColor(Color.WHITE);
+            Bonus1_Content.setText(BonusService.GetBonusLeftDayString(EntityCardEvent) + " days left!");
+            Bonus1_Title_Point.setTextColor(Color.RED);
+        }
 
 
         TextView Bonus2_Title = (TextView) convertView.findViewById(R.id.action2_title);
@@ -158,12 +176,32 @@ public class Adapter_BonusList extends BaseAdapter {
         Bonus2_Title_Point.setText(_ListItem_Actions.getIndirectPoint());
         Bonus2_Title2.setText("/" + VirtualCardEvent.getIndirectPointTarget() + "]: "+VirtualCardEvent.getEventTitle());
 
-        Bonus2_Content.setText(BonusService.GetBonusLeftDayString(VirtualCardEvent)+" days left!");
+        //BONUS2 STYLE
+        if(Integer.valueOf(CardInfo.getIndirectPoint())>=Integer.valueOf(VirtualCardEvent.getIndirectPointTarget()))
+        {
+            Bonus2_Content.setTextColor(Color.YELLOW);
+            if(VirtualCardEvent.getHasExchanged())
+            {
+                Bonus2_Content.setText("You have got the bonus.");
+            }
+            else
+            {
+                Bonus2_Content.setText("Get your bonus now!!");
+            }
+            Bonus2_Title_Point.setTextColor(Color.YELLOW);
+        }
+        else
+        {
+            Bonus2_Content.setTextColor(Color.WHITE);
+            Bonus2_Content.setText(BonusService.GetBonusLeftDayString(VirtualCardEvent) + " days left!");
+            Bonus2_Title_Point.setTextColor(Color.RED);
+        }
 
         if(VirtualCardEvent==null) {
             Bonus2_Title.setVisibility(View.GONE);
             Bonus2_Content.setVisibility(View.GONE);
         }
+
 
 
 
@@ -187,24 +225,42 @@ public class Adapter_BonusList extends BaseAdapter {
             }
         });
 
-        //exchange style
+
+        /** //exchange style
+
         if(Integer.parseInt(CardInfo.getDirectPoint())>=Integer.parseInt(EntityCardEvent.getDirectPointTarget())&&
                 Integer.parseInt(CardInfo.getIndirectPoint())>=Integer.parseInt(EntityCardEvent.getIndirectPointTarget())) {
-            LinearLayout1.setBackgroundColor(Color.GREEN);
+            LinearLayout1.setBackgroundColor(0xFF99cc00);
+        }
+        else
+        {
+            LinearLayout1.setBackgroundColor(Color.BLACK);
         }
 
         if(Integer.parseInt(CardInfo.getDirectPoint())>=Integer.parseInt(VirtualCardEvent.getDirectPointTarget())&&
                 Integer.parseInt(CardInfo.getIndirectPoint())>=Integer.parseInt(VirtualCardEvent.getIndirectPointTarget())) {
-            LinearLayout2.setBackgroundColor(Color.GREEN);
+            LinearLayout2.setBackgroundColor(0xFF99cc00);
+        }
+        else
+        {
+            LinearLayout2.setBackgroundColor(Color.BLACK);
         }
 
         if(EntityCardEvent.getHasExchanged()) {
             LinearLayout1.setBackgroundColor(Color.RED);
         }
+        else
+        {
+            LinearLayout1.setBackgroundColor(Color.BLACK);
+        }
 
         if(VirtualCardEvent.getHasExchanged()) {
             LinearLayout2.setBackgroundColor(Color.RED);
         }
+        else
+        {
+            LinearLayout2.setBackgroundColor(Color.BLACK);
+        }**/
 
         return convertView;
     }
