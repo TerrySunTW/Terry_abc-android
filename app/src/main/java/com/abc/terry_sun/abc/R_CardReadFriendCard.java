@@ -18,13 +18,16 @@ import com.abc.terry_sun.abc.Provider.VariableProvider;
 import com.abc.terry_sun.abc.Service.CardService;
 import com.abc.terry_sun.abc.Service.ProcessControlService;
 import com.abc.terry_sun.abc.Service.ServerCommunicationService;
+import com.google.zxing.Result;
+
 import me.dm7.barcodescanner.zbar.ZBarScannerView;
+import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 /**
  * Created by terry_sun on 2015/7/20.
  */
-public class R_CardReadFriendCard extends Fragment implements ZBarScannerView.ResultHandler{
-    private ZBarScannerView mScannerView;
+public class R_CardReadFriendCard extends Fragment implements ZXingScannerView.ResultHandler{
+    private ZXingScannerView mScannerView;
     ImageView ImageView_Scanner;
     TextView TextView_Log;
     Handler messageHandler;
@@ -46,7 +49,7 @@ public class R_CardReadFriendCard extends Fragment implements ZBarScannerView.Re
         }
         context=getActivity();
         ViewGroup contentFrame = (ViewGroup) mRootView.findViewById(R.id.content_frame);
-        mScannerView = new ZBarScannerView(context);
+        mScannerView = new ZXingScannerView(context);
         contentFrame.addView(mScannerView);
         ImageView_Scanner=(ImageView)mRootView.findViewById(R.id.ImageView_Scanner);
         TextView_Log=(TextView)mRootView.findViewById(R.id.TextView_Log);
@@ -62,8 +65,8 @@ public class R_CardReadFriendCard extends Fragment implements ZBarScannerView.Re
     }
 
     @Override
-    public void handleResult(me.dm7.barcodescanner.zbar.Result result) {
-        final String ReadCardID=result.getContents();
+    public void handleResult(Result result){
+        final String ReadCardID=result.getText();
         //scan virtual QR-Code
         Log.i(TAG, "handleResult ReadCardID="+ReadCardID);
         Log.i(TAG, "handleResult LastReadEntityID="+LastReadEntityID);
@@ -190,5 +193,4 @@ public class R_CardReadFriendCard extends Fragment implements ZBarScannerView.Re
             }
         };
     }
-
 }
