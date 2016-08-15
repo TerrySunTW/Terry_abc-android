@@ -44,6 +44,8 @@ public class R_CardNewCardActivity extends Fragment implements ZXingScannerView.
     public void onResume() {
         super.onResume();
         mScannerView.setResultHandler(this);
+        mScannerView.setAutoFocus(true);
+        mScannerView.setTouchscreenBlocksFocus(true);
         mScannerView.startCamera();
     }
 
