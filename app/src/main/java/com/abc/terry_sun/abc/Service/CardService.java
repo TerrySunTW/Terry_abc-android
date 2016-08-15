@@ -442,7 +442,7 @@ public class CardService {
 
     private void CardDetailUISetting(final Context context, final DB_Cards selectedCardInfo) {
         LinearLayout LinearLayout_Background =(LinearLayout)CardDetailDialog.findViewById(R.id.LinearLayout_Background);
-        LinearLayout_Background.setBackground(new BitmapDrawable(CardService.getInstance().GetCardImageByCardID(selectedCardInfo.getCardID())));
+        LinearLayout_Background.setBackground(new BitmapDrawable(context.getResources(),CardService.getInstance().GetCardImageByCardID(selectedCardInfo.getCardID())));
         //calculate photo height
         int CardWidth = ScreenService.GetScreenWidth();
         int CardHeight=(CardWidth/5)*7;
@@ -780,7 +780,9 @@ public class CardService {
     }
     public Bitmap GetCardImageByCardID(String CardID)
     {
+
         DB_Cards card=CardService.getInstance().GetCardsByCardID(CardID);
+        Log.i(TAG,"CardImagePath="+ StorageService.GetImagePath(card.getCardImage()));
         return BitmapFactory.decodeFile(StorageService.GetImagePath(card.getCardImage()));
     }
     public String GetEntityCardIDByCardID(String CardID)
