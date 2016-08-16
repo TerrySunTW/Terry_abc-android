@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.abc.terry_sun.abc.CustomClass.CustomStyle.AwardButtonStyle;
 import com.abc.terry_sun.abc.Entities.DB_Cards;
 import com.abc.terry_sun.abc.Entities.DB_Events;
 import com.abc.terry_sun.abc.Entities.DB_Friend;
@@ -683,6 +684,17 @@ public class CardService {
         TextView ActionDetail_left_message = (TextView) FrameLayout_CardBonusDetail.findViewById(R.id.ActionDetail_left_message);
         TextView ActionDetail_content = (TextView) FrameLayout_CardBonusDetail.findViewById(R.id.ActionDetail_content);
 
+
+        if(Integer.valueOf(selectedCardInfo.getIndirectPoint())>=Integer.valueOf(_DB_Events.getIndirectPointTarget()))
+        {
+            ActionDetail_point.setTextColor(Color.YELLOW);
+        }
+        else
+        {
+            ActionDetail_point.setTextColor(Color.RED);
+        }
+
+
         final ImageView ImageViewCloseBonusDetail=(ImageView)FrameLayout_CardBonusDetail.findViewById(R.id.ImageViewCloseBonusDetail);
         ImageViewCloseBonusDetail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -702,7 +714,9 @@ public class CardService {
             }
         });
         final BootstrapButton Button_Award=(BootstrapButton)FrameLayout_CardBonusDetail.findViewById(R.id.Button_Award);
+        Button_Award.setBootstrapBrand(new AwardButtonStyle(MainActivity.GetMainActivityContext()));
         Button_Award.setShowOutline(true);
+
         boolean OpenAward=false;
         String PointInfo="";
         if(!_DB_Events.getDirectPointTarget().equals("0"))
@@ -739,6 +753,8 @@ public class CardService {
         {
             ActionDetail_left_message.setText("");
             Button_Award.setShowOutline(false);
+            BootstrapText Button_AwardText = new BootstrapText.Builder(MainActivity.GetMainActivityContext()).addFontAwesomeIcon("fa_gift").addText("Award").build();
+            Button_Award.setBootstrapText(Button_AwardText);
             Button_Award.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -748,6 +764,17 @@ public class CardService {
         }
         else
         {
+            String PointInfoString="";
+            if(!_DB_Events.getDirectPointTarget().equals("0"))
+            {
+                PointInfoString+=_DB_Events.getIndirectPointTarget() + " DP";
+            }
+            if(!_DB_Events.getIndirectPointTarget().equals("0"))
+            {
+                PointInfoString+=_DB_Events.getIndirectPointTarget() + " IP";
+            }
+
+            Button_Award.setText("Need "+PointInfoString);
             ActionDetail_left_message.setText(BonusService.GetBonusLeftDayString(_DB_Events)+" days left!");
         }
 

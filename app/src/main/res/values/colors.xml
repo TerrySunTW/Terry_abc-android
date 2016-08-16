@@ -8,6 +8,9 @@
 	<color name="tabTransparent">#10ffffff</color>
 	<color name="textWhite">#ffffff</color>
 	<color name="textRed">#ff3300</color>
+	<color name="custom_button_default_fill">#ffff00</color>
+	<color name="custom_button_default_edge">#ffff00</color>
+	<color name="custom_button_default_text">#4D3900</color>
 	
 	
 	
