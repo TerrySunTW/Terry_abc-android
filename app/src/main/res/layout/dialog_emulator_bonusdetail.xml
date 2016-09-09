@@ -22,12 +22,22 @@
 			android:layout_width="100sp"
 			android:layout_height="100sp"
 			app:roundedCorners="true"
-			app:bootstrapBrand="warning"
+			app:bootstrapBrand="primary"
 			android:layout_gravity="center_horizontal|right"
 			android:gravity="center_vertical|right"
 			style="@style/wrapping_button"
 			app:showOutline="true" />
 
+		<com.beardedhen.androidbootstrap.BootstrapButton
+			android:id="@+id/Button_Info"
+			android:layout_width="100sp"
+			android:layout_height="100sp"
+			app:roundedCorners="true"
+			app:bootstrapBrand="primary"
+			android:layout_gravity="center_horizontal|right"
+			android:gravity="center_vertical|right"
+			style="@style/wrapping_button"
+			app:showOutline="true" />
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"

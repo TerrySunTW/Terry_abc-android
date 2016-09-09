@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.abc.terry_sun.abc.CustomClass.ZXingScannerView.CZXingScannerView;
 import com.abc.terry_sun.abc.Entities.DB_Cards;
 import com.abc.terry_sun.abc.Service.CardService;
 import com.abc.terry_sun.abc.Service.ProcessControlService;
@@ -26,7 +27,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
  * Created by terry_sun on 2015/7/20.
  */
 public class R_CardNewCardActivity extends Fragment implements ZXingScannerView.ResultHandler {
-    private ZXingScannerView mScannerView;
+    private CZXingScannerView mScannerView;
     Handler messageHandler;
     String LastReadEntityID;
     Thread ProcessThread;
@@ -36,7 +37,7 @@ public class R_CardNewCardActivity extends Fragment implements ZXingScannerView.
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mScannerView = new ZXingScannerView(getActivity());
+        mScannerView = new CZXingScannerView(getActivity());
         HandlerSetting();
         return mScannerView;
     }

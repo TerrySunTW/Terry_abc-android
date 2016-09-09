@@ -676,6 +676,7 @@ public class CardService {
         final FrameLayout FrameLayout_CardBonusDetail=(FrameLayout)CardDetailDialog.findViewById(R.id.FrameLayout_CardBonusDetail);
         FrameLayout_CardBonusDetail.setVisibility(View.VISIBLE);
         final BootstrapButton Button_Bonus=(BootstrapButton)FrameLayout_CardBonusDetail.findViewById(R.id.Button_Award);
+        final BootstrapButton Button_Info=(BootstrapButton)FrameLayout_CardBonusDetail.findViewById(R.id.Button_Info);
 
 
         TextView ActionDetail_title = (TextView) FrameLayout_CardBonusDetail.findViewById(R.id.ActionDetail_title);
@@ -685,13 +686,20 @@ public class CardService {
         TextView ActionDetail_content = (TextView) FrameLayout_CardBonusDetail.findViewById(R.id.ActionDetail_content);
 
 
-        if(Integer.valueOf(selectedCardInfo.getIndirectPoint())>=Integer.valueOf(_DB_Events.getIndirectPointTarget()))
+        if(Integer.valueOf(selectedCardInfo.getIndirectPoint())>=Integer.valueOf(_DB_Events.getIndirectPointTarget())
+                &&
+            Integer.valueOf(selectedCardInfo.getDirectPoint())>=Integer.valueOf(_DB_Events.getDirectPointTarget())
+                )
         {
             ActionDetail_point.setTextColor(Color.YELLOW);
+            Button_Info.setVisibility(View.GONE);
+            Button_Bonus.setVisibility(View.VISIBLE);
         }
         else
         {
             ActionDetail_point.setTextColor(Color.RED);
+            Button_Info.setVisibility(View.VISIBLE);
+            Button_Bonus.setVisibility(View.GONE);
         }
 
 
@@ -767,14 +775,14 @@ public class CardService {
             String PointInfoString="";
             if(!_DB_Events.getDirectPointTarget().equals("0"))
             {
-                PointInfoString+=_DB_Events.getIndirectPointTarget() + " DP";
+                PointInfoString+=_DB_Events.getDirectPointTarget() + " DP";
             }
             if(!_DB_Events.getIndirectPointTarget().equals("0"))
             {
                 PointInfoString+=_DB_Events.getIndirectPointTarget() + " IP";
             }
 
-            Button_Award.setText("Need "+PointInfoString);
+            Button_Info.setText("Need "+PointInfoString);
             ActionDetail_left_message.setText(BonusService.GetBonusLeftDayString(_DB_Events)+" days left!");
         }
 
