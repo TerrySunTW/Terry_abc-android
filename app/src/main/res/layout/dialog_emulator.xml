@@ -43,6 +43,17 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignParentStart="false">
                     <com.beardedhen.androidbootstrap.BootstrapButton
+                        android:id="@+id/Button_Buy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:roundedCorners="true"
+                        app:bootstrapBrand="primary"
+                        app:bootstrapText="{fa_ticket}Buy It"
+                        android:layout_gravity="center_horizontal|right"
+                        android:gravity="center_vertical|right"
+                        style="@style/wrapping_button"
+                        android:layout_marginBottom="5dp" />
+                    <com.beardedhen.androidbootstrap.BootstrapButton
                         android:id="@+id/Button_Media"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
