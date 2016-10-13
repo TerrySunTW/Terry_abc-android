@@ -25,7 +25,7 @@ import java.util.List;
  * Created by terry_sun on 2015/7/24.
  */
 public class ServerCommunicationService {
-    static String TAG="ServerCommunicationService";
+    static String TAG="ServerCommService";
     private static final ServerCommunicationService _ServerCommunicationService = new ServerCommunicationService();
     public static ServerCommunicationService getInstance() {
         return _ServerCommunicationService;
@@ -114,14 +114,13 @@ public class ServerCommunicationService {
         }
         return result;
     }
-    //for NFC&QR
-    public int AddFriendEntityCard(final String ReadUserCardID,final String ReadCardID)
+    //for EntityCard
+    public int AddFriendEntityCard(final String ReadCardID)
     {
         int result=0;//0:fail >0:CardID:
         try {
             ContentValues UrlParams = new ContentValues();
             UrlParams.put("UserFacebookID", VariableProvider.getInstance().getFacebookID());
-            UrlParams.put("ReadUserCardID", ReadUserCardID);
             UrlParams.put("ReadCardID", ReadCardID);
 
             result=OkHttpUtil.getIntFromServer(OkHttpUtil.attachHttpGetParams(HttpURL_Provider.AddFriendEntityCard, UrlParams));
@@ -137,8 +136,8 @@ public class ServerCommunicationService {
         return result;
     }
 
-    //only NFC
-    public int AddFriendNFCCard(final String NFCCardID)
+    //only VirtualCard
+    public int AddFriendVirtualCard(final String NFCCardID)
     {
         int result=0;//0:fail >0:CardID:
         try {

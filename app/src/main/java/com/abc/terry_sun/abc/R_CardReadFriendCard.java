@@ -20,7 +20,6 @@ import com.abc.terry_sun.abc.Service.ProcessControlService;
 import com.abc.terry_sun.abc.Service.ServerCommunicationService;
 import com.google.zxing.Result;
 
-import me.dm7.barcodescanner.zbar.ZBarScannerView;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 /**
@@ -34,7 +33,6 @@ public class R_CardReadFriendCard extends Fragment implements ZXingScannerView.R
     String LastReadEntityID;
     String LastReadUserCardID;
     Thread ProcessThread;
-    private Boolean HasReadRealCard=false;
     static String LastLogMessage;
     int GotCardID=0;
     static String EntityCardID;
@@ -43,7 +41,6 @@ public class R_CardReadFriendCard extends Fragment implements ZXingScannerView.R
     Context context;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        HasReadRealCard=false;
         if (mRootView == null){
             mRootView = inflater.inflate(R.layout.activity_r_card_zbar_layout,container,false);
         }
@@ -74,10 +71,11 @@ public class R_CardReadFriendCard extends Fragment implements ZXingScannerView.R
         {
             return;
         }
-
-        if(HasReadRealCard)
+        Log.i(TAG, "ReadCardID="+ReadCardID);
+        Log.i(TAG, "ReadCardID.split="+String.valueOf(ReadCardID.split(",").length));
+        if(ReadCardID.split(",").length==1)
         {
-            Log.i(TAG, "HasReadRealCard Processing");
+            Log.i(TAG, "RealCard Processing");
             LastReadEntityID=ReadCardID;
             ProcessControlService.ShowProgressDialog(MainActivity.GetMainActivityContext(), "取得資料處理中...", "");
             //Emu card ID
@@ -86,15 +84,14 @@ public class R_CardReadFriendCard extends Fragment implements ZXingScannerView.R
                     Message msg = new Message();
 
                     //add new card
-                    GotCardID = ServerCommunicationService.getInstance().AddFriendEntityCard(LastReadUserCardID,ReadCardID);
+                    GotCardID = ServerCommunicationService.getInstance().AddFriendEntityCard(ReadCardID);
                     Log.i(TAG, "FacebookID="+VariableProvider.getInstance().getFacebookID());
-                    Log.i(TAG, "LastReadEntityID="+LastReadUserCardID);
                     Log.i(TAG, "ReadCardID="+ReadCardID);
                     Log.i(TAG, "GotCardID="+GotCardID);
                     if (GotCardID>0) {
-                        LastLogMessage="IP + 1";
+                        ServerCommunicationService.getInstance().UpdateServerInfo();
                         EntityCardID=String.valueOf(GotCardID);
-                        msg.what = 1 ;
+                        msg.what = 1;
                     } else {
                         msg.what = 99;
                     }
@@ -102,13 +99,12 @@ public class R_CardReadFriendCard extends Fragment implements ZXingScannerView.R
                 }
             });
             ProcessThread.start();
-
         }
         else
         {
             //[Time , UserCardID]
             LastReadEntityID=ReadCardID;
-            Log.i(TAG, "!HasReadRealCard Processing");
+            Log.i(TAG, "Virtual Card Processing");
             ImageView_Scanner.setImageDrawable(getResources().getDrawable(R.drawable.circle_green));
             LastReadUserCardID = ReadCardID.split(",")[1];;
             ProcessControlService.ShowProgressDialog(MainActivity.GetMainActivityContext(), "取得資料處理中...", "");
@@ -117,13 +113,12 @@ public class R_CardReadFriendCard extends Fragment implements ZXingScannerView.R
                 public void run() {
                     Message msg = new Message();
                     //add new card
-                    GotCardID = ServerCommunicationService.getInstance().AddFriendNFCCard(LastReadUserCardID);
+                    GotCardID = ServerCommunicationService.getInstance().AddFriendVirtualCard(LastReadUserCardID);
                     Log.i(TAG, "LastReadUserCardID="+LastReadUserCardID);
                     Log.i(TAG, "FacebookID="+VariableProvider.getInstance().getFacebookID());
                     Log.i(TAG, "GotCardID="+GotCardID);
                     if (GotCardID>0) {
                         ServerCommunicationService.getInstance().UpdateServerInfo();
-                        LastLogMessage="DP + 1";
                         msg.what = 0 ;
                     } else {
                         msg.what = 99;
@@ -148,32 +143,11 @@ public class R_CardReadFriendCard extends Fragment implements ZXingScannerView.R
                 Log.i(TAG, "msg.what="+String.valueOf(msg.what));
                 switch(msg.what){
                     case 0:
-                        HasReadRealCard=true;
-                        //read QR/NFC from EmU
-                        new AlertDialog.Builder(MainActivity.GetMainActivityContext())//
-                                .setMessage("Wanna read real card?")//
-                                .setPositiveButton("Yes",
-                                        new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog,
-                                                                int which) {
-                                                VariableProvider.getInstance().setLastNFCKey(String.valueOf(GotCardID));
-                                                mScannerView.resumeCameraPreview(R_CardReadFriendCard.this);
-                                            }
-                                        })//
-                                .setNeutralButton("No", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog,
-                                                        int which) {
-                                        Log.i(TAG, "GotCardID="+GotCardID);
-                                        CardService.getInstance().ShowCardDetailDialog(
-                                                CardService.getInstance().GetEntityCardIDByCardID(String.valueOf(GotCardID)),
-                                                "successfully read a virtual card.",
-                                                MainActivity.MainActivityContext);
-                                        TextView_Log.setText(TextView_Log.getText() + "\n" + LastLogMessage);
-                                    }
-                                })//
-                                .show();
+                        //read virtual card
+                        CardService.getInstance().ShowCardDetailDialog(
+                                CardService.getInstance().GetEntityCardIDByCardID(String.valueOf(GotCardID)),
+                                "successfully read a virtual card.",
+                                MainActivity.MainActivityContext);
                         break;
                     case 1:
                         //success //entity card
@@ -181,7 +155,7 @@ public class R_CardReadFriendCard extends Fragment implements ZXingScannerView.R
                                 CardService.getInstance().GetEntityCardIDByCardID(String.valueOf(EntityCardID)),
                                 "successfully read a real card.",
                                 MainActivity.MainActivityContext);
-                        TextView_Log.setText(TextView_Log.getText()+"\n"+LastLogMessage);
+                        TextView_Log.setText("You can read virtual card to earn DP/IP.");
                         break;
                     case 99:
                         ProcessControlService.AlertMessage(MainActivity.MainActivityContext, "卡片無效!!");
@@ -189,7 +163,6 @@ public class R_CardReadFriendCard extends Fragment implements ZXingScannerView.R
                 }
                 super.handleMessage(msg);
                 ProcessControlService.CloseProgressDialog();
-                //mScannerView.resumeCameraPreview(R_CardReadFriendCard.this);
             }
         };
     }

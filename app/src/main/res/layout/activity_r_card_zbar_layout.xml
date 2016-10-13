@@ -29,7 +29,7 @@
                     android:id="@+id/ImageView_Scanner"
                     />
                 <TextView
-                    android:text="Please scan the Emu QR code.\n DP:Phone IP:Card"
+                    android:text="Please scan the QR code."
                     android:paddingLeft="15px"
                     android:textColor="@android:color/white"
                     android:layout_width="wrap_content"
